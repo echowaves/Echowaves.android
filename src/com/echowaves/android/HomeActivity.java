@@ -9,12 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainActivity extends Activity {
+public class HomeActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.home);
 
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.main, container,
+			View rootView = inflater.inflate(R.layout.home, container,
 					false);
 			return rootView;
 		}

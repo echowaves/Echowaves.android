@@ -4,5 +4,8 @@
     <string name="app_name">echowaves</string>
     <string name="action_settings">Settings</string>
     <color name="ewColor">#FFA500</color>
-
+    <color name="colorWhite">#FFFF</color>
+    <string name="tuneIn">Tune In</string>
+    <string name="createWave">Create New Wave</string>
+    
 </resources>
