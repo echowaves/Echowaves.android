@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">echowaves</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <color name="ewColor">#FFA500</color>
 
 </resources>
