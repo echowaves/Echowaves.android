@@ -19,8 +19,7 @@
             android:textColor="@color/colorWhite"
             android:singleLine="false"
             android:typeface="serif"
-            android:clickable="true"
-            android:onClick="@string/action_sign_in" />
+            android:clickable="true"/>
 
         <Button
             android:id="@+id/createWave"
@@ -30,7 +29,6 @@
             android:background="@drawable/rounded_button"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:textColor="@color/colorWhite"
-            android:onClick="@string/action_sign_up" />
+            android:textColor="@color/colorWhite"/>
  
 </LinearLayout>
