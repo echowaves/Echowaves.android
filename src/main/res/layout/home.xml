@@ -10,22 +10,27 @@
 
         <Button
             android:id="@+id/tuneIn"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="@string/tuneIn"
-            android:background="@xml/rounded_button"
+            android:background="@drawable/rounded_button"
+            android:padding="5dp"
             android:layout_margin="5dp"
             android:textColor="@color/colorWhite"
             android:singleLine="false"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:clickable="true"
+            android:onClick="@string/action_sign_in" />
 
         <Button
             android:id="@+id/createWave"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="@string/createWave"
-            android:background="@xml/rounded_button"
+            android:background="@drawable/rounded_button"
+            android:padding="5dp"
             android:layout_margin="5dp"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:onClick="@string/action_sign_up" />
  
 </LinearLayout>
