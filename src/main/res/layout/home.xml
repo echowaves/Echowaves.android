@@ -5,18 +5,27 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.echowaves.android.HomeActivity">
+    tools:context="com.echowaves.android.HomeActivity"
+    android:padding="10dp">
 
         <Button
             android:id="@+id/tuneIn"
-            android:layout_width="222dp"
-            android:layout_height="wrap_content"
-            android:text="@string/tuneIn" />
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:text="@string/tuneIn"
+            android:background="@xml/rounded_button"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorWhite"
+            android:singleLine="false"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/createWave"
-            android:layout_width="222dp"
-            android:layout_height="wrap_content"
-            android:text="@string/createWave" />
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:text="@string/createWave"
+            android:background="@xml/rounded_button"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorWhite" />
  
 </LinearLayout>
