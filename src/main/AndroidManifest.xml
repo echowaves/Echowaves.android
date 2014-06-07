@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.echowaves.android"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.echowaves.android" >
 
-    <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="19" />
     <supports-screens android:resizeable="false" android:xlargeScreens="false" android:smallScreens="false" android:largeScreens="true" android:normalScreens="true"/>
 
     <application
