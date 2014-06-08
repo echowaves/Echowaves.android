@@ -29,7 +29,7 @@ public class HomeActivity extends Activity {
         createWaveButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                Intent createWave = new Intent(getApplicationContext(), SignInActivity.class);
+                Intent createWave = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(createWave);
             }
         });

@@ -3,9 +3,13 @@
 
     <string name="app_name">echowaves</string>
     <string name="action_settings">Settings</string>
+
     <color name="ewColor">#FFA500</color>
     <color name="colorWhite">#FFFF</color>
+
     <string name="tuneIn">Tune In</string>
     <string name="createWave">Create New Wave</string>
-    
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
