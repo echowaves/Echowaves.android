@@ -17,9 +17,8 @@
             android:padding="5dp"
             android:layout_margin="5dp"
             android:textColor="@color/colorWhite"
-            android:singleLine="false"
-            android:typeface="serif"
-            android:clickable="true"/>
+            android:clickable="true"
+            />
 
         <Button
             android:id="@+id/createWave"
@@ -29,6 +28,8 @@
             android:background="@drawable/rounded_button"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:textColor="@color/colorWhite"/>
+            android:textColor="@color/colorWhite"
+            android:clickable="true"
+            />
  
 </LinearLayout>

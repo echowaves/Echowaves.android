@@ -1,18 +1,38 @@
 package com.echowaves.android;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-public class HomeActivity extends FragmentActivity {
+public class HomeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
+        Button tuneInButton = (Button) findViewById(R.id.tuneIn);
+        //Listening to button event
+        tuneInButton.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View arg0) {
+                Intent tuneIn = new Intent(getApplicationContext(), SignInActivity.class);
+                startActivity(tuneIn);
+            }
+        });
+
+        Button createWaveButton = (Button) findViewById(R.id.createWave);
+        //Listening to button event
+        createWaveButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                Intent createWave = new Intent(getApplicationContext(), SignInActivity.class);
+                startActivity(createWave);
+            }
+        });
     }
 
     @Override
@@ -23,41 +43,5 @@ public class HomeActivity extends FragmentActivity {
 		return true;
 	}
 
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.home);
-//
-//		if (savedInstanceState == null) {
-//			getFragmentManager().beginTransaction()
-//					.add(R.id.container, new PlaceholderFragment()).commit();
-//		}
-//	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
-//
-//	/**
-//	 * A placeholder fragment containing a simple view.
-//	 */
-//	public static class PlaceholderFragment extends Fragment {
-//
-//		public PlaceholderFragment() {
-//		}
-//
-//		@Override
-//		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//				Bundle savedInstanceState) {
-//			View rootView = inflater.inflate(R.layout.home, container,
-//					false);
-//			return rootView;
-//		}
-//	}
 
 }
