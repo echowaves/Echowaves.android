@@ -1,7 +1,10 @@
 package com.echowaves.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 
 public class SignUpActivity extends Activity {
@@ -10,6 +13,16 @@ public class SignUpActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        ImageView backButton = (ImageView) findViewById(R.id.imageViewBack);        //Listening to button event
+        backButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                Intent home = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(home);
+            }
+        });
+
     }
 
 
