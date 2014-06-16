@@ -40,6 +40,4 @@ public class HomeActivity extends BaseActivity {
 //		getMenuInflater().inflate(R.menu.main, menu);
 //		return true;
 //	}
-
-
 }
