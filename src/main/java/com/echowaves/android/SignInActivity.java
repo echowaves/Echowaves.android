@@ -1,6 +1,5 @@
 package com.echowaves.android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
  * A login screen that offers login via wave_name/password.
 
  */
-public class SignInActivity extends Activity {
+public class SignInActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +28,7 @@ public class SignInActivity extends Activity {
         });
 
     }
+
 
 
 }

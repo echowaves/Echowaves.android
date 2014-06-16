@@ -64,16 +64,8 @@ dependencies {
 
         mavenCentral()
     }
-}
-
-dependencies {
-    compile 'com.android.support:appcompat-v7:19.1.+'
-    //    compile project(':libraries:android_support')
-}
-dependencies {
     compile 'com.google.android.gms:play-services:4.2.42'
     compile 'com.android.support:appcompat-v7:19.+'
+    compile files('libs/FlurryAnalytics-4.0.0.jar')
 }
-dependencies {
-    compile 'com.android.support:appcompat-v7:19.+'
-}
+

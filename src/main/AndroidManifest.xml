@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.echowaves.android" >
+    package="com.echowaves.android">
 
     <supports-screens
         android:largeScreens="true"
@@ -9,30 +9,35 @@
         android:smallScreens="false"
         android:xlargeScreens="false" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar"
-        android:screenOrientation="portrait">
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.NoTitleBar" >
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SignInActivity"
-            android:label="@string/title_activity_sign_in"
-            >
+            android:label="@string/title_activity_sign_in" >
         </activity>
         <activity
             android:name=".SignUpActivity"
-            android:label="@string/title_activity_sign_up"
-            >
+            android:label="@string/title_activity_sign_up" >
+        </activity>
+        <activity
+            android:name=".NavigationTabBarActivity"
+            android:label="@string/title_activity_navigation_tab_bar" >
         </activity>
     </application>
 

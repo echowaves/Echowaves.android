@@ -1,13 +1,12 @@
 package com.echowaves.android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,4 +43,6 @@ public class SignUpActivity extends Activity {
 //        }
 //        return super.onOptionsItemSelected(item);
 //    }
+
+
 }
