@@ -13,5 +13,8 @@
     <string name="title_activity_sign_up">SignUp</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_navigation_tab_bar">NavigationTabBarActivity</string>
+    <string name="title_activity_waving">Waving</string>
+    <string name="title_activity_echo_wave">EchoWaveActivity</string>
+    <string name="title_activity_blends">BlendsActivity</string>
 
 </resources>

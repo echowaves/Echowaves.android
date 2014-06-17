@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.echowaves.android">
+    package="com.echowaves.android" >
 
     <supports-screens
         android:largeScreens="true"
@@ -10,7 +10,7 @@
         android:xlargeScreens="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -37,7 +37,21 @@
         </activity>
         <activity
             android:name=".NavigationTabBarActivity"
-            android:label="@string/title_activity_navigation_tab_bar" >
+            android:label="@string/title_activity_navigation_tab_bar"
+            android:theme="@style/Theme.AppCompat"
+            >
+        </activity>
+        <activity
+            android:name=".WavingActivity"
+            android:label="@string/title_activity_waving" >
+        </activity>
+        <activity
+            android:name=".EchoWaveActivity"
+            android:label="@string/title_activity_echo_wave" >
+        </activity>
+        <activity
+            android:name=".BlendsActivity"
+            android:label="@string/title_activity_blends" >
         </activity>
     </application>
 

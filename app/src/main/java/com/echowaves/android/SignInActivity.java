@@ -3,6 +3,7 @@ package com.echowaves.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
@@ -26,6 +27,17 @@ public class SignInActivity extends BaseActivity {
                 startActivity(home);
             }
         });
+
+        Button tuneInButton = (Button) findViewById(R.id.sign_in_button);
+        //Listening to button event
+        tuneInButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+                startActivity(tuneIn);
+            }
+        });
+
 
     }
 

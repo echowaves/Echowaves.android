@@ -10,11 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.echowaves.android.SignInActivity">
 
-
-                    android:maxLines="1"
-            android:singleLine="true"
-            android:background="@drawable/rounded_inputtext"
-            android:padding="5dp"
     <LinearLayout
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
@@ -122,7 +117,7 @@
 
 
                 <Button
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/sign_in_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
