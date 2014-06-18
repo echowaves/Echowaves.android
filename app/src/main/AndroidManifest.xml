@@ -38,7 +38,6 @@
         <activity
             android:name=".NavigationTabBarActivity"
             android:label="@string/title_activity_navigation_tab_bar"
-            android:theme="@style/Theme.AppCompat"
             >
         </activity>
         <activity
