@@ -18,9 +18,15 @@ public class NavigationTabBarActivity extends BaseActivity {
         spec.setContent(R.id.tab1);
         spec.setIndicator("Clock");
         tabs.addTab(spec);
+
         spec=tabs.newTabSpec("tag2");
         spec.setContent(R.id.tab2);
         spec.setIndicator("Button");
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("tag3");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("Button2");
         tabs.addTab(spec);
     }
 

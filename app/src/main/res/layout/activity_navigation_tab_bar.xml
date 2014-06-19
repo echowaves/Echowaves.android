@@ -104,22 +104,53 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                />
+                >
+                <!--<TextView-->
+                    <!--android:id="@+id/tab1"-->
+                    <!--android:tag="tab0"-->
+                    <!--android:text="Tab 1"-->
+                    <!--android:background="@android:drawable/btn_star_big_on"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="fill_parent"-->
+                    <!--/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tab2"-->
+                    <!--android:tag="tab1"-->
+                    <!--android:text="Tab 2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="fill_parent"-->
+                    <!--/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tab3"-->
+                    <!--android:tag="tab2"-->
+                    <!--android:text="Tab 3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="fill_parent"-->
+                    <!--/>-->
+
+            </TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-                <AnalogClock
+                <TextView
                     android:id="@+id/tab1"
+                    android:text="Hallo1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+                <TextView
+                    android:id="@+id/tab2"
+                    android:text="Hallo2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+                <TextView
+                    android:id="@+id/tab3"
+                    android:text="Hallo3"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" />
 
-                <AnalogClock
-                    android:id="@+id/tab2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
             </FrameLayout>
         </RelativeLayout>
     </TabHost>
