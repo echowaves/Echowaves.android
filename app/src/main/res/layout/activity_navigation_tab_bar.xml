@@ -135,21 +135,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-                <TextView
+                <include
                     android:id="@+id/tab1"
-                    android:text="Hallo1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
-                <TextView
+                    layout="@layout/activity_waving"/>
+
+                <include
                     android:id="@+id/tab2"
-                    android:text="Hallo2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
-                <TextView
+                    layout="@layout/activity_echo_wave"/>
+
+                <include
                     android:id="@+id/tab3"
-                    android:text="Hallo3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    layout="@layout/activity_blends"/>
 
             </FrameLayout>
         </RelativeLayout>
