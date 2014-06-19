@@ -116,11 +116,10 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" />
 
-                <Button
+                <AnalogClock
                     android:id="@+id/tab2"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="A semi-random button" />
+                    android:layout_height="fill_parent" />
             </FrameLayout>
         </RelativeLayout>
     </TabHost>
