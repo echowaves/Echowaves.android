@@ -16,7 +16,7 @@
             android:background="@drawable/rounded_button"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@android:color/white"
             android:clickable="true"
             />
 
@@ -28,7 +28,7 @@
             android:background="@drawable/rounded_button"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@android:color/white"
             android:clickable="true"
             />
  

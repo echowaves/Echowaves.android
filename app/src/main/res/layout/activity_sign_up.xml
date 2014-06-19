@@ -13,6 +13,7 @@
 
         <TextView
             android:id="@+id/textViewNotification"
+            android:background="@color/ewColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -29,6 +30,7 @@
 
         <ImageView
             android:id="@+id/imageViewBack"
+            android:background="@color/ewColor"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
@@ -130,7 +132,7 @@
         android:background="@drawable/rounded_button"
         android:padding="5dp"
         android:layout_margin="5dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@android:color/white"
         />
 
     />

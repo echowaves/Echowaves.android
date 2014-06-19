@@ -5,7 +5,6 @@
     <string name="action_settings">Settings</string>
 
     <color name="ewColor">#FFA500</color>
-    <color name="colorWhite">#FFFF</color>
 
     <string name="tuneIn">TuneIn</string>
     <string name="tuneOut">TuneOut</string>

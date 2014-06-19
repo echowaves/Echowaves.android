@@ -18,6 +18,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/tuneIn"
                 android:textColor="@android:color/white"
+                android:background="@color/ewColor"
                 android:textSize="14sp" />
         </RelativeLayout>
 
@@ -30,6 +31,7 @@
 
             <ImageView
                 android:id="@+id/imageViewBack"
+                android:background="@color/ewColor"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
@@ -116,7 +118,7 @@
                     android:background="@drawable/rounded_button"
                     android:padding="5dp"
                     android:layout_margin="5dp"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@android:color/white"
                     />
 
                 />

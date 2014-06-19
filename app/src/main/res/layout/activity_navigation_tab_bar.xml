@@ -17,6 +17,7 @@
 
             <TextView
                 android:id="@+id/textViewNotification"
+                android:background="@color/ewColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -47,6 +48,7 @@
 
             <TextView
                 android:id="@+id/textViewBackTitle"
+                android:background="@color/ewColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -97,7 +99,8 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TabWidget
                 android:id="@android:id/tabs"
@@ -109,6 +112,7 @@
                     android:tag="tab0"
                     android:text="Waving"
                     android:background="@drawable/waving32"
+                    android:colorBackground="@color/ewColor"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     />
@@ -116,6 +120,7 @@
                     android:tag="tab1"
                     android:text="EchoWave"
                     android:background="@drawable/echowave32"
+                    android:colorBackground="@color/ewColor"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     />
@@ -123,6 +128,7 @@
                     android:tag="tab2"
                     android:text="Blends"
                     android:background="@drawable/blends32"
+                    android:colorBackground="@color/ewColor"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     />

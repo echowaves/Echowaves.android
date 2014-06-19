@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.echowaves.android.model.EWWave;
+
 
 /**
  * A login screen that offers login via wave_name/password.
@@ -32,9 +34,15 @@ public class SignInActivity extends BaseActivity {
         //Listening to button event
         tuneInButton.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View arg0) {
+            public void onClick(View v) {
 
-//                AsyncHttpClient client = new AsyncHttpClient();
+                EWWave.showLoadingIndicator(v.getContext());
+                try {
+                    Thread.sleep(10000);
+                    EWWave.hideLoadingIndicator();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                 startActivity(tuneIn);

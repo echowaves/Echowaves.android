@@ -1,6 +1,9 @@
 package com.echowaves.android.model;
 
-import com.echowaves.android.BaseActivity;
+import android.app.ProgressDialog;
+import android.content.Context;
+
+import com.echowaves.android.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 
@@ -15,10 +18,42 @@ public class EWDataModel {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
+    private static ProgressDialog progressDialog = null;
+
     static {
-        PersistentCookieStore cookieStore = new PersistentCookieStore(new BaseActivity().getApplicationContext());
+        PersistentCookieStore cookieStore = new PersistentCookieStore( ApplicationContextProvider.getContext());
         client.setCookieStore(cookieStore);
     }
+
+    public static void showLoadingIndicator(Context context) {
+//        if(progressDialog == null) {
+            progressDialog=new ProgressDialog(context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Initializing Please Wait");
+            progressDialog.setTitle("Loading");
+            progressDialog.setIcon(R.drawable.ic_launcher);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.setMax(100);
+            progressDialog.show();
+//        }
+    }
+
+    public static void hideLoadingIndicator() {
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+    }
+
+    public static boolean isLoadingIndicatorShowing() {
+        if(progressDialog != null)
+            return true;
+        return false;
+    }
+
+
+
 
 //    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 //        client.get(getAbsoluteUrl(url), params, responseHandler);
