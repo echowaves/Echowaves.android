@@ -33,6 +33,9 @@ public class SignInActivity extends BaseActivity {
         tuneInButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
+
+//                AsyncHttpClient client = new AsyncHttpClient();
+
                 Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                 startActivity(tuneIn);
             }
