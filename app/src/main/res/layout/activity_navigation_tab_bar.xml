@@ -105,28 +105,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 >
-                <!--<TextView-->
-                    <!--android:id="@+id/tab1"-->
-                    <!--android:tag="tab0"-->
-                    <!--android:text="Tab 1"-->
-                    <!--android:background="@android:drawable/btn_star_big_on"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="fill_parent"-->
-                    <!--/>-->
-                <!--<TextView-->
-                    <!--android:id="@+id/tab2"-->
-                    <!--android:tag="tab1"-->
-                    <!--android:text="Tab 2"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="fill_parent"-->
-                    <!--/>-->
-                <!--<TextView-->
-                    <!--android:id="@+id/tab3"-->
-                    <!--android:tag="tab2"-->
-                    <!--android:text="Tab 3"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="fill_parent"-->
-                    <!--/>-->
+                <TextView
+                    android:tag="tab0"
+                    android:text="Tab 1"
+                    android:background="@android:drawable/btn_star_big_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    />
+                <TextView
+                    android:tag="tab1"
+                    android:text="Tab 2"
+                    android:background="@android:drawable/btn_star_big_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    />
+                <TextView
+                    android:tag="tab2"
+                    android:text="Tab 3"
+                    android:background="@android:drawable/btn_star_big_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    />
 
             </TabWidget>
 
@@ -136,15 +135,12 @@
                 android:layout_height="fill_parent">
 
                 <include
-                    android:id="@+id/tab1"
                     layout="@layout/activity_waving"/>
 
                 <include
-                    android:id="@+id/tab2"
                     layout="@layout/activity_echo_wave"/>
 
                 <include
-                    android:id="@+id/tab3"
                     layout="@layout/activity_blends"/>
 
             </FrameLayout>
