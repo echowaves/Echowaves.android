@@ -12,7 +12,7 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        Button tuneInButton = (Button) findViewById(R.id.tuneIn);
+        Button tuneInButton = (Button) findViewById(R.id.home_tuneIn);
         //Listening to button event
         tuneInButton.setOnClickListener(new View.OnClickListener() {
 
@@ -22,7 +22,7 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        Button createWaveButton = (Button) findViewById(R.id.createWave);
+        Button createWaveButton = (Button) findViewById(R.id.home_createWave);
         //Listening to button event
         createWaveButton.setOnClickListener(new View.OnClickListener() {
 

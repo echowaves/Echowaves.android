@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -9,7 +9,7 @@
     android:padding="10dp">
 
         <Button
-            android:id="@+id/tuneIn"
+            android:id="@+id/home_tuneIn"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="@string/tuneIn"
@@ -21,7 +21,7 @@
             />
 
         <Button
-            android:id="@+id/createWave"
+            android:id="@+id/home_createWave"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="@string/createWave"

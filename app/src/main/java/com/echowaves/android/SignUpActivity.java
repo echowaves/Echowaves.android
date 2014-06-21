@@ -14,7 +14,7 @@ public class SignUpActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        ImageView backButton = (ImageView) findViewById(R.id.imageViewBack);        //Listening to button event
+        ImageView backButton = (ImageView) findViewById(R.id.signup_imageViewBack);        //Listening to button event
         backButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {

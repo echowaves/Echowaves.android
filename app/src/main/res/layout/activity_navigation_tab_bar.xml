@@ -52,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageViewBack"
                 android:paddingLeft="5dp"
                 android:text="@string/tuneOut"
                 android:textColor="@android:color/white"

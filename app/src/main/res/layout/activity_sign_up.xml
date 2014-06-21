@@ -29,7 +29,7 @@
         android:background="@color/ewColor" >
 
         <ImageView
-            android:id="@+id/imageViewBack"
+            android:id="@+id/signup_imageViewBack"
             android:background="@color/ewColor"
             android:layout_width="50dp"
             android:layout_height="50dp"
