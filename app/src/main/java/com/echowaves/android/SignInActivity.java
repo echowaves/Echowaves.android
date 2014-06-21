@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -26,6 +28,11 @@ public class SignInActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        // show soft keyboard automagically
+        EditText waveName = (EditText) findViewById(R.id.tunein_wave_name);
+        waveName.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         ImageView backButton = (ImageView) findViewById(R.id.tunein_imageViewBack);
         //Listening to button event
@@ -73,9 +80,22 @@ public class SignInActivity extends BaseActivity {
                         if (error != null) {
                             Log.d("................ failed error: ", error.toString());
 
+                            String msg = "";
+                            if (null != responseBody) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                    msg = jsonResponse.getString("error");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                msg = error.getMessage();
+                            }
+
+
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                             builder.setTitle("Error")
-                                    .setMessage(error.getMessage() + (responseBody != null ? new String(responseBody) : ""))
+                                    .setMessage(msg)
                                     .setCancelable(false)
                                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
