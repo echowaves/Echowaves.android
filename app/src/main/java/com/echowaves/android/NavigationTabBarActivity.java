@@ -1,11 +1,22 @@
 package com.echowaves.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+
+import com.echowaves.android.model.EWWave;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class NavigationTabBarActivity extends BaseActivity {
@@ -16,7 +27,7 @@ public class NavigationTabBarActivity extends BaseActivity {
 
         setContentView(R.layout.activity_navigation_tab_bar);
 
-        TabHost tabHost=(TabHost)findViewById(R.id.tabhost);
+        TabHost tabHost = (TabHost) findViewById(R.id.nav_tabhost);
         tabHost.setup();
 
         final TabWidget tabWidget = tabHost.getTabWidget();
@@ -53,6 +64,78 @@ public class NavigationTabBarActivity extends BaseActivity {
             }
             tabHost.addTab(tabSpec);
         }
+
+        // tune out button
+        TextView tuneOutButton = (TextView) findViewById(R.id.nav_tuneOut);
+        //Listening to button event
+        tuneOutButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(final View v) {
+
+                EWWave.tuneOut(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onStart() {
+                        EWWave.showLoadingIndicator(v.getContext());
+                    }
+
+                    @Override
+                    public void onSuccess(JSONObject jsonResponse) {
+                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+
+                        Intent home = new Intent(getApplicationContext(), HomeActivity.class);
+                        startActivity(home);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        if (headers != null) {
+                            for (Header h : headers) {
+                                Log.d("................ failed   key: ", h.getName());
+                                Log.d("................ failed value: ", h.getValue());
+                            }
+                        }
+                        if (responseBody != null) {
+                            Log.d("................ failed : ", new String(responseBody));
+                        }
+                        if (error != null) {
+                            Log.d("................ failed error: ", error.toString());
+
+                            String msg = "";
+                            if (null != responseBody) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                    msg = jsonResponse.getString("error");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                msg = error.getMessage();
+                            }
+
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Error")
+                                    .setMessage(msg)
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        EWWave.hideLoadingIndicator();
+                    }
+                });
+
+            }
+        });
+
+
     }
 
 }

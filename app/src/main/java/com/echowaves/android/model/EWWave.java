@@ -20,4 +20,8 @@ public class EWWave extends EWDataModel {
         client.post(getAbsoluteUrl("/login.json"), params, responseHandler);
     }
 
+    public static void tuneOut(AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        client.post(getAbsoluteUrl("/logout.json"), params, responseHandler);
+    }
 }
