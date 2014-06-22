@@ -11,6 +11,17 @@ import com.loopj.android.http.RequestParams;
 
 public class EWWave extends EWDataModel {
 
+    public static void createWaveWithName(String waveName,
+                                          String wavePassword,
+                                          String confirmPassword,
+                                          AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("name", waveName);
+        params.put("pass", wavePassword);
+        params.put("pass1", confirmPassword);
+        client.post(getAbsoluteUrl("/register.json"), params, responseHandler);
+    }
+
     public static void tuneInWithNameAndPassword(String waveName,
                                                  String wavePassword,
                                                  AsyncHttpResponseHandler responseHandler) {
