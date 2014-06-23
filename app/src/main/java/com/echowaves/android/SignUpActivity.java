@@ -35,7 +35,7 @@ public class SignUpActivity extends BaseActivity {
         ImageView backButton = (ImageView) findViewById(R.id.signup_imageViewBack);        //Listening to button event
         backButton.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View arg0) {
+            public void onClick(final View v) {
                 Intent home = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(home);
             }
@@ -52,67 +52,71 @@ public class SignUpActivity extends BaseActivity {
                 final String wavePassword = ((EditText) findViewById(R.id.signup_password)).getText().toString();
                 final String confirmPassword = ((EditText) findViewById(R.id.signup_password_confirm)).getText().toString();
 
-                EWWave.tuneInWithNameAndPassword(waveName, wavePassword, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onStart() {
-                        EWWave.showLoadingIndicator(v.getContext());
-                    }
-
-                    @Override
-                    public void onSuccess(JSONObject jsonResponse) {
-                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-
-                        Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                        startActivity(createWave);
-
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        if (headers != null) {
-                            for (Header h : headers) {
-                                Log.d("................ failed   key: ", h.getName());
-                                Log.d("................ failed value: ", h.getValue());
+                EWWave.createWaveWithName(
+                        waveName,
+                        wavePassword,
+                        confirmPassword,
+                        new JsonHttpResponseHandler() {
+                            @Override
+                            public void onStart() {
+                                EWWave.showLoadingIndicator(v.getContext());
                             }
-                        }
-                        if (responseBody != null) {
-                            Log.d("................ failed : ", new String(responseBody));
-                        }
-                        if (error != null) {
-                            Log.d("................ failed error: ", error.toString());
 
-                            String msg = "";
-                            if (null != responseBody) {
-                                try {
-                                    JSONObject jsonResponse = new JSONObject(new String(responseBody));
-                                    msg = jsonResponse.getString("error");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                            @Override
+                            public void onSuccess(JSONObject jsonResponse) {
+                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+//TODO: store credentials securily
+                                Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+                                startActivity(createWave);
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                if (headers != null) {
+                                    for (Header h : headers) {
+                                        Log.d("................ failed   key: ", h.getName());
+                                        Log.d("................ failed value: ", h.getValue());
+                                    }
                                 }
-                            } else {
-                                msg = error.getMessage();
+                                if (responseBody != null) {
+                                    Log.d("................ failed : ", new String(responseBody));
+                                }
+                                if (error != null) {
+                                    Log.d("................ failed error: ", error.toString());
+
+                                    String msg = "";
+                                    if (null != responseBody) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                            msg = jsonResponse.getString("error");
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        msg = error.getMessage();
+                                    }
+
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder.setTitle("Error")
+                                            .setMessage(msg)
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
                             }
 
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setTitle("Error")
-                                    .setMessage(msg)
-                                    .setCancelable(false)
-                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                        }
-                                    });
-                            AlertDialog alert = builder.create();
-                            alert.show();
+                            @Override
+                            public void onFinish() {
+                                EWWave.hideLoadingIndicator();
+                            }
                         }
-                    }
-
-
-                    @Override
-                    public void onFinish() {
-                        EWWave.hideLoadingIndicator();
-                    }
-                });
+                );
             }
 
         });

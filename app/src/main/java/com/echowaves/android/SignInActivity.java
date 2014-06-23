@@ -62,6 +62,8 @@ public class SignInActivity extends BaseActivity {
                     @Override
                     public void onSuccess(JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+//TODO: store credentials securily
+
                         Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                         startActivity(tuneIn);
                     }
