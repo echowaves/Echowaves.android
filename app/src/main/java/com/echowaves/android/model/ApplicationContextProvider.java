@@ -10,6 +10,11 @@ import android.content.Context;
  */
 
 public class ApplicationContextProvider extends Application {
+
+    public static String APP_DOMAIN = "com.echowaves";
+    public static String LOGIN_KEY = APP_DOMAIN + ".login";
+    public static String PASS_KEY = APP_DOMAIN + ".password";
+
     /**
      * Keeps a reference of the application context
      */
@@ -18,9 +23,7 @@ public class ApplicationContextProvider extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         context = getApplicationContext();
-
     }
 
     /**

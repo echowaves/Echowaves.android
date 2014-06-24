@@ -34,6 +34,15 @@ public class SignInActivity extends BaseActivity {
         waveName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
+        String storedWaveName = EWWave.getStoredWaveName();
+        String storedWavePassword = EWWave.getStoredWavePassword();
+        if( !"".equals(storedWaveName)) {
+            waveName.setText(storedWaveName);
+            EditText wavePassword = (EditText) findViewById(R.id.tunein_wave_password);
+            wavePassword.setText(storedWavePassword);
+        }
+
+
         ImageView backButton = (ImageView) findViewById(R.id.tunein_imageViewBack);
         //Listening to button event
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +71,8 @@ public class SignInActivity extends BaseActivity {
                     @Override
                     public void onSuccess(JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-//TODO: store credentials securily
+
+                        EWWave.storeCredentialForWave(waveName, wavePassword);
 
                         Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                         startActivity(tuneIn);

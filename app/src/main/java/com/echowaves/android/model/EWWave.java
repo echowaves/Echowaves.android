@@ -1,5 +1,7 @@
 package com.echowaves.android.model;
 
+import android.content.SharedPreferences;
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -10,6 +12,25 @@ import com.loopj.android.http.RequestParams;
  */
 
 public class EWWave extends EWDataModel {
+    static private SharedPreferences prefs;
+
+    static {
+        prefs = new SecurePreferences(ApplicationContextProvider.getContext());
+    }
+
+
+    public static void storeCredentialForWave(String waveName, String wavePassword) {
+        prefs.edit().putString(ApplicationContextProvider.LOGIN_KEY, waveName).commit();
+        prefs.edit().putString(ApplicationContextProvider.PASS_KEY, wavePassword).commit();
+    }
+
+    public static String getStoredWaveName() {
+        return prefs.getString(ApplicationContextProvider.LOGIN_KEY, "");
+    }
+
+    public static String getStoredWavePassword() {
+        return prefs.getString(ApplicationContextProvider.PASS_KEY, "");
+    }
 
     public static void createWaveWithName(String waveName,
                                           String wavePassword,

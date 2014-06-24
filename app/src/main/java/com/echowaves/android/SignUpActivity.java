@@ -65,7 +65,9 @@ public class SignUpActivity extends BaseActivity {
                             @Override
                             public void onSuccess(JSONObject jsonResponse) {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-//TODO: store credentials securily
+
+                                EWWave.storeCredentialForWave(waveName, wavePassword);
+
                                 Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                                 startActivity(createWave);
                             }
