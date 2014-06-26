@@ -12,12 +12,7 @@ import com.loopj.android.http.RequestParams;
  */
 
 public class EWWave extends EWDataModel {
-    static private SharedPreferences prefs;
-
-    static {
-        prefs = new SecurePreferences(ApplicationContextProvider.getContext());
-    }
-
+    static final private SharedPreferences prefs = new SecurePreferences(ApplicationContextProvider.getContext());
 
     public static void storeCredentialForWave(String waveName, String wavePassword) {
         prefs.edit().putString(ApplicationContextProvider.LOGIN_KEY, waveName).commit();

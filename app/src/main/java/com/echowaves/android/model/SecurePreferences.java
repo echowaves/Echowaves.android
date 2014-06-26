@@ -249,7 +249,7 @@ public class SecurePreferences implements SharedPreferences {
      * call {@link #commit()} or {@link #apply()}.
      */
     public static class Editor implements SharedPreferences.Editor {
-        private SharedPreferences.Editor mEditor;
+        private final SharedPreferences.Editor mEditor;
 
         /**
          * Constructor.

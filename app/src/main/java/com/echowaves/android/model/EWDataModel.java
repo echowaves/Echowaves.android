@@ -16,7 +16,7 @@ public class EWDataModel {
 //    private static final String BASE_URL = "http://echowaves.com";
     private static final String BASE_URL = "http://172.16.1.101:3000";
 
-    protected static AsyncHttpClient client = new AsyncHttpClient();
+    protected final static AsyncHttpClient client = new AsyncHttpClient();
 
     private static ProgressDialog progressDialog = null;
 
@@ -46,9 +46,5 @@ public class EWDataModel {
 
     protected static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
-    }
-
-    public static void debug() {
-        System.out.println("debug method called");
     }
 }

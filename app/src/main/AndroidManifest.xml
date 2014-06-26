@@ -45,18 +45,18 @@
             android:label="@string/title_activity_navigation_tab_bar"
             >
         </activity>
-        <activity
-            android:name=".WavingActivity"
-            android:label="@string/title_activity_waving" >
-        </activity>
-        <activity
-            android:name=".EchoWaveActivity"
-            android:label="@string/title_activity_echo_wave" >
-        </activity>
-        <activity
-            android:name=".BlendsActivity"
-            android:label="@string/title_activity_blends" >
-        </activity>
+        <!--<activity-->
+            <!--android:name=".WavingFragment"-->
+            <!--android:label="@string/title_activity_waving" >-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name=".EchoWaveFragment"-->
+            <!--android:label="@string/title_activity_echo_wave" >-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name=".BlendsFragment"-->
+            <!--android:label="@string/title_activity_blends" >-->
+        <!--</activity>-->
     </application>
 
 </manifest>

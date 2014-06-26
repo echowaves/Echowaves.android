@@ -31,5 +31,5 @@
             android:textColor="@android:color/white"
             android:clickable="true"
             />
- 
+
 </LinearLayout>

@@ -139,14 +139,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-                <include
-                    layout="@layout/activity_waving"/>
-
-                <include
-                    layout="@layout/activity_echo_wave"/>
-
-                <include
-                    layout="@layout/activity_blends"/>
+                <fragment class="com.echowaves.android.WavingFragment"
+                    android:id="@+id/fragment_waving"
+                    android:layout_width="match_parent" android:layout_height="match_parent" />
+                <fragment class="com.echowaves.android.EchoWaveFragment"
+                    android:id="@+id/fragment_echoWave"
+                    android:layout_width="match_parent" android:layout_height="match_parent" />
+                <fragment class="com.echowaves.android.BlendsFragment"
+                    android:id="@+id/fragment_blends"
+                    android:layout_width="match_parent" android:layout_height="match_parent" />
 
             </FrameLayout>
         </RelativeLayout>

@@ -74,6 +74,7 @@ public class SignInActivity extends BaseActivity {
 
                         EWWave.storeCredentialForWave(waveName, wavePassword);
 
+//                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                         Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                         startActivity(tuneIn);
                     }
