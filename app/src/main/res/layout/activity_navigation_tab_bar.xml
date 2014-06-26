@@ -17,10 +17,10 @@
 
             <TextView
                 android:id="@+id/nav_textViewNotification"
-                android:background="@color/ewColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:background="@color/ewColor"
                 android:text="@string/tuneIn"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
@@ -48,10 +48,10 @@
 
             <TextView
                 android:id="@+id/nav_tuneOut"
-                android:background="@color/ewColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:background="@color/ewColor"
                 android:paddingLeft="5dp"
                 android:text="@string/tuneOut"
                 android:textColor="@android:color/white"
@@ -92,45 +92,42 @@
     <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/nav_tabhost"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
+        android:layout_height="fill_parent">
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                >
+                android:layout_alignParentBottom="true">
+
                 <TextView
-                    android:tag="tab0"
-                    android:text="Waving"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
                     android:background="@drawable/waving32"
                     android:colorBackground="@color/ewColor"
+                    android:tag="tab0"
+                    android:text="Waving" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    />
-                <TextView
-                    android:tag="tab1"
-                    android:text="EchoWave"
                     android:background="@drawable/echowave32"
                     android:colorBackground="@color/ewColor"
+                    android:tag="tab1"
+                    android:text="EchoWave" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    />
-                <TextView
-                    android:tag="tab2"
-                    android:text="Blends"
                     android:background="@drawable/blends32"
                     android:colorBackground="@color/ewColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    />
+                    android:tag="tab2"
+                    android:text="Blends" />
 
             </TabWidget>
 
@@ -139,15 +136,23 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-                <fragment class="com.echowaves.android.WavingFragment"
+                <fragment
                     android:id="@+id/fragment_waving"
-                    android:layout_width="match_parent" android:layout_height="match_parent" />
-                <fragment class="com.echowaves.android.EchoWaveFragment"
+                    android:name="com.echowaves.android.WavingFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <fragment
                     android:id="@+id/fragment_echoWave"
-                    android:layout_width="match_parent" android:layout_height="match_parent" />
-                <fragment class="com.echowaves.android.BlendsFragment"
+                    android:name="com.echowaves.android.EchoWaveFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <fragment
                     android:id="@+id/fragment_blends"
-                    android:layout_width="match_parent" android:layout_height="match_parent" />
+                    android:name="com.echowaves.android.BlendsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </FrameLayout>
         </RelativeLayout>
