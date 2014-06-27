@@ -20,16 +20,17 @@ import org.json.JSONException;
 public class WavePickerFragment extends Fragment {
 
     private Spinner spinnerWaves;
-//    private TextView selectedWave;
 
     private static String[] waves;
+    private static int currentWaveIndex;
 
-//    @Override
-//    public void onCreate(Bundle bundle) {
-//        super.onCreate(bundle);
-//        Log.i("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ WavePickerFragment", "onCreate()");
-//
-//    }
+    public static String getCurrentWaveName() {
+        return waves[currentWaveIndex];
+    }
+
+    public static int getCurrentWaveIndex() {
+        return currentWaveIndex;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,10 +63,13 @@ public class WavePickerFragment extends Fragment {
                 waves_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 spinnerWaves.setAdapter(waves_adapter);
+                spinnerWaves.setSelection(getCurrentWaveIndex());
 
                 spinnerWaves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         spinnerWaves.setSelection(position);
+                        currentWaveIndex = position;
+
 //                String selState = (String) spinnerWaves.getSelectedItem();
 //                selectedWave.setText("Selected Android OS:" + selState);
                     }
