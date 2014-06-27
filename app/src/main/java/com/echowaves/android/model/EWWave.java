@@ -35,8 +35,13 @@ public class EWWave extends EWDataModel {
         params.put("name", waveName);
         params.put("pass", wavePassword);
         params.put("pass1", confirmPassword);
-        client.post(getAbsoluteUrl("/register.json"), params, responseHandler);
+        HTTP_CLIENT.post(getAbsoluteUrl("/register.json"), params, responseHandler);
     }
+
+    synchronized public static void getAllMyWaves(AsyncHttpResponseHandler responseHandler) {
+        HTTP_CLIENT.get(getAbsoluteUrl("/all-my-waves.json"), new RequestParams(), responseHandler);
+    }
+
 
     public static void tuneInWithNameAndPassword(String waveName,
                                                  String wavePassword,
@@ -44,11 +49,11 @@ public class EWWave extends EWDataModel {
         RequestParams params = new RequestParams();
         params.put("name", waveName);
         params.put("pass", wavePassword);
-        client.post(getAbsoluteUrl("/login.json"), params, responseHandler);
+        HTTP_CLIENT.post(getAbsoluteUrl("/login.json"), params, responseHandler);
     }
 
     public static void tuneOut(AsyncHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        client.post(getAbsoluteUrl("/logout.json"), params, responseHandler);
+        HTTP_CLIENT.post(getAbsoluteUrl("/logout.json"), params, responseHandler);
     }
 }

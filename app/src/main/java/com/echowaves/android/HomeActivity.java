@@ -1,7 +1,5 @@
 package com.echowaves.android;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +11,6 @@ import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HomeActivity extends BaseActivity {
@@ -28,7 +25,7 @@ public class HomeActivity extends BaseActivity {
         final String storedWaveName = EWWave.getStoredWaveName();
         final String storedWavePassword = EWWave.getStoredWavePassword();
         // auto tunein
-        if (!"".equals(storedWaveName) && tuneInCount==0) {
+        if (!"".equals(storedWaveName) && tuneInCount == 0) {
             EWWave.tuneInWithNameAndPassword(storedWaveName, storedWavePassword, new JsonHttpResponseHandler() {
 //                @Override
 //                public void onStart() {
@@ -60,29 +57,29 @@ public class HomeActivity extends BaseActivity {
                     if (error != null) {
                         Log.d("................ failed error: ", error.toString());
 
-                        String msg = "";
-                        if (null != responseBody) {
-                            try {
-                                JSONObject jsonResponse = new JSONObject(new String(responseBody));
-                                msg = jsonResponse.getString("error");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            msg = error.getMessage();
-                        }
+//                        String msg = "";
+//                        if (null != responseBody) {
+//                            try {
+//                                JSONObject jsonResponse = new JSONObject(new String(responseBody));
+//                                msg = jsonResponse.getString("error");
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        } else {
+//                            msg = error.getMessage();
+//                        }
 
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
-                        builder.setTitle("Error")
-                                .setMessage(msg)
-                                .setCancelable(false)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
+//                        builder.setTitle("Error")
+//                                .setMessage(msg)
+//                                .setCancelable(false)
+//                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int id) {
+//                                    }
+//                                });
+//                        AlertDialog alert = builder.create();
+//                        alert.show();
                     }
                 }
 

@@ -4,8 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.echowaves.android.WavePickerFragment">
+
     <Spinner
         android:id="@+id/wavePicker"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
 </LinearLayout>

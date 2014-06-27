@@ -13,16 +13,16 @@ import com.loopj.android.http.PersistentCookieStore;
  */
 
 public class EWDataModel {
-//    private static final String BASE_URL = "http://echowaves.com";
-    private static final String BASE_URL = "http://172.16.1.101:3000";
+    private static final String BASE_URL = "http://echowaves.com";
+//    private static final String BASE_URL = "http://172.16.1.101:3000";
 
-    protected final static AsyncHttpClient client = new AsyncHttpClient();
+    protected final static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 
     private static ProgressDialog progressDialog = null;
 
     static {
         PersistentCookieStore cookieStore = new PersistentCookieStore( ApplicationContextProvider.getContext());
-        client.setCookieStore(cookieStore);
+        HTTP_CLIENT.setCookieStore(cookieStore);
     }
 
     public static void showLoadingIndicator(Context context) {
