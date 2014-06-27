@@ -42,7 +42,6 @@ public class EWWave extends EWDataModel {
         HTTP_CLIENT.get(getAbsoluteUrl("/all-my-waves.json"), new RequestParams(), responseHandler);
     }
 
-
     public static void tuneInWithNameAndPassword(String waveName,
                                                  String wavePassword,
                                                  AsyncHttpResponseHandler responseHandler) {
