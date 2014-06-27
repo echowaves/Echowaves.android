@@ -10,21 +10,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/ewColor">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:background="@color/ewColor">-->
 
-            <TextView
-                android:id="@+id/nav_textViewNotification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@color/ewColor"
-                android:text="@string/tuneIn"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/nav_textViewNotification"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:background="@color/ewColor"-->
+                <!--android:text="@string/tuneIn"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textSize="14sp" />-->
+        <!--</RelativeLayout>-->
 
         <!-- Action Bar -->
 
