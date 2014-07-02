@@ -11,6 +11,13 @@ public class BlendsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("!!!!!!!!!!!!!", "BlendsFragment onStart()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("!!!!!!!!!!!!!", "BlendsFragment onResume()");
     }
 
     @Override

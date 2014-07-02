@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class NavigationTabBarActivity extends BaseFragmentActivity {
+public class NavigationTabBarActivity extends BaseFragmentActivity implements TabHost.OnTabChangeListener, WavePickerFragment.OnWaveSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,5 +137,23 @@ public class NavigationTabBarActivity extends BaseFragmentActivity {
 
 
     }
+
+
+    @Override
+    public void onTabChanged(String tabId) {
+        Log.d("$$$$$$$$$$$$$$$$$ NavigationTabBarActivity", "onTabChanged(): tabId=" + tabId);
+    }
+
+    @Override
+    public void onAWaveSelected(String waveName) {
+        Log.d("%%%%%%%%%%%%%%%%% NavigationTabBarActivity", "waveSelected:" + waveName);
+//        DetailFragment detailfragment = (DetailFragment) getFragmentManager()
+//                .findFragmentById(R.id.detail_Fragment);
+//        if (detailfragment != null && detailfragment.isInLayout()) {
+//            detailfragment.setText(OS_Name);
+//        }
+
+    };
+
 
 }

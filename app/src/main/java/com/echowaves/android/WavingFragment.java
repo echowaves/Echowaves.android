@@ -13,7 +13,7 @@ public class WavingFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        Log.d("!!!!!!!!!!!!!", "WavingFragment onStart()");
     }
 
     @Override

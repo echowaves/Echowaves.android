@@ -14,7 +14,7 @@ import com.loopj.android.http.PersistentCookieStore;
 
 public class EWDataModel {
     private static final String BASE_URL = "http://echowaves.com";
-//    private static final String BASE_URL = "http://172.16.1.101:3000";
+//    private static final String BASE_URL = "http://192.168.1.101:3000";
 
     protected final static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 

@@ -1,5 +1,6 @@
 package com.echowaves.android;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,13 @@ import org.json.JSONException;
 
 public class WavePickerFragment extends Fragment {
 
+    private OnWaveSelectedListener mOnWaveSelectedListener;
+    // NavigationTabBarActivity must implement this interface
+    public interface OnWaveSelectedListener {
+        public void onAWaveSelected(String waveName);
+    }
+
+
     private Spinner spinnerWaves;
 
     private static String[] waves;
@@ -31,6 +39,25 @@ public class WavePickerFragment extends Fragment {
     public static int getCurrentWaveIndex() {
         return currentWaveIndex;
     }
+
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mOnWaveSelectedListener = (OnWaveSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnWaveSelectedListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mOnWaveSelectedListener = null;
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +84,7 @@ public class WavePickerFragment extends Fragment {
 
                 spinnerWaves = (Spinner) view.findViewById(R.id.wavePicker);
 
+
                 ArrayAdapter<String> waves_adapter =
                         new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, waves);
 
@@ -66,19 +94,26 @@ public class WavePickerFragment extends Fragment {
                 spinnerWaves.setSelection(getCurrentWaveIndex());
 
                 spinnerWaves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                        // your code here
+                        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^", "spinner on item selected:" + waves[position]);
                         spinnerWaves.setSelection(position);
                         currentWaveIndex = position;
 
-//                String selState = (String) spinnerWaves.getSelectedItem();
-//                selectedWave.setText("Selected Android OS:" + selState);
+                        mOnWaveSelectedListener.onAWaveSelected(waves[position]);
                     }
 
                     @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-
+                    public void onNothingSelected(AdapterView<?> parentView) {
+                        // your code here
+                        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^", "spinner nothing selected");
                     }
+
                 });
+
+
+
 
 
             }
@@ -104,4 +139,13 @@ public class WavePickerFragment extends Fragment {
 
         return view;
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        Log.i("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Waving fragment ", "onResume()");
+//
+//    }
+
+
 }

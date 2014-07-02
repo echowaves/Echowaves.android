@@ -93,7 +93,8 @@
         android:id="@+id/fragment_wavePicker"
         android:name="com.echowaves.android.WavePickerFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_wave_picker" />
 
 
     <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
@@ -147,19 +148,22 @@
                     android:id="@+id/fragment_waving"
                     android:name="com.echowaves.android.WavingFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    tools:layout="@layout/fragment_waving" />
 
                 <fragment
                     android:id="@+id/fragment_echoWave"
                     android:name="com.echowaves.android.EchoWaveFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    tools:layout="@layout/fragment_echo_wave" />
 
                 <fragment
                     android:id="@+id/fragment_blends"
                     android:name="com.echowaves.android.BlendsFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    tools:layout="@layout/fragment_blends" />
 
             </FrameLayout>
         </RelativeLayout>
