@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class NavigationTabBarActivity extends BaseFragmentActivity implements TabHost.OnTabChangeListener, WavePickerFragment.OnWaveSelectedListener {
+public class NavigationTabBarActivity extends EWFragmentActivity implements TabHost.OnTabChangeListener, WavePickerFragment.OnWaveSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,10 +134,7 @@ public class NavigationTabBarActivity extends BaseFragmentActivity implements Ta
 
             }
         });
-
-
     }
-
 
     @Override
     public void onTabChanged(String tabId) {
@@ -147,13 +144,20 @@ public class NavigationTabBarActivity extends BaseFragmentActivity implements Ta
     @Override
     public void onAWaveSelected(String waveName) {
         Log.d("%%%%%%%%%%%%%%%%% NavigationTabBarActivity", "waveSelected:" + waveName);
-//        DetailFragment detailfragment = (DetailFragment) getFragmentManager()
-//                .findFragmentById(R.id.detail_Fragment);
+        WavingTabFragment wavingFragment = (WavingTabFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_waving);
+        EchoWaveTabFragment echoWaveFragment = (EchoWaveTabFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_echoWave);
+        BlendsTabFragment blendsTabFragment = (BlendsTabFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_blends);
+
 //        if (detailfragment != null && detailfragment.isInLayout()) {
-//            detailfragment.setText(OS_Name);
 //        }
 
-    };
+        wavingFragment.updateWave(WavePickerFragment.getCurrentWaveName());
+        echoWaveFragment.updateWave(WavePickerFragment.getCurrentWaveName());
+        blendsTabFragment.updateWave(WavePickerFragment.getCurrentWaveName());
+    }
 
 
 }

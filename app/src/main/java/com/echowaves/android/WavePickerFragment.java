@@ -21,6 +21,7 @@ import org.json.JSONException;
 public class WavePickerFragment extends Fragment {
 
     private OnWaveSelectedListener mOnWaveSelectedListener;
+
     // NavigationTabBarActivity must implement this interface
     public interface OnWaveSelectedListener {
         public void onAWaveSelected(String waveName);
@@ -41,7 +42,6 @@ public class WavePickerFragment extends Fragment {
     }
 
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -51,13 +51,12 @@ public class WavePickerFragment extends Fragment {
             throw new ClassCastException(activity.toString() + " must implement OnWaveSelectedListener");
         }
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mOnWaveSelectedListener = null;
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,8 +64,13 @@ public class WavePickerFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_wave_picker, container, false);
         Log.i("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Waving fragment ", "onCreateView()");
 
-
         EWWave.getAllMyWaves(new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.d(">>>>>>>>>>>>>>>>>>>> WavePickerFragment starting Loading", "");
+            }
+
             @Override
             public void onSuccess(JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> WavePickerFragment finished Loading", jsonResponseArray.toString());
@@ -111,9 +115,6 @@ public class WavePickerFragment extends Fragment {
                     }
 
                 });
-
-
-
 
 
             }

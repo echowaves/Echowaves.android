@@ -1,33 +1,16 @@
 package com.echowaves.android;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
-import com.echowaves.android.model.EWImage;
-import com.echowaves.android.model.EWWave;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.image.SmartImageView;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
-
-public class EchoWaveFragment extends Fragment {
+public class EchoWaveTabFragment extends EWTabFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("!!!!!!!!!!!!!", "EchoWaveFragment onStart()");
+        Log.d("!!!!!!!!!!!!!", "EchoWaveTabFragment onStart()");
     }
 
     @Override
@@ -35,13 +18,10 @@ public class EchoWaveFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_echo_wave, container, false);
 
-        Log.d("EchoWaveFragment", view.toString());
+        Log.d("EchoWaveTabFragment", view.toString());
 
 //        GridView gridview = (GridView) view.findViewById(R.id.gridView);
 //        gridview.setAdapter(new ImageAdapter(view.getContext()));
-
-
-
 
 
 //        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,11 +31,10 @@ public class EchoWaveFragment extends Fragment {
 //        });
 
 
-
 //        EWImage.getAllImagesForWave(WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
 //            @Override
 //            public void onSuccess(JSONArray jsonResponseArray) {
-//                Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveFragment finished Loading images", jsonResponseArray.toString());
+//                Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveTabFragment finished Loading images", jsonResponseArray.toString());
 //
 ////                waves = new String[jsonResponseArray.length()];
 ////                for (int i = 0; i < jsonResponseArray.length(); i++) {
@@ -115,10 +94,12 @@ public class EchoWaveFragment extends Fragment {
 //        });
 
 
-
-
-
         return view;
+    }
+
+    @Override
+    public void updateWave(String waveName) {
+        Log.d("EchoWaveTabFragment updateWave", waveName);
     }
 
 //    public class ImageAdapter extends BaseAdapter {

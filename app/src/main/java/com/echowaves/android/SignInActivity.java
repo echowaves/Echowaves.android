@@ -22,7 +22,7 @@ import org.json.JSONObject;
 /**
  * A login screen that offers login via wave_name/password.
  */
-public class SignInActivity extends BaseActivity {
+public class SignInActivity extends EWActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class SignInActivity extends BaseActivity {
 
         String storedWaveName = EWWave.getStoredWaveName();
         String storedWavePassword = EWWave.getStoredWavePassword();
-        if( !"".equals(storedWaveName)) {
+        if (!"".equals(storedWaveName)) {
             waveName.setText(storedWaveName);
             EditText wavePassword = (EditText) findViewById(R.id.tunein_wave_password);
             wavePassword.setText(storedWavePassword);

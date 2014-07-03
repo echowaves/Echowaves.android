@@ -13,7 +13,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends EWActivity {
 
     private static int tuneInCount = 0;
 

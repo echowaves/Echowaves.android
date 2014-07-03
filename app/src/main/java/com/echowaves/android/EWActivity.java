@@ -1,6 +1,6 @@
 package com.echowaves.android;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 
 import com.flurry.android.FlurryAgent;
 
@@ -10,7 +10,7 @@ import com.flurry.android.FlurryAgent;
  * on 6/14/14.
  */
 
-public class BaseFragmentActivity extends FragmentActivity implements BaseConstants {
+abstract public class EWActivity extends Activity implements EWConstants {
 
     @Override
     protected void onStart() {

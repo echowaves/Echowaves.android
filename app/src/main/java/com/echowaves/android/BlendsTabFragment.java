@@ -1,23 +1,22 @@
 package com.echowaves.android;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BlendsFragment extends Fragment {
+public class BlendsTabFragment extends EWTabFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("!!!!!!!!!!!!!", "BlendsFragment onStart()");
+        Log.d("!!!!!!!!!!!!!", "BlendsTabFragment onStart()");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("!!!!!!!!!!!!!", "BlendsFragment onResume()");
+        Log.d("!!!!!!!!!!!!!", "BlendsTabFragment onResume()");
     }
 
     @Override
@@ -25,9 +24,13 @@ public class BlendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blends, container, false);
 
-        Log.d("BlendsFragment", view.toString());
+        Log.d("BlendsTabFragment", view.toString());
 
         return view;
     }
 
+    @Override
+    public void updateWave(String waveName) {
+        Log.d("BlendsTabFragment updateWave", waveName);
+    }
 }

@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class SignUpActivity extends BaseActivity {
+public class SignUpActivity extends EWActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

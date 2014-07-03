@@ -46,15 +46,15 @@
             >
         </activity>
         <!--<activity-->
-            <!--android:name=".WavingFragment"-->
+            <!--android:name=".WavingTabFragment"-->
             <!--android:label="@string/title_activity_waving" >-->
         <!--</activity>-->
         <!--<activity-->
-            <!--android:name=".EchoWaveFragment"-->
+            <!--android:name=".EchoWaveTabFragment"-->
             <!--android:label="@string/title_activity_echo_wave" >-->
         <!--</activity>-->
         <!--<activity-->
-            <!--android:name=".BlendsFragment"-->
+            <!--android:name=".BlendsTabFragment"-->
             <!--android:label="@string/title_activity_blends" >-->
         <!--</activity>-->
     </application>

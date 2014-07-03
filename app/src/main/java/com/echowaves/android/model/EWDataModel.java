@@ -15,24 +15,26 @@ import com.loopj.android.http.PersistentCookieStore;
 public class EWDataModel {
     private static final String BASE_URL = "http://echowaves.com";
 //    private static final String BASE_URL = "http://192.168.1.101:3000";
+//    private static final String BASE_URL = "http://10.0.20.92:3000";
+
 
     protected final static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 
     private static ProgressDialog progressDialog = null;
 
     static {
-        PersistentCookieStore cookieStore = new PersistentCookieStore( ApplicationContextProvider.getContext());
+        PersistentCookieStore cookieStore = new PersistentCookieStore(ApplicationContextProvider.getContext());
         HTTP_CLIENT.setCookieStore(cookieStore);
     }
 
     public static void showLoadingIndicator(Context context) {
-        if(progressDialog == null) {
+        if (progressDialog == null) {
             progressDialog = ProgressDialog.show(context, "", "Loading...", true);
         }
     }
 
     public static void hideLoadingIndicator() {
-        if(progressDialog != null) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
         }
