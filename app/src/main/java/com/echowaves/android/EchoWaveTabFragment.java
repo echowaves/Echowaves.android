@@ -65,7 +65,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
                         String thumb = EWConstants.EWAWSBucket + "/img/" + jsonResponseArray.getJSONObject(i).getString("name_2") + "/thumb_" + jsonResponseArray.getJSONObject(i).getString("name");
-                        Log.d("thumbUrl:", thumb);
+//                        Log.d("thumbUrl:", thumb);
                         thumbUrls[i] = thumb;
                     } catch (JSONException e) {
                         Log.d("JSONException", e.toString(), e);
@@ -113,11 +113,13 @@ public class EchoWaveTabFragment extends EWTabFragment {
         }
 
         public Object getItem(int position) {
-            return mThumbURLs[position];
+//            return mThumbURLs[position];
+            return null;
         }
 
         public long getItemId(int position) {
-            return position;
+//            return position;
+            return 0;
         }
 
         // create a new ImageView for each item referenced by the Adapter
