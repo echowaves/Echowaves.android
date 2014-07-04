@@ -10,7 +10,6 @@ import android.widget.Button;
 
 public class WavingTabFragment extends EWTabFragment {
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -23,6 +22,17 @@ public class WavingTabFragment extends EWTabFragment {
         View view = inflater.inflate(R.layout.fragment_waving, container, false);
         Log.d("WavingTabFragment", view.toString());
 
+        Button addWaveButton = (Button) view.findViewById(R.id.waving_addNewWaveButton);
+        //Listening to button event
+        addWaveButton.
+                setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(final View v) {
+                                Intent addChildWaveIntent = new Intent(v.getContext(), AddChildWaveActivity.class);
+                                startActivity(addChildWaveIntent);
+                            }
+                        }
+                );
         return view;
     }
 
