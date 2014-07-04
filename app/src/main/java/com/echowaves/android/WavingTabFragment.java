@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class WavingTabFragment extends EWTabFragment {
 
@@ -25,8 +26,29 @@ public class WavingTabFragment extends EWTabFragment {
     }
 
     @Override
-    public void updateWave(String waveName) {
+    public void updateWave(final String waveName) {
         super.updateWave(waveName);
-        Log.d("WavingTabFragment updateWave", waveName);
+        Log.d("&&&&&&&&&&&&&&&& WavingTabFragment updateWave", waveName);
+
+        View view = getView();
+        if (view != null) {
+            Button editWaveButton = (Button) view.findViewById(R.id.waving_editWaveButton);
+            editWaveButton.setText(waveName);
+            //Listening to button event
+            editWaveButton.
+                    setOnClickListener(
+                            new View.OnClickListener() {
+
+                                public void onClick(final View v) {
+
+//                                ((Button)getView().findViewById(R.id.waving_waveSelectedLabel)).setText(waveName);
+
+////                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+//                                Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+//                                startActivity(tuneIn);
+                                }
+                            }
+                    );
+        }
     }
 }

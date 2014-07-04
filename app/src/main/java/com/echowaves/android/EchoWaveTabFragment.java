@@ -58,7 +58,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
         EWImage.getAllImagesForWave(WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONArray jsonResponseArray) {
-                Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveTabFragment finished Loading images", jsonResponseArray.toString());
+                Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveTabFragment finished Loading images", Integer.toString(jsonResponseArray.length()));
 
                 String[] thumbUrls = new String[jsonResponseArray.length()];
 
@@ -131,7 +131,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
 //            if (convertView == null) {  // if it's not recycled, initialize some attributes
                 imageView = new SmartImageView(mContext);
 
-                imageView.setLayoutParams(new GridView.LayoutParams(parent.getWidth()/3-5, parent.getWidth()/3-5));
+                imageView.setLayoutParams(new GridView.LayoutParams(parent.getWidth() / 3 - 5, parent.getWidth() / 3 - 5));
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setPadding(2, 2, 2, 2);
 //            } else {
