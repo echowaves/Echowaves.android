@@ -124,21 +124,21 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int position, View convertView, ViewGroup parent) {
-
-            Log.d("@@@@@@@@@@@@@@@ImageViewAdapter", "position:" + position + " url:" + mThumbURLs[position]);
+            Log.d("@@@@@@@@@@@@@@@ImageViewAdapter ", "position:" + position + " url:" + mThumbURLs[position]);
 
             SmartImageView imageView;
-            if (convertView == null) {  // if it's not recycled, initialize some attributes
+
+//            if (convertView == null) {  // if it's not recycled, initialize some attributes
                 imageView = new SmartImageView(mContext);
 
-                imageView.setLayoutParams(new GridView.LayoutParams(parent.getWidth()/3-10, parent.getWidth()/3-10));
+                imageView.setLayoutParams(new GridView.LayoutParams(parent.getWidth()/3-5, 500));
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setPadding(5, 5, 5, 5);
-            } else {
-                imageView = (SmartImageView) convertView;
-            }
-
+                imageView.setPadding(2, 2, 2, 2);
+//            } else {
+//                imageView = (SmartImageView) convertView;
+//            }
             imageView.setImageUrl(mThumbURLs[position]);
+
             return imageView;
         }
     }
