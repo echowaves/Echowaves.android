@@ -3,6 +3,7 @@ package com.echowaves.android.model;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.echowaves.android.EWConstants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
 
@@ -12,11 +13,7 @@ import com.loopj.android.http.PersistentCookieStore;
  * on 6/18/14.
  */
 
-public class EWDataModel {
-    private static final String BASE_URL = "http://echowaves.com";
-//    private static final String BASE_URL = "http://192.168.1.101:3000";
-//    private static final String BASE_URL = "http://10.0.20.92:3000";
-
+public class EWDataModel implements EWConstants {
 
     protected final static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
 

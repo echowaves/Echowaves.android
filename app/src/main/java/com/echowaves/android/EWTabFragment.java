@@ -7,6 +7,14 @@ import android.app.Fragment;
  *
  */
 abstract public class EWTabFragment extends Fragment {
+    private String waveName;
+
     @SuppressWarnings("unused")
-    protected abstract void updateWave(String waveName);
+    public String getWaveName() {
+        return waveName;
+    }
+
+    public void updateWave(String waveName) {
+        this.waveName = waveName;
+    }
 }

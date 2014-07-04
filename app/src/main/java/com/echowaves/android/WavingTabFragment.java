@@ -26,6 +26,7 @@ public class WavingTabFragment extends EWTabFragment {
 
     @Override
     public void updateWave(String waveName) {
+        super.updateWave(waveName);
         Log.d("WavingTabFragment updateWave", waveName);
     }
 }

@@ -31,6 +31,7 @@ public class BlendsTabFragment extends EWTabFragment {
 
     @Override
     public void updateWave(String waveName) {
+        super.updateWave(waveName);
         Log.d("BlendsTabFragment updateWave", waveName);
     }
 }

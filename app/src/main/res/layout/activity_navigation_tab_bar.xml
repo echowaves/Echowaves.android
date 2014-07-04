@@ -11,19 +11,19 @@
         android:orientation="vertical">
 
         <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:background="@color/ewColor">-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:background="@color/ewColor">-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/nav_textViewNotification"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:background="@color/ewColor"-->
-                <!--android:text="@string/tuneIn"-->
-                <!--android:textColor="@android:color/white"-->
-                <!--android:textSize="14sp" />-->
+        <!--<TextView-->
+        <!--android:id="@+id/nav_textViewNotification"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:background="@color/ewColor"-->
+        <!--android:text="@string/tuneIn"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textSize="14sp" />-->
         <!--</RelativeLayout>-->
 
         <!-- Action Bar -->
@@ -107,6 +107,36 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <fragment
+                    android:id="@+id/fragment_waving"
+                    android:name="com.echowaves.android.WavingTabFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout="@layout/fragment_waving" />
+
+                <fragment
+                    android:id="@+id/fragment_echoWave"
+                    android:name="com.echowaves.android.EchoWaveTabFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout="@layout/fragment_echo_wave" />
+
+                <fragment
+                    android:id="@+id/fragment_blends"
+                    android:name="com.echowaves.android.BlendsTabFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout="@layout/fragment_blends" />
+
+            </FrameLayout>
+
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
@@ -139,33 +169,6 @@
 
             </TabWidget>
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <fragment
-                    android:id="@+id/fragment_waving"
-                    android:name="com.echowaves.android.WavingTabFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:layout="@layout/fragment_waving" />
-
-                <fragment
-                    android:id="@+id/fragment_echoWave"
-                    android:name="com.echowaves.android.EchoWaveTabFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:layout="@layout/fragment_echo_wave" />
-
-                <fragment
-                    android:id="@+id/fragment_blends"
-                    android:name="com.echowaves.android.BlendsTabFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:layout="@layout/fragment_blends" />
-
-            </FrameLayout>
         </RelativeLayout>
     </TabHost>
 

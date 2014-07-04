@@ -88,7 +88,6 @@ public class WavePickerFragment extends Fragment {
 
                 spinnerWaves = (Spinner) view.findViewById(R.id.wavePicker);
 
-
                 ArrayAdapter<String> waves_adapter =
                         new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, waves);
 
