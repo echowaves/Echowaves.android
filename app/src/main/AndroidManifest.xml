@@ -45,6 +45,11 @@
             android:label="@string/title_activity_navigation_tab_bar"
             >
         </activity>
+        <activity
+            android:name=".WaveDetailsActivity"
+            android:label="@string/title_activity_wave_details"
+            >
+        </activity>
         <!--<activity-->
             <!--android:name=".WavingTabFragment"-->
             <!--android:label="@string/title_activity_waving" >-->

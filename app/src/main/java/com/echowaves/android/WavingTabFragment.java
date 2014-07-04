@@ -1,5 +1,6 @@
 package com.echowaves.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,14 +39,9 @@ public class WavingTabFragment extends EWTabFragment {
             editWaveButton.
                     setOnClickListener(
                             new View.OnClickListener() {
-
                                 public void onClick(final View v) {
-
-//                                ((Button)getView().findViewById(R.id.waving_waveSelectedLabel)).setText(waveName);
-
-////                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                                Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                                startActivity(tuneIn);
+                                    Intent waveDetails = new Intent(v.getContext(), WaveDetailsActivity.class);
+                                    startActivity(waveDetails);
                                 }
                             }
                     );

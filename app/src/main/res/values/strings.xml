@@ -10,11 +10,12 @@
     <string name="tuneOut">TuneOut</string>
     <string name="createWave">Create New Wave</string>
     <string name="title_activity_sign_up">SignUp</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_wave_details">Wave Details</string>
     <string name="title_activity_navigation_tab_bar">NavigationTabBarActivity</string>
     <string name="title_activity_waving">Waving</string>
     <string name="title_activity_echo_wave">EchoWaveActivity</string>
     <string name="title_activity_blends">BlendsActivity</string>
     <string name="add_new_wave_label">Add new wave:</string>
+    <string name="waveDetails">Wave details</string>
 
 </resources>

@@ -20,18 +20,10 @@ import org.json.JSONException;
 
 public class WavePickerFragment extends Fragment {
 
-    private OnWaveSelectedListener mOnWaveSelectedListener;
-
-    // NavigationTabBarActivity must implement this interface
-    public interface OnWaveSelectedListener {
-        public void onAWaveSelected(String waveName);
-    }
-
-
-    private Spinner spinnerWaves;
-
     private static String[] waves;
     private static int currentWaveIndex;
+    private OnWaveSelectedListener mOnWaveSelectedListener;
+    private Spinner spinnerWaves;
 
     public static String getCurrentWaveName() {
         return waves[currentWaveIndex];
@@ -40,7 +32,6 @@ public class WavePickerFragment extends Fragment {
     public static int getCurrentWaveIndex() {
         return currentWaveIndex;
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -138,6 +129,11 @@ public class WavePickerFragment extends Fragment {
 
 
         return view;
+    }
+
+    // NavigationTabBarActivity must implement this interface
+    public interface OnWaveSelectedListener {
+        public void onAWaveSelected(String waveName);
     }
 
 //    @Override

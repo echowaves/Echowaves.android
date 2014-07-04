@@ -38,6 +38,13 @@ public class EWWave extends EWDataModel {
         HTTP_CLIENT.post(getAbsoluteUrl("/register.json"), params, responseHandler);
     }
 
+
+    public static void getWaveDetails(String waveName, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("wave_name", waveName);
+        HTTP_CLIENT.get(getAbsoluteUrl("/wave-details.json"), params, responseHandler);
+    }
+
     synchronized public static void getAllMyWaves(AsyncHttpResponseHandler responseHandler) {
         HTTP_CLIENT.get(getAbsoluteUrl("/all-my-waves.json"), new RequestParams(), responseHandler);
     }
