@@ -15,5 +15,6 @@
     <string name="title_activity_waving">Waving</string>
     <string name="title_activity_echo_wave">EchoWaveActivity</string>
     <string name="title_activity_blends">BlendsActivity</string>
+    <string name="add_new_wave_label">Add new wave:</string>
 
 </resources>
