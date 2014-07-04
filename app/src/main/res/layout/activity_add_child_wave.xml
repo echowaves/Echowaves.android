@@ -43,11 +43,30 @@
 
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/addwave_childWaveName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="child wave name"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_inputtext"
+        android:padding="5dp"
+        android:layout_margin="5dp"/>
 
+    <Button
+        android:id="@+id/addwave_createChildWaveButton"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/createChildWave"
+        android:textStyle="bold"
+        android:background="@drawable/rounded_button"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:textColor="@android:color/white"
+        />
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

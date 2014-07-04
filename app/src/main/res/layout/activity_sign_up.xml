@@ -106,7 +106,6 @@
         android:background="@drawable/rounded_inputtext"
         android:padding="5dp"
         android:layout_margin="5dp"/>
-    />
 
     <EditText
         android:id="@+id/signup_password_confirm"
@@ -119,7 +118,6 @@
         android:background="@drawable/rounded_inputtext"
         android:padding="5dp"
         android:layout_margin="5dp"/>
-    />
 
     <Button
         android:id="@+id/signup_create_wave_button"
@@ -134,7 +132,5 @@
         android:layout_margin="5dp"
         android:textColor="@android:color/white"
         />
-
-    />
 
 </LinearLayout>
