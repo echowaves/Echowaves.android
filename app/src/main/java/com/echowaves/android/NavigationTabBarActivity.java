@@ -159,5 +159,10 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
         blendsTabFragment.updateWave(WavePickerFragment.getCurrentWaveName());
     }
 
-
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        //return to parent wave
+//        onAWaveSelected(EWWave.getStoredWaveName());
+//    }
 }

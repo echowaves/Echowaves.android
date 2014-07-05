@@ -28,6 +28,9 @@ public class WavePickerFragment extends Fragment {
     public static String getCurrentWaveName() {
         return waves[currentWaveIndex];
     }
+    public static void resetCurrentWaveIndex() {
+        currentWaveIndex = 0;
+    }
 
     public static int getCurrentWaveIndex() {
         return currentWaveIndex;

@@ -21,7 +21,6 @@ import org.json.JSONObject;
 /**
  * © Echowaves
  * Created by dmitry on 7/4/14.
- *
  */
 public class WaveDetailsActivity extends EWActivity {
 
@@ -32,20 +31,6 @@ public class WaveDetailsActivity extends EWActivity {
 
         final TextView waveNameLabel = (TextView) findViewById(R.id.wave_details_waveName);
         waveNameLabel.setText(WavePickerFragment.getCurrentWaveName());
-
-//        // show soft keyboard automagically
-//        EditText waveName = (EditText) findViewById(R.id.tunein_wave_name);
-//        waveName.requestFocus();
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-//
-//        String storedWaveName = EWWave.getStoredWaveName();
-//        String storedWavePassword = EWWave.getStoredWavePassword();
-//        if (!"".equals(storedWaveName)) {
-//            waveName.setText(storedWaveName);
-//            EditText wavePassword = (EditText) findViewById(R.id.tunein_wave_password);
-//            wavePassword.setText(storedWavePassword);
-//        }
-
 
         ImageView backButton = (ImageView) findViewById(R.id.wave_details_imageViewBack);
         //Listening to button event
@@ -100,8 +85,8 @@ public class WaveDetailsActivity extends EWActivity {
                                                         WavePickerFragment.getCurrentWaveName() +
                                                         " wave? All wave's photos will be gone!")
                                                 .setCancelable(false)
-                                                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog,int id) {
+                                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
                                                         // if this button is clicked, close
                                                         // current activity
                                                         EWWave.deleteChildWave(WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
@@ -113,7 +98,7 @@ public class WaveDetailsActivity extends EWActivity {
                                                             @Override
                                                             public void onSuccess(JSONObject jsonResponse) {
                                                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-
+                                                                WavePickerFragment.resetCurrentWaveIndex();
                                                                 Intent navTabBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                                                                 startActivity(navTabBarIntent);
                                                             }
@@ -167,8 +152,8 @@ public class WaveDetailsActivity extends EWActivity {
 
                                                     }
                                                 })
-                                                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog,int id) {
+                                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
                                                         // if this button is clicked, just close
                                                         // the dialog box and do nothing
                                                         dialog.cancel();
