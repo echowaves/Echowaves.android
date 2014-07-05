@@ -51,12 +51,14 @@
             android:text="Photos since:"
             android:textSize="20sp" />
 
-        <TextView
+        <Button
             android:id="@+id/waving_sinceDateTimeValue"
             android:layout_gravity="center_vertical|left"
             android:layout_margin="5dp"
+            android:background="@android:color/transparent"
             android:singleLine="true"
             android:text="12:20am 03/06/2014"
+            android:textColor="@android:color/holo_blue_dark"
             android:textSize="20sp" />
 
         <TextView
