@@ -52,12 +52,12 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/waving_sinceDateTimeValue"
+            android:id="@+id/waving_sinceDateTimeValueButton"
             android:layout_gravity="center_vertical|left"
             android:layout_margin="5dp"
             android:background="@android:color/transparent"
             android:singleLine="true"
-            android:text="12:20am 03/06/2014"
+            android:text="12:00am 01/01/0001"
             android:textColor="@android:color/holo_blue_dark"
             android:textSize="20sp" />
 
