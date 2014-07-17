@@ -1,5 +1,6 @@
 package com.echowaves.android.util;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
@@ -94,6 +95,7 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
 
     private View.OnSystemUiVisibilityChangeListener mSystemUiVisibilityChangeListener
             = new View.OnSystemUiVisibilityChangeListener() {
+        @SuppressLint("AppCompatMethod")
         @Override
         public void onSystemUiVisibilityChange(int vis) {
             // Test against mTestFlags to see if the system UI is visible.

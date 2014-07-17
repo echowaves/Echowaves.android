@@ -20,10 +20,8 @@ public class ApplicationContextProvider extends Application {
      */
     private static Context context;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        context = getApplicationContext();
+    public ApplicationContextProvider() {
+        context = this;
     }
 
     /**
@@ -35,4 +33,9 @@ public class ApplicationContextProvider extends Application {
         return context;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context = getApplicationContext();
+    }
 }

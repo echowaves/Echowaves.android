@@ -2,12 +2,15 @@ package com.echowaves.android;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.SecurePreferences;
@@ -21,6 +24,8 @@ public class WavingTabFragment extends EWTabFragment {
     public static final String CURRENT_ASSET_DATE_TIME_KEY = "currentAssetDateTime";
 
     private static Date currentAssetDateTime;
+
+    private TextView photosCount;
 
     public static Date getCurrentAssetDateTime() {
         if(currentAssetDateTime == null) {
@@ -41,13 +46,12 @@ public class WavingTabFragment extends EWTabFragment {
         WavingTabFragment.currentAssetDateTime = currentAssetDateTime;
     }
 
-
-
-
     @Override
     public void onStart() {
         super.onStart();
         Log.d("!!!!!!!!!!!!!", "WavingTabFragment onStart()");
+        photosCount.setText(Long.toString(getPhotosCountSince(getCurrentAssetDateTime())));
+
     }
 
     @Override
@@ -57,7 +61,6 @@ public class WavingTabFragment extends EWTabFragment {
         Log.d("WavingTabFragment", view.toString());
 
         Button sinceDateTimeValueButton = (Button) view.findViewById(R.id.waving_sinceDateTimeValueButton);
-
         sinceDateTimeValueButton.setText(DateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM, DateFormat.SHORT).format(getCurrentAssetDateTime()));
         //Listening to button event
@@ -71,6 +74,8 @@ public class WavingTabFragment extends EWTabFragment {
                         }
                 );
 
+
+        photosCount = (TextView) view.findViewById(R.id.waving_photosCount);
 
         Button addWaveButton = (Button) view.findViewById(R.id.waving_addNewWaveButton);
         //Listening to button event
@@ -86,6 +91,24 @@ public class WavingTabFragment extends EWTabFragment {
 
 
         return view;
+    }
+
+    public long getPhotosCountSince(Date date) {
+//  http://stackoverflow.com/questions/22302357/delete-image-from-android-gallery-captured-after-particular-date-time
+        String[] projection = new String[]{
+//                MediaStore.Images.ImageColumns._ID,
+//                MediaStore.Images.ImageColumns.DATA,
+//                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+                MediaStore.Images.ImageColumns.DATE_TAKEN,
+                MediaStore.Images.ImageColumns.MIME_TYPE
+        };
+        String selection = MediaStore.Images.Media.DATE_TAKEN + " > ?";
+        String[] selectionArgs = { String.valueOf(date.getTime()) };
+        final Cursor cursor = getActivity().getContentResolver()
+                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, selection,
+                        selectionArgs, MediaStore.Images.ImageColumns.DATE_TAKEN + " ASC");
+
+        return cursor.getCount();
     }
 
     @Override
