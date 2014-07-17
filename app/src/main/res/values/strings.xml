@@ -7,6 +7,7 @@
     <color name="ewColor">#FFA500</color>
 
     <string name="tuneIn">TuneIn</string>
+    <string name="setDateTime">Set Date and Time</string>
     <string name="tuneOut">TuneOut</string>
     <string name="createWave">Create New Wave</string>
     <string name="createChildWave">Create Wave</string>
@@ -20,5 +21,8 @@
     <string name="waveDetails">Wave details</string>
     <string name="title_activity_add_child_wave">Add New Wave</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_date_time_picker">DateTimePickerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

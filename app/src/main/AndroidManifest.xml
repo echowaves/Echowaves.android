@@ -61,6 +61,11 @@
             android:name=".AddChildWaveActivity"
             android:label="@string/title_activity_add_child_wave" >
         </activity>
+        <activity
+            android:name=".DateTimePickerActivity"
+            android:label="@string/title_activity_date_time_picker"
+            >
+        </activity>
     </application>
 
 </manifest>

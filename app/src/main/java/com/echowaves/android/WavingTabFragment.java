@@ -65,8 +65,8 @@ public class WavingTabFragment extends EWTabFragment {
                 setOnClickListener(
                         new View.OnClickListener() {
                             public void onClick(final View v) {
-//                                Intent addChildWaveIntent = new Intent(v.getContext(), AddChildWaveActivity.class);
-//                                startActivity(addChildWaveIntent);
+                                Intent dtPickerIntent = new Intent(v.getContext(), DateTimePickerActivity.class);
+                                startActivity(dtPickerIntent);
                             }
                         }
                 );
