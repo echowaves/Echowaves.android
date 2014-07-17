@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".model.ApplicationContextProvider"
         android:allowBackup="true"
@@ -65,8 +64,11 @@
         </activity>
         <activity
             android:name=".DateTimePickerActivity"
-            android:label="@string/title_activity_date_time_picker"
-            >
+            android:label="@string/title_activity_date_time_picker" >
+        </activity>
+        <activity
+            android:name=".PickWavesForUploadActivity"
+            android:label="@string/title_activity_pick_waves_for_upload" >
         </activity>
     </application>
 

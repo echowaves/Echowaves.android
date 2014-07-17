@@ -77,6 +77,18 @@ public class WavingTabFragment extends EWTabFragment {
 
         photosCount = (TextView) view.findViewById(R.id.waving_photosCount);
 
+        Button waveAllButton = (Button) view.findViewById(R.id.waving_waveAllButton);
+        //Listening to button event
+        waveAllButton.
+                setOnClickListener(
+                        new View.OnClickListener() {
+                            public void onClick(final View v) {
+                                Intent pickWavesIntent = new Intent(v.getContext(), PickWavesForUploadActivity.class);
+                                startActivity(pickWavesIntent);
+                            }
+                        }
+                );
+
         Button addWaveButton = (Button) view.findViewById(R.id.waving_addNewWaveButton);
         //Listening to button event
         addWaveButton.
@@ -88,7 +100,6 @@ public class WavingTabFragment extends EWTabFragment {
                             }
                         }
                 );
-
 
         return view;
     }
