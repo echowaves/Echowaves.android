@@ -75,8 +75,7 @@
             android:layout_gravity="center_vertical|left"
             android:layout_margin="5dp"
             android:background="@drawable/rounded_button"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:padding="15dp"
             android:text="Wave all"
             android:textColor="@android:color/white"
             android:textSize="30sp" />
