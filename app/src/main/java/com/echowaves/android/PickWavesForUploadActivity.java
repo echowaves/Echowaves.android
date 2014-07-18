@@ -6,12 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,7 +51,13 @@ public class PickWavesForUploadActivity extends EWActivity {
             @Override
             public void onStart() {
                 super.onStart();
+                EWWave.showLoadingIndicator(getLayoutInflater().getContext());
                 Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
+            }
+
+            @Override
+            public void onFinish() {
+                EWWave.hideLoadingIndicator();
             }
 
             @Override
