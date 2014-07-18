@@ -43,18 +43,18 @@
     </RelativeLayout>
 
 
-    <ScrollView
-        android:id="@+id/pickwaves_scrollView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        >
 
-        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/pickwaves_listview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pickwaves_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/pickwaves_waveNowButton" />
 
-    </ScrollView>
 
     <Button
         android:id="@+id/pickwaves_waveNowButton"
@@ -67,7 +67,10 @@
         android:padding="15dp"
         android:text="Wave Now"
         android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        />
 
+    </RelativeLayout>
 
 </LinearLayout>
