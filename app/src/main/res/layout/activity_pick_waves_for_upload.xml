@@ -44,31 +44,20 @@
 
 
     <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/pickwaves_scrollView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textView"
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pickwaves_listview"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pharetra eget urna nec commodo. Proin id orci blandit, scelerisque quam ac, pharetra arcu. Quisque nulla velit, tincidunt in risus eget, imperdiet semper massa. Suspendisse arcu metus, porttitor eget luctus a, rhoncus et felis. Nullam faucibus diam sit amet venenatis placerat. Mauris sem dui, lobortis quis molestie tincidunt, dictum eget dolor. Mauris gravida sapien ac orci pharetra, non rutrum risus egestas. Curabitur at mollis ante. Sed neque enim, condimentum eget nunc in, egestas dignissim tellus. In vehicula, quam vitae faucibus rhoncus, odio arcu tempus nunc, fermentum rutrum libero sapien vel eros. Cras a vulputate magna. Donec pulvinar magna vel purus egestas blandit. Vestibulum at nulla et risus vulputate egestas.
-
-In ligula arcu, scelerisque ac eros quis, sagittis facilisis dolor. Proin in porttitor est, a sagittis sem. Etiam aliquet felis in eros tempus, quis convallis tellus varius. Nullam congue sollicitudin tortor at dictum. Praesent at mauris feugiat, placerat nunc a, facilisis mauris. Aenean sed nulla sit amet ipsum viverra fringilla id in tortor. Nullam commodo dui a mauris tincidunt, in iaculis tortor cursus. Nullam at quam sit amet elit tempor scelerisque vitae in libero. Nunc vel varius lorem. Mauris quis elit elementum, feugiat justo in, tincidunt nulla. Sed et pulvinar metus. Phasellus tempor accumsan rhoncus. Integer rhoncus lorem dui, vitae pharetra lacus imperdiet vel.
-
-Fusce quis enim nec dolor tincidunt ultrices. Nullam ipsum magna, fringilla mattis lobortis sit amet, tempus a turpis. Aliquam pretium, ante non gravida feugiat, purus est sodales arcu, sed sodales lacus justo eu felis. Donec non risus tempor, mollis nunc id, pretium libero. Suspendisse tristique orci quis suscipit commodo. Aenean accumsan leo sapien, quis blandit eros adipiscing nec. Aliquam ligula quam, euismod et sollicitudin vel, rhoncus vel velit. Donec faucibus vel elit non interdum. Suspendisse molestie neque quis adipiscing suscipit. Sed vel luctus diam. Proin interdum tellus vitae libero ullamcorper, quis pulvinar purus convallis. Nulla et vulputate sapien, vitae laoreet nisl. Mauris tincidunt, arcu vel volutpat rhoncus, metus orci rutrum risus, quis rutrum arcu lacus eget justo. Sed non facilisis tortor.
-
-Sed dui elit, pharetra eu enim ut, pharetra dictum lacus. Phasellus vel egestas mauris. Quisque dapibus vulputate ultricies. Nam vitae erat vitae mauris malesuada condimentum nec sit amet sapien. Phasellus sollicitudin quis arcu at faucibus. Sed sodales, neque vitae bibendum vestibulum, sapien ipsum rhoncus ante, ut aliquam diam eros sit amet magna. Pellentesque ultrices sodales faucibus.
-
-Mauris adipiscing purus nibh, sed sollicitudin massa posuere vel. Aliquam suscipit sem nec erat venenatis placerat. Vestibulum gravida pulvinar diam sit amet laoreet. Vestibulum ornare elit elit, et auctor justo blandit eu. Donec eleifend velit consectetur, gravida sapien quis, adipiscing velit. Curabitur et odio blandit, malesuada neque non, viverra lacus. Nulla orci erat, mollis sit amet augue eget, rhoncus feugiat lectus. Integer pretium pellentesque ligula, non imperdiet odio vehicula eu.
-
-" />
+            android:layout_height="wrap_content" />
 
     </ScrollView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/pickwaves_waveNowButton"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
