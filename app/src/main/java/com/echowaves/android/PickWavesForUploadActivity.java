@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -96,7 +97,7 @@ public class PickWavesForUploadActivity extends EWActivity {
                                 String waveName = waves.get(position).getName();
                                 holder.waveName.setText(waveName);
                                 boolean waveActive = waves.get(position).isActive();
-                                holder.waveActive.setEnabled(waveActive);
+                                holder.waveActive.setChecked(waveActive);
 
                                 return rowView;
                             }
@@ -106,21 +107,12 @@ public class PickWavesForUploadActivity extends EWActivity {
 
                 wavesListView.setAdapter(waves_adapter);
 
-//                wavesListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                wavesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                    @Override
-//                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//                    public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 //                        // your code here
-//                        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^", "spinner on item selected:" + waves[position]);
-//                        spinnerWaves.setSelection(position);
-//                        currentWaveIndex = position;
-//
-//                        mOnWaveSelectedListener.onAWaveSelected(waves[position]);
-//                    }
-//
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> parentView) {
-//                        // your code here
-//                        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^", "spinner nothing selected");
+//                        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^", "PickWavesForUploadActivity on item selected:" + position);
+////                        spinnerWaves.setSelection(position);
 //                    }
 //
 //                });
