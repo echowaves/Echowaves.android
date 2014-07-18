@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -78,17 +79,33 @@ public class PickWavesForUploadActivity extends EWActivity {
                 ArrayAdapter<Model> waves_adapter =
                         new ArrayAdapter<Model>(wavesListView.getContext(), R.layout.pick_wave_for_upload_row, waves) {
                             @Override
-                            public View getView(int position, View convertView, ViewGroup parent) {
+                            public View getView(final int position, View convertView, ViewGroup parent) {
                                 View rowView = convertView;
                                 // reuse views
                                 if (rowView == null) {
                                     LayoutInflater inflater = getLayoutInflater();
                                     rowView = inflater.inflate(R.layout.pick_wave_for_upload_row, null);
                                     // configure view holder
-                                    ViewHolder viewHolder = new ViewHolder();
+                                    final ViewHolder viewHolder = new ViewHolder();
                                     viewHolder.waveName = (TextView) rowView.findViewById(R.id.waverow_name);
                                     viewHolder.waveActive = (CheckBox) rowView
                                             .findViewById(R.id.waverow_active);
+
+                                    viewHolder.waveActive
+                                            .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                                                @Override
+                                                public void onCheckedChanged(CompoundButton buttonView,
+                                                                             boolean isChecked) {
+//                                                    Model element = (Model) viewHolder.waveActive
+//                                                            .getTag();
+//                                                    element.setActive(buttonView.isChecked());
+
+                                                    Log.d("making a wave active: " + position + ":", String.valueOf(isChecked));
+                                                }
+                                            });
+
+
                                     rowView.setTag(viewHolder);
                                 }
 
