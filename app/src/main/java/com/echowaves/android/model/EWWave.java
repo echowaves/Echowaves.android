@@ -44,6 +44,13 @@ public class EWWave extends EWDataModel {
         HTTP_CLIENT.post(getAbsoluteUrl("/create-child-wave.json"), params, responseHandler);
     }
 
+    public static void makeWaveActive(String waveName, boolean active, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("wave_name", waveName);
+        params.put("active", active? "1": "0");
+        HTTP_CLIENT.post(getAbsoluteUrl("/make-wave-active.json"), params, responseHandler);
+    }
+
     public static void getWaveDetails(String waveName, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("wave_name", waveName);

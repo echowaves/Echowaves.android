@@ -101,11 +101,48 @@ public class PickWavesForUploadActivity extends EWActivity {
                                                 @Override
                                                 public void onCheckedChanged(CompoundButton buttonView,
                                                                              boolean isChecked) {
-//                                                    Model element = (Model) viewHolder.waveActive
-//                                                            .getTag();
-//                                                    element.setActive(buttonView.isChecked());
-
                                                     Log.d("making a wave active: " + position + ":", String.valueOf(isChecked));
+                                                    waves.get(position).setActive(isChecked);
+
+                                                    EWWave.makeWaveActive(waves.get(position).getName(), isChecked, new JsonHttpResponseHandler() {
+                                                        @Override
+                                                        public void onStart() {
+                                                            super.onStart();
+                                                            EWWave.showLoadingIndicator(getLayoutInflater().getContext());
+                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active starting Loading", "");
+                                                        }
+
+                                                        @Override
+                                                        public void onFinish() {
+                                                            EWWave.hideLoadingIndicator();
+                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active done Loading", "");
+                                                        }
+
+                                                        @Override
+                                                        public void onSuccess(JSONArray jsonResponseArray) {
+                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active finished Loading successfully", jsonResponseArray.toString());
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active finished Loading error", "");
+                                                            if (headers != null) {
+                                                                for (Header h : headers) {
+                                                                    Log.d("................ failed   key: ", h.getName());
+                                                                    Log.d("................ failed value: ", h.getValue());
+                                                                }
+                                                            }
+                                                            if (responseBody != null) {
+                                                                Log.d("................ failed : ", new String(responseBody));
+                                                            }
+                                                            if (error != null) {
+                                                                Log.d("................ failed error: ", error.toString());
+
+                                                            }
+                                                        }
+                                                    });
+
+
                                                 }
                                             });
 
@@ -124,20 +161,7 @@ public class PickWavesForUploadActivity extends EWActivity {
                             }
                         };
 
-//                waves_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
                 wavesListView.setAdapter(waves_adapter);
-
-//                wavesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-//                        // your code here
-//                        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^", "PickWavesForUploadActivity on item selected:" + position);
-////                        spinnerWaves.setSelection(position);
-//                    }
-//
-//                });
-
 
             }
 
