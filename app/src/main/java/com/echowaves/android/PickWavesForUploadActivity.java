@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -184,8 +185,16 @@ public class PickWavesForUploadActivity extends EWActivity {
         });
 
 
-    }
+        Button waveNowButton = (Button)findViewById(R.id.pickwaves_waveNowButton);
+        //Listening to button event
+        waveNowButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Intent uploadIntent = new Intent(getApplicationContext(), UploadProgressActivity.class);
+                startActivity(uploadIntent);
+            }
+        });
 
+    }
 
     static class ViewHolder {
         public TextView waveName;
