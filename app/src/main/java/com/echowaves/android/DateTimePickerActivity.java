@@ -8,6 +8,8 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 
+import com.echowaves.android.model.ApplicationContextProvider;
+
 import java.util.Calendar;
 
 // http://www.yogeshblogspot.com/datepicker-and-timepicker/
@@ -37,9 +39,9 @@ public class DateTimePickerActivity extends EWActivity {
         TimePicker timePicker = (TimePicker) findViewById(R.id.dtpicker_timePicker);
 
         Calendar cal = Calendar.getInstance();
-        cal.setTime(WavingTabFragment.getCurrentAssetDateTime());
+        cal.setTime(ApplicationContextProvider.getCurrentAssetDateTime());
         datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-        timePicker.setCurrentHour(cal.get(Calendar.HOUR));
+        timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
         timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
 
         Button setTimeButton = (Button) findViewById(R.id.dtpicker_button);
@@ -57,7 +59,7 @@ public class DateTimePickerActivity extends EWActivity {
                 cal.set(Calendar.HOUR, tp.getCurrentHour());
                 cal.set(Calendar.MINUTE, tp.getCurrentMinute());
 
-                WavingTabFragment.setCurrentAssetDateTime(cal.getTime());
+                ApplicationContextProvider.setCurrentAssetDateTime(cal.getTime());
 
                 Intent navTabBarActivity = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                 startActivity(navTabBarActivity);
