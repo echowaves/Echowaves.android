@@ -20,14 +20,16 @@ import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWImage;
 import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class UploadProgressActivity extends EWActivity {
@@ -94,6 +96,11 @@ public class UploadProgressActivity extends EWActivity {
                     int orientation = cursor.getInt(5);
 
                     Log.d("###################### orientation: ", String.valueOf(orientation));
+                    long timeTaken = cursor.getLong(3);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmssSSSS");
+
+                    String dateTaken = simpleDateFormat.format(timeTaken);
+
                     Matrix matrix = new Matrix();
                     matrix.postRotate(orientation);
 
@@ -101,10 +108,12 @@ public class UploadProgressActivity extends EWActivity {
 
                     imageView.setImageBitmap(bm);
 
-                    String mimeType = cursor.getString(4);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
 
                     try {
-                        EWImage.uploadPhoto(imageFile, mimeType, new AsyncHttpResponseHandler() {
+                        EWImage.uploadPhoto(stream.toByteArray(), dateTaken + ".jpg", new AsyncHttpResponseHandler() {
                                     @Override
                                     public void onStart() {
                                         EWWave.showLoadingIndicator(ApplicationContextProvider.getContext());
@@ -112,9 +121,9 @@ public class UploadProgressActivity extends EWActivity {
 
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                        Log.d(">>>>>>>>>>>>>>>>>>>> statusCode:" + statusCode, responseBody.toString());
-    //                                    Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-    //                                    startActivity(createWave);
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> statusCode:" + statusCode, Arrays.toString(responseBody));
+                                        //                                    Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+                                        //                                    startActivity(createWave);
                                     }
 
                                     @Override

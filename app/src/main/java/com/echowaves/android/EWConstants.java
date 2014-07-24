@@ -12,8 +12,8 @@ public interface EWConstants {
 //    public static final String BASE_URL = "http://echowaves.com";
 //    public static final String EWAWSBucket = "http://images.echowaves.com";
 
-//    public static final String BASE_URL = "http://192.168.1.102:3000";
-    public static final String BASE_URL = "http://172.20.10.2:3000";
+    public static final String BASE_URL = "http://192.168.1.102:3000";
+//    public static final String BASE_URL = "http://172.20.10.2:3000";
     public static final String EWAWSBucket = "http://imagesdev.echowaves.com";
 
 }
