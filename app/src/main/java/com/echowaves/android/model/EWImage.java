@@ -3,7 +3,6 @@ package com.echowaves.android.model;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -23,11 +22,14 @@ public class EWImage extends EWDataModel {
     }
 
     public static void uploadPhoto(byte[] photoByteArray, String photoName, AsyncHttpResponseHandler responseHandler) throws FileNotFoundException {
-        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(photoByteArray));
+//        responseHandler.setUseSynchronousMode(true);
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
+
+//        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(photoByteArray));
+        InputStream inputStream = new ByteArrayInputStream(photoByteArray);
         RequestParams params = new RequestParams();
-
         params.put("file", inputStream, photoName);
-
         HTTP_CLIENT.post(getAbsoluteUrl("/upload"), params, responseHandler);
     }
 

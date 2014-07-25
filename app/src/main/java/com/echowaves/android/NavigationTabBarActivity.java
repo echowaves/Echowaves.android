@@ -79,7 +79,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
                     }
 
                     @Override
-                    public void onSuccess(JSONObject jsonResponse) {
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
 
                         Intent home = new Intent(getApplicationContext(), HomeActivity.class);
@@ -87,7 +87,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
                     }
 
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                         if (headers != null) {
                             for (Header h : headers) {
                                 Log.d("................ failed   key: ", h.getName());
@@ -95,7 +95,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
                             }
                         }
                         if (responseBody != null) {
-                            Log.d("................ failed : ", new String(responseBody));
+                            Log.d("................ failed : ", responseBody);
                         }
                         if (error != null) {
                             Log.d("................ failed error: ", error.toString());
@@ -103,7 +103,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
                             String msg = "";
                             if (null != responseBody) {
                                 try {
-                                    JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                    JSONObject jsonResponse = new JSONObject(responseBody);
                                     msg = jsonResponse.getString("error");
                                 } catch (JSONException e) {
                                     e.printStackTrace();

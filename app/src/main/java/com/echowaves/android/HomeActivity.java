@@ -33,7 +33,7 @@ public class HomeActivity extends EWActivity {
 //                }
 
                 @Override
-                public void onSuccess(JSONObject jsonResponse) {
+                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                     tuneInCount++;
                     Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
 
@@ -44,7 +44,7 @@ public class HomeActivity extends EWActivity {
                 }
 
                 @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                     if (headers != null) {
                         for (Header h : headers) {
                             Log.d("................ failed   key: ", h.getName());
@@ -52,7 +52,7 @@ public class HomeActivity extends EWActivity {
                         }
                     }
                     if (responseBody != null) {
-                        Log.d("................ failed : ", new String(responseBody));
+                        Log.d("................ failed : ", responseBody);
                     }
                     if (error != null) {
                         Log.d("................ failed error: ", error.toString());

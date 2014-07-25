@@ -57,7 +57,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
         EWImage.getAllImagesForWave(WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(JSONArray jsonResponseArray) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveTabFragment finished Loading images", Integer.toString(jsonResponseArray.length()));
 
                 String[] thumbUrls = new String[jsonResponseArray.length()];
@@ -78,7 +78,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                 if (headers != null) {
                     for (Header h : headers) {
                         Log.d("................ failed   key: ", h.getName());
@@ -86,7 +86,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
                     }
                 }
                 if (responseBody != null) {
-                    Log.d("................ failed : ", new String(responseBody));
+                    Log.d("................ failed : ", responseBody);
                 }
                 if (error != null) {
                     Log.d("................ failed error: ", error.toString());

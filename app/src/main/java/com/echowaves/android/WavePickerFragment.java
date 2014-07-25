@@ -66,7 +66,7 @@ public class WavePickerFragment extends Fragment {
             }
 
             @Override
-            public void onSuccess(JSONArray jsonResponseArray) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> WavePickerFragment finished Loading", jsonResponseArray.toString());
 
                 waves = new String[jsonResponseArray.length()];
@@ -113,7 +113,7 @@ public class WavePickerFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                 if (headers != null) {
                     for (Header h : headers) {
                         Log.d("................ failed   key: ", h.getName());
@@ -121,7 +121,7 @@ public class WavePickerFragment extends Fragment {
                     }
                 }
                 if (responseBody != null) {
-                    Log.d("................ failed : ", new String(responseBody));
+                    Log.d("................ failed : ", responseBody);
                 }
                 if (error != null) {
                     Log.d("................ failed error: ", error.toString());

@@ -14,11 +14,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWImage;
-import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -34,6 +34,11 @@ import java.util.Date;
 
 public class UploadProgressActivity extends EWActivity {
     private TextView photosCount;
+    private ProgressBar progressBar;
+    private ImageView imageView;
+    private Button cancelButton;
+    private Button pauseAllButton;
+
 
     @Override
     public void onStart() {
@@ -47,7 +52,7 @@ public class UploadProgressActivity extends EWActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_progress);
 
-        Button pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
+        pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
         //Listening to button event
         pauseAllButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -55,6 +60,13 @@ public class UploadProgressActivity extends EWActivity {
                 startActivity(navBarIntent);
             }
         });
+
+        imageView = (ImageView) findViewById(R.id.upload_imageView);
+        progressBar = (ProgressBar) findViewById(R.id.upload_progressBar);
+        photosCount = (TextView) findViewById(R.id.upload_count);
+
+        cancelButton = (Button) findViewById(R.id.upload_cancelButton);
+        pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
 
 
         waveAll(ApplicationContextProvider.getContext());
@@ -73,7 +85,7 @@ public class UploadProgressActivity extends EWActivity {
 
         Cursor cursor = null;
         do {
-            photosCount = (TextView) findViewById(R.id.upload_count);
+            photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
 
             if (cursor != null) {
                 cursor.close();
@@ -86,7 +98,6 @@ public class UploadProgressActivity extends EWActivity {
 
             // Put it in the image view
             if (cursor.moveToFirst()) {
-                final ImageView imageView = (ImageView) findViewById(R.id.upload_imageView);
                 String imageLocation = cursor.getString(1);
                 Log.d("###################### Asset location = ", imageLocation);
 
@@ -115,8 +126,14 @@ public class UploadProgressActivity extends EWActivity {
                     try {
                         EWImage.uploadPhoto(stream.toByteArray(), dateTaken + ".jpg", new AsyncHttpResponseHandler() {
                                     @Override
+                                    public void onProgress(int bytesWritten, int totalSize) {
+                                        Log.d("--------------progress: ", String.valueOf(bytesWritten) + " of " + String.valueOf(totalSize));
+                                        progressBar.setProgress(100 * bytesWritten / totalSize);
+                                    }
+
+                                    @Override
                                     public void onStart() {
-                                        EWWave.showLoadingIndicator(ApplicationContextProvider.getContext());
+//                                        EWWave.showLoadingIndicator(ApplicationContextProvider.getContext());
                                     }
 
                                     @Override
@@ -169,35 +186,33 @@ public class UploadProgressActivity extends EWActivity {
 
                                     @Override
                                     public void onFinish() {
-                                        EWWave.hideLoadingIndicator();
+//                                        EWWave.hideLoadingIndicator();
                                     }
                                 }
                         );
+
                     } catch (FileNotFoundException e) {
+                        Log.e("FileNotFound", e.toString());
                         e.printStackTrace();
                     }
-
-
                 }
-
-//                try {
-//                    Log.d("~~~~~~~~~~~~ sleeping", "");
-//                    Thread.sleep(500);
-//                } catch(InterruptedException ex) {
-//                    Thread.currentThread().interrupt();
-//                }
 
                 Log.d("Asset time = ", cursor.getString(3));
                 ApplicationContextProvider.setCurrentAssetDateTime(new Date(Long.valueOf(cursor.getString(3))));
 
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
 
         } while (cursor.getCount() > 0 && !cursor.isLast());
 
-//        ApplicationContextProvider.setCurrentAssetDateTime(new Date());
-//        Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//        startActivity(navBarIntent);
+        ApplicationContextProvider.setCurrentAssetDateTime(new Date());
+        Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+        startActivity(navBarIntent);
 
     }
 

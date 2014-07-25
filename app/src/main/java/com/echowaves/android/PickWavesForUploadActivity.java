@@ -62,7 +62,7 @@ public class PickWavesForUploadActivity extends EWActivity {
             }
 
             @Override
-            public void onSuccess(JSONArray jsonResponseArray) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponseArray.toString());
 
                 waves = new ArrayList<Model>(jsonResponseArray.length());
@@ -120,12 +120,12 @@ public class PickWavesForUploadActivity extends EWActivity {
                                                         }
 
                                                         @Override
-                                                        public void onSuccess(JSONArray jsonResponseArray) {
+                                                        public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                                                             Log.d(">>>>>>>>>>>>>>>>>>>> making wave active finished Loading successfully", jsonResponseArray.toString());
                                                         }
 
                                                         @Override
-                                                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                                                             Log.d(">>>>>>>>>>>>>>>>>>>> making wave active finished Loading error", "");
                                                             if (headers != null) {
                                                                 for (Header h : headers) {
@@ -134,7 +134,7 @@ public class PickWavesForUploadActivity extends EWActivity {
                                                                 }
                                                             }
                                                             if (responseBody != null) {
-                                                                Log.d("................ failed : ", new String(responseBody));
+                                                                Log.d("................ failed : ", responseBody);
                                                             }
                                                             if (error != null) {
                                                                 Log.d("................ failed error: ", error.toString());
@@ -167,7 +167,7 @@ public class PickWavesForUploadActivity extends EWActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                 if (headers != null) {
                     for (Header h : headers) {
                         Log.d("................ failed   key: ", h.getName());
@@ -175,7 +175,7 @@ public class PickWavesForUploadActivity extends EWActivity {
                     }
                 }
                 if (responseBody != null) {
-                    Log.d("................ failed : ", new String(responseBody));
+                    Log.d("................ failed : ", responseBody);
                 }
                 if (error != null) {
                     Log.d("................ failed error: ", error.toString());

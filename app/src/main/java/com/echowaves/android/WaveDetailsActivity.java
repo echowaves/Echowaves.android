@@ -53,7 +53,7 @@ public class WaveDetailsActivity extends EWActivity {
                     }
 
                     @Override
-                    public void onSuccess(JSONObject jsonResponse) {
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> WaveDetailsJson object:", jsonResponse.toString());
 
                         try {
@@ -96,7 +96,7 @@ public class WaveDetailsActivity extends EWActivity {
                                                             }
 
                                                             @Override
-                                                            public void onSuccess(JSONObject jsonResponse) {
+                                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
                                                                 WavePickerFragment.resetCurrentWaveIndex();
                                                                 Intent navTabBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
@@ -104,7 +104,7 @@ public class WaveDetailsActivity extends EWActivity {
                                                             }
 
                                                             @Override
-                                                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                                                                 if (headers != null) {
                                                                     for (Header h : headers) {
                                                                         Log.d("................ failed   key: ", h.getName());
@@ -112,7 +112,7 @@ public class WaveDetailsActivity extends EWActivity {
                                                                     }
                                                                 }
                                                                 if (responseBody != null) {
-                                                                    Log.d("................ failed : ", new String(responseBody));
+                                                                    Log.d("................ failed : ", responseBody);
                                                                 }
                                                                 if (error != null) {
                                                                     Log.d("................ failed error: ", error.toString());
@@ -120,7 +120,7 @@ public class WaveDetailsActivity extends EWActivity {
                                                                     String msg = "";
                                                                     if (null != responseBody) {
                                                                         try {
-                                                                            JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                                                            JSONObject jsonResponse = new JSONObject(responseBody);
                                                                             msg = jsonResponse.getString("error");
                                                                         } catch (JSONException e) {
                                                                             e.printStackTrace();
@@ -179,7 +179,7 @@ public class WaveDetailsActivity extends EWActivity {
                     }
 
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                         if (headers != null) {
                             for (Header h : headers) {
                                 Log.d("................ failed   key: ", h.getName());
@@ -187,7 +187,7 @@ public class WaveDetailsActivity extends EWActivity {
                             }
                         }
                         if (responseBody != null) {
-                            Log.d("................ failed : ", new String(responseBody));
+                            Log.d("................ failed : ", responseBody);
                         }
                         if (error != null) {
                             Log.d("................ failed error: ", error.toString());
@@ -195,7 +195,7 @@ public class WaveDetailsActivity extends EWActivity {
                             String msg = "";
                             if (null != responseBody) {
                                 try {
-                                    JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                    JSONObject jsonResponse = new JSONObject(responseBody);
                                     msg = jsonResponse.getString("error");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
