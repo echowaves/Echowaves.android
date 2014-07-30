@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWImage;
+import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -34,6 +36,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class UploadProgressActivity extends EWActivity {
+    public static RequestHandle currentRequestHandle;
     private TextView photosCount;
     private ProgressBar progressBar;
     private ImageView imageView;
@@ -57,6 +60,8 @@ public class UploadProgressActivity extends EWActivity {
         //Listening to button event
         pauseAllButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+                currentRequestHandle.cancel(true);
+                EWWave.cancelAllSynchRequests(true);
                 Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                 startActivity(navBarIntent);
             }
@@ -67,6 +72,14 @@ public class UploadProgressActivity extends EWActivity {
         photosCount = (TextView) findViewById(R.id.upload_count);
 
         cancelButton = (Button) findViewById(R.id.upload_cancelButton);
+//        cancelButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View arg0) {
+//                if (currentRequestHandle != null)
+//                    currentRequestHandle.cancel(true);
+//            }
+//        });
+
+
         pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
 
         new WaveOperation().execute("");
@@ -142,14 +155,7 @@ public class UploadProgressActivity extends EWActivity {
 
                     bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true); // rotating bitmap
 
-                    publishProgress(bm, totalCount--);
-
-                    try {
-                        Log.d("+++++++++++++++++++Sleeping", "");
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    publishProgress(bm, ApplicationContextProvider.getPhotosCountSinceLast());
 
 
                     final ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -159,13 +165,17 @@ public class UploadProgressActivity extends EWActivity {
                         EWImage.uploadPhoto(stream.toByteArray(), dateTaken + ".jpg", new AsyncHttpResponseHandler() {
                                     @Override
                                     public void onProgress(int bytesWritten, int totalSize) {
+                                        super.onProgress(bytesWritten, totalSize);
                                         Log.d("--------------progress: ", String.valueOf(bytesWritten) + " of " + String.valueOf(totalSize));
                                         progressBar.setProgress(100 * bytesWritten / totalSize);
                                     }
 
+
                                     @Override
                                     public void onStart() {
+                                        super.onStart();
 //                                        EWWave.showLoadingIndicator(ApplicationContextProvider.getContext());
+                                        progressBar.setProgress(0);
                                     }
 
                                     @Override
@@ -173,6 +183,7 @@ public class UploadProgressActivity extends EWActivity {
                                         Log.d(">>>>>>>>>>>>>>>>>>>> statusCode:" + statusCode, Arrays.toString(responseBody));
                                         //                                    Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                                         //                                    startActivity(createWave);
+                                        progressBar.setProgress(100);
                                     }
 
                                     @Override
@@ -218,6 +229,7 @@ public class UploadProgressActivity extends EWActivity {
 
                                     @Override
                                     public void onFinish() {
+                                        super.onFinish();
 //                                        EWWave.hideLoadingIndicator();
                                     }
                                 }
@@ -238,7 +250,6 @@ public class UploadProgressActivity extends EWActivity {
                 }
             }
 
-//        } while (cursor.getCount() > 0 && !cursor.isLast());
 
             ApplicationContextProvider.setCurrentAssetDateTime(new Date());
             Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);

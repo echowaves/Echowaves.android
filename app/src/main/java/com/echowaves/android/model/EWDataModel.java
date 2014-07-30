@@ -6,6 +6,8 @@ import android.content.Context;
 import com.echowaves.android.EWConstants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
+import com.loopj.android.http.RequestHandle;
+import com.loopj.android.http.SyncHttpClient;
 
 /**
  * copyright echowaves
@@ -16,13 +18,21 @@ import com.loopj.android.http.PersistentCookieStore;
 public class EWDataModel implements EWConstants {
 
     protected final static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
+    protected final static SyncHttpClient SYNC_HTTP_CLIENT = new SyncHttpClient();
 
     private static ProgressDialog progressDialog = null;
 
     static {
         PersistentCookieStore cookieStore = new PersistentCookieStore(ApplicationContextProvider.getContext());
         HTTP_CLIENT.setCookieStore(cookieStore);
+        SYNC_HTTP_CLIENT.setCookieStore(cookieStore);
+
     }
+
+    public static void cancelAllSynchRequests(boolean mayInterruptIfRunning) {
+        SYNC_HTTP_CLIENT.cancelAllRequests(mayInterruptIfRunning);
+    }
+
 
     public static void showLoadingIndicator(Context context) {
         if (progressDialog == null) {
