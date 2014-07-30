@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.echowaves.android" >
+    package="com.echowaves.android">
 
     <supports-screens
         android:largeScreens="true"
@@ -18,13 +18,14 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:screenOrientation="portrait"
         android:largeHeap="true"
-        android:theme="@style/AppTheme" >
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme">
         <activity
             android:name=".HomeActivity"
             android:background="@android:color/white"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,20 +34,20 @@
         </activity>
         <activity
             android:name=".SignInActivity"
-            android:label="@string/title_activity_sign_in" >
-        </activity>
+            android:label="@string/title_activity_sign_in"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".SignUpActivity"
-            android:label="@string/title_activity_sign_up" >
-        </activity>
+            android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".NavigationTabBarActivity"
-            android:label="@string/title_activity_navigation_tab_bar" >
-        </activity>
+            android:label="@string/title_activity_navigation_tab_bar"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".WaveDetailsActivity"
-            android:label="@string/title_activity_wave_details" >
-        </activity>
+            android:label="@string/title_activity_wave_details"
+            android:screenOrientation="portrait"></activity>
         <!-- <activity -->
         <!-- android:name=".WavingTabFragment" -->
         <!-- android:label="@string/title_activity_waving" > -->
@@ -61,20 +62,20 @@
         <!-- </activity> -->
         <activity
             android:name=".AddChildWaveActivity"
-            android:label="@string/title_activity_add_child_wave" >
-        </activity>
+            android:label="@string/title_activity_add_child_wave"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".DateTimePickerActivity"
-            android:label="@string/title_activity_date_time_picker" >
-        </activity>
+            android:label="@string/title_activity_date_time_picker"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".PickWavesForUploadActivity"
-            android:label="@string/title_activity_pick_waves_for_upload" >
-        </activity>
+            android:label="@string/title_activity_pick_waves_for_upload"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".UploadProgressActivity"
-            android:label="@string/title_activity_upload_progress" >
-        </activity>
+            android:label="@string/title_activity_upload_progress"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
