@@ -25,9 +25,13 @@ public class EWImage extends EWDataModel {
     public static void uploadPhoto(byte[] photoByteArray, String photoName, AsyncHttpResponseHandler responseHandler) throws FileNotFoundException {
         responseHandler.setUseSynchronousMode(true);
 //        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(photoByteArray));
-        InputStream inputStream = new ByteArrayInputStream(photoByteArray);
+
         RequestParams params = new RequestParams();
-        params.put("file", inputStream, photoName);
+        params.put("file", new ByteArrayInputStream(photoByteArray), photoName);
+//                params.put("file", inputStream, photoName,  "image/jpeg", photoByteArray.length);
+
+        params.setAutoCloseInputStreams(true);
+
         UploadProgressActivity.currentRequestHandle =
                 SYNC_HTTP_CLIENT.post(getAbsoluteUrl("/upload"), params, responseHandler);
     }

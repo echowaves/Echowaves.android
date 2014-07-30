@@ -167,7 +167,7 @@ public class UploadProgressActivity extends EWActivity {
                                     public void onProgress(int bytesWritten, int totalSize) {
                                         super.onProgress(bytesWritten, totalSize);
                                         Log.d("--------------progress: ", String.valueOf(bytesWritten) + " of " + String.valueOf(totalSize));
-                                        progressBar.setProgress(100 * bytesWritten / totalSize);
+                                        progressBar.setProgress((int)(100 * ((double)bytesWritten / (double)totalSize)));
                                     }
 
 
