@@ -16,14 +16,12 @@ import com.loopj.android.http.PersistentCookieStore;
 public class EWDataModel implements EWConstants {
 
     protected final static AsyncHttpClient HTTP_CLIENT = new AsyncHttpClient();
-//    protected final static SyncHttpClient SYNC_HTTP_CLIENT = new SyncHttpClient();
 
     private static ProgressDialog progressDialog = null;
 
     static {
         PersistentCookieStore cookieStore = new PersistentCookieStore(ApplicationContextProvider.getContext());
         HTTP_CLIENT.setCookieStore(cookieStore);
-//        SYNC_HTTP_CLIENT.setCookieStore(cookieStore);
     }
 
     public static void showLoadingIndicator(Context context) {

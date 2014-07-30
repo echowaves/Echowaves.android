@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -68,60 +69,91 @@ public class UploadProgressActivity extends EWActivity {
         cancelButton = (Button) findViewById(R.id.upload_cancelButton);
         pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
 
-
-        waveAll(ApplicationContextProvider.getContext());
+        new WaveOperation().execute("");
 
     }
 
-    private void waveAll(Context context) {
-        String[] projection = new String[]{
-                MediaStore.Images.ImageColumns._ID,
-                MediaStore.Images.ImageColumns.DATA,
-                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
-                MediaStore.Images.ImageColumns.DATE_TAKEN,
-                MediaStore.Images.ImageColumns.MIME_TYPE,
-                MediaStore.Images.ImageColumns.ORIENTATION
-        };
 
-        Cursor cursor = null;
-        do {
-            photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
+    private class WaveOperation extends AsyncTask<String, Object, String> {
 
-            if (cursor != null) {
-                cursor.close();
-            }
+        @Override
+        protected String doInBackground(String... params) {
+            waveAll(ApplicationContextProvider.getContext());
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // might want to change "executed" for the returned string passed
+            // into onPostExecute() but that is upto you
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Object... params) {
+            Bitmap bitmap = (Bitmap) params[0];
+            Integer totalCount = (Integer) params[1];
+            imageView.setImageBitmap(bitmap);
+            photosCount.setText(totalCount.toString());
+        }
+
+
+        private void waveAll(Context context) {
+            String[] projection = new String[]{
+                    MediaStore.Images.ImageColumns._ID,
+                    MediaStore.Images.ImageColumns.DATA,
+                    MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+                    MediaStore.Images.ImageColumns.DATE_TAKEN,
+                    MediaStore.Images.ImageColumns.MIME_TYPE,
+                    MediaStore.Images.ImageColumns.ORIENTATION
+            };
+
             String selection = MediaStore.Images.Media.DATE_TAKEN + " > ?";
             String[] selectionArgs = {String.valueOf(ApplicationContextProvider.getCurrentAssetDateTime().getTime())};
-            cursor = context.getContentResolver()
+            Cursor cursor = context.getContentResolver()
                     .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, selection,
                             selectionArgs, MediaStore.Images.ImageColumns.DATE_TAKEN + " ASC");
 
+            int totalCount = cursor.getCount();
             // Put it in the image view
-            if (cursor.moveToFirst()) {
-                String imageLocation = cursor.getString(1);
+            while (cursor.moveToNext()) {
+//                Log.d("&&&&&&&&&&&&&&&&&&&&&& totalCount:", String.valueOf(totalCount));
+
+                final String imageLocation = cursor.getString(1);
                 Log.d("###################### Asset location = ", imageLocation);
 
                 File imageFile = new File(imageLocation);
                 if (imageFile.exists()) {   // is there a better way to do this?
+
                     Bitmap bm = BitmapFactory.decodeFile(imageLocation);
                     int orientation = cursor.getInt(5);
 
-                    Log.d("###################### orientation: ", String.valueOf(orientation));
+//                    Log.d("###################### orientation: ", String.valueOf(orientation));
                     long timeTaken = cursor.getLong(3);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmssSSSS");
 
-                    String dateTaken = simpleDateFormat.format(timeTaken);
+                    final String dateTaken = simpleDateFormat.format(timeTaken);
 
                     Matrix matrix = new Matrix();
                     matrix.postRotate(orientation);
 
                     bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true); // rotating bitmap
 
-                    imageView.setImageBitmap(bm);
+                    publishProgress(bm, totalCount--);
 
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    try {
+                        Log.d("+++++++++++++++++++Sleeping", "");
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    final ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-
 
                     try {
                         EWImage.uploadPhoto(stream.toByteArray(), dateTaken + ".jpg", new AsyncHttpResponseHandler() {
@@ -190,29 +222,29 @@ public class UploadProgressActivity extends EWActivity {
                                     }
                                 }
                         );
-
                     } catch (FileNotFoundException e) {
                         Log.e("FileNotFound", e.toString());
                         e.printStackTrace();
                     }
-                }
 
-                Log.d("Asset time = ", cursor.getString(3));
-                ApplicationContextProvider.setCurrentAssetDateTime(new Date(Long.valueOf(cursor.getString(3))));
 
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+//                    try {
+                    Log.d("Asset time = ", cursor.getString(3));
+                    ApplicationContextProvider.setCurrentAssetDateTime(new Date(Long.valueOf(cursor.getString(3))));
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+
                 }
             }
 
+//        } while (cursor.getCount() > 0 && !cursor.isLast());
 
-        } while (cursor.getCount() > 0 && !cursor.isLast());
+            ApplicationContextProvider.setCurrentAssetDateTime(new Date());
+            Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+            startActivity(navBarIntent);
 
-        ApplicationContextProvider.setCurrentAssetDateTime(new Date());
-        Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-        startActivity(navBarIntent);
+        }
 
     }
 
