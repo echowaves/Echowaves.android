@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWImage;
-import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 
@@ -43,6 +42,8 @@ public class UploadProgressActivity extends EWActivity {
     private Button cancelButton;
     private Button pauseAllButton;
 
+    private WaveOperation waveOperation;
+
 
     @Override
     public void onStart() {
@@ -60,8 +61,11 @@ public class UploadProgressActivity extends EWActivity {
         //Listening to button event
         pauseAllButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                currentRequestHandle.cancel(true);
-                EWWave.cancelAllSynchRequests(true);
+//                currentRequestHandle.cancel(true);
+                if (waveOperation != null) {
+                    waveOperation.cancel(true);
+                }
+
                 Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                 startActivity(navBarIntent);
             }
@@ -82,15 +86,16 @@ public class UploadProgressActivity extends EWActivity {
 
         pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
 
-        new WaveOperation().execute("");
+        waveOperation = new WaveOperation();
+        waveOperation.execute();
 
     }
 
 
-    private class WaveOperation extends AsyncTask<String, Object, String> {
+    private class WaveOperation extends AsyncTask<Void, Object, String> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Void... arg0) {
             waveAll(ApplicationContextProvider.getContext());
             return "Executed";
         }
@@ -104,6 +109,11 @@ public class UploadProgressActivity extends EWActivity {
         @Override
         protected void onPreExecute() {
         }
+
+//        @Override
+//        protected void onCancelled() {
+//
+//        }
 
         @Override
         protected void onProgressUpdate(Object... params) {
@@ -126,13 +136,12 @@ public class UploadProgressActivity extends EWActivity {
 
             String selection = MediaStore.Images.Media.DATE_TAKEN + " > ?";
             String[] selectionArgs = {String.valueOf(ApplicationContextProvider.getCurrentAssetDateTime().getTime())};
-            Cursor cursor = context.getContentResolver()
+            final Cursor cursor = context.getContentResolver()
                     .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, selection,
                             selectionArgs, MediaStore.Images.ImageColumns.DATE_TAKEN + " ASC");
 
-            int totalCount = cursor.getCount();
             // Put it in the image view
-            while (cursor.moveToNext()) {
+            while (cursor.moveToNext() && !isCancelled()) {
 //                Log.d("&&&&&&&&&&&&&&&&&&&&&& totalCount:", String.valueOf(totalCount));
 
                 final String imageLocation = cursor.getString(1);
@@ -167,7 +176,7 @@ public class UploadProgressActivity extends EWActivity {
                                     public void onProgress(int bytesWritten, int totalSize) {
                                         super.onProgress(bytesWritten, totalSize);
                                         Log.d("--------------progress: ", String.valueOf(bytesWritten) + " of " + String.valueOf(totalSize));
-                                        progressBar.setProgress((int)(100 * ((double)bytesWritten / (double)totalSize)));
+                                        progressBar.setProgress((int) (100 * ((double) bytesWritten / (double) totalSize)));
                                     }
 
 
@@ -184,6 +193,9 @@ public class UploadProgressActivity extends EWActivity {
                                         //                                    Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                                         //                                    startActivity(createWave);
                                         progressBar.setProgress(100);
+                                        Log.d("Asset time = ", cursor.getString(3));
+                                        ApplicationContextProvider.setCurrentAssetDateTime(new Date(Long.valueOf(cursor.getString(3))));
+
                                     }
 
                                     @Override
@@ -240,18 +252,12 @@ public class UploadProgressActivity extends EWActivity {
                     }
 
 
-//                    try {
-                    Log.d("Asset time = ", cursor.getString(3));
-                    ApplicationContextProvider.setCurrentAssetDateTime(new Date(Long.valueOf(cursor.getString(3))));
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
 
                 }
             }
 
 
-            ApplicationContextProvider.setCurrentAssetDateTime(new Date());
+//            ApplicationContextProvider.setCurrentAssetDateTime(new Date());
             Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
             startActivity(navBarIntent);
 

@@ -6,7 +6,6 @@ import android.content.Context;
 import com.echowaves.android.EWConstants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.PersistentCookieStore;
-import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.SyncHttpClient;
 
 /**
@@ -29,9 +28,9 @@ public class EWDataModel implements EWConstants {
 
     }
 
-    public static void cancelAllSynchRequests(boolean mayInterruptIfRunning) {
-        SYNC_HTTP_CLIENT.cancelAllRequests(mayInterruptIfRunning);
-    }
+//    public static void cancelAllSynchRequests(boolean mayInterruptIfRunning) {
+//        SYNC_HTTP_CLIENT.cancelAllRequests(mayInterruptIfRunning);
+//    }
 
 
     public static void showLoadingIndicator(Context context) {

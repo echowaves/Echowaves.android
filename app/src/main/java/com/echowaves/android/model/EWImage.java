@@ -6,7 +6,6 @@ import com.loopj.android.http.RequestParams;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 /**
  * copyright echowaves
@@ -24,6 +23,7 @@ public class EWImage extends EWDataModel {
 
     public static void uploadPhoto(byte[] photoByteArray, String photoName, AsyncHttpResponseHandler responseHandler) throws FileNotFoundException {
         responseHandler.setUseSynchronousMode(true);
+
 //        InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(photoByteArray));
 
         RequestParams params = new RequestParams();
