@@ -1,8 +1,7 @@
 package com.echowaves.android;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,93 +9,68 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
-import com.echowaves.android.model.EWImage;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestHandle;
 
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
 public class UploadProgressActivity extends EWActivity {
-    public static RequestHandle currentRequestHandle;
+    public final static int OPERATION_CANCEL = 100;
+    public final static int OPERATION_PAUSE_ALL = 101;
+    public final static int OPERATION_CONTINUE = 102;
+
+
+    private boolean uploadProgressDetailsActivityIsActive = false;
     private TextView photosCount;
-    private ProgressBar progressBar;
-    private ImageView imageView;
-    private Button cancelButton;
-    private Button pauseAllButton;
-
     private WaveOperation waveOperation;
+    private Activity activity;
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d("!!!!!!!!!!!!!", "WavingTabFragment onStart()");
-        photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_progress);
+        activity = this;
+        photosCount = (TextView) findViewById(R.id.uploadprogress_count);
 
-        pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
-        //Listening to button event
-        pauseAllButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-//                currentRequestHandle.cancel(true);
-                if (waveOperation != null) {
-                    waveOperation.cancel(true);
-                }
-
-                Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                startActivity(navBarIntent);
-            }
-        });
-
-        imageView = (ImageView) findViewById(R.id.upload_imageView);
-        progressBar = (ProgressBar) findViewById(R.id.upload_progressBar);
-        photosCount = (TextView) findViewById(R.id.upload_count);
-
-        cancelButton = (Button) findViewById(R.id.upload_cancelButton);
-//        cancelButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View arg0) {
-//                if (currentRequestHandle != null)
-//                    currentRequestHandle.cancel(true);
-//            }
-//        });
-
-
-        pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
-
-        waveOperation = new WaveOperation();
+        waveOperation = new WaveOperation(this);
         waveOperation.execute();
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intetData) {
+        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", "onActivityResult");
+        switch (resultCode) {
+            case OPERATION_CANCEL:
+                break;
+            case OPERATION_PAUSE_ALL:
+                break;
+            case OPERATION_CONTINUE:
+                break;
+        }
+        uploadProgressDetailsActivityIsActive = false;
+    }
 
     private class WaveOperation extends AsyncTask<Void, Object, String> {
+        private Context context;
+
+        public WaveOperation(Context context) {
+            this.context = context;
+        }
 
         @Override
         protected String doInBackground(Void... arg0) {
-            waveAll(ApplicationContextProvider.getContext());
+            waveAll();
             return "Executed";
         }
 
@@ -104,27 +78,26 @@ public class UploadProgressActivity extends EWActivity {
         protected void onPostExecute(String result) {
             // might want to change "executed" for the returned string passed
             // into onPostExecute() but that is upto you
+            Intent navBarIntent = new Intent(context, NavigationTabBarActivity.class);
+            startActivity(navBarIntent);
         }
 
         @Override
         protected void onPreExecute() {
         }
 
-//        @Override
-//        protected void onCancelled() {
-//
-//        }
+        @Override
+        protected void onCancelled() {
+        }
 
         @Override
         protected void onProgressUpdate(Object... params) {
-            Bitmap bitmap = (Bitmap) params[0];
-            Integer totalCount = (Integer) params[1];
-            imageView.setImageBitmap(bitmap);
+            Integer totalCount = (Integer) params[0];
             photosCount.setText(totalCount.toString());
         }
 
 
-        private void waveAll(Context context) {
+        private void waveAll() {
             String[] projection = new String[]{
                     MediaStore.Images.ImageColumns._ID,
                     MediaStore.Images.ImageColumns.DATA,
@@ -164,104 +137,43 @@ public class UploadProgressActivity extends EWActivity {
 
                     bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true); // rotating bitmap
 
-                    publishProgress(bm, ApplicationContextProvider.getPhotosCountSinceLast());
+                    //publish progress
+                    publishProgress(ApplicationContextProvider.getPhotosCountSinceLast());
 
+                    // write temp file
+                    String tmpPath = Environment.getExternalStorageDirectory().toString();
 
-                    final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-
+                    final File tmpFile = new File(tmpPath, dateTaken + ".jpg");
+                    OutputStream fOut = null;
                     try {
-                        EWImage.uploadPhoto(stream.toByteArray(), dateTaken + ".jpg", new AsyncHttpResponseHandler() {
-                                    @Override
-                                    public void onProgress(int bytesWritten, int totalSize) {
-                                        super.onProgress(bytesWritten, totalSize);
-                                        Log.d("--------------progress: ", String.valueOf(bytesWritten) + " of " + String.valueOf(totalSize));
-                                        progressBar.setProgress((int) (100 * ((double) bytesWritten / (double) totalSize)));
-                                    }
-
-
-                                    @Override
-                                    public void onStart() {
-                                        super.onStart();
-//                                        EWWave.showLoadingIndicator(ApplicationContextProvider.getContext());
-                                        progressBar.setProgress(0);
-                                    }
-
-                                    @Override
-                                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                        Log.d(">>>>>>>>>>>>>>>>>>>> statusCode:" + statusCode, Arrays.toString(responseBody));
-                                        //                                    Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                                        //                                    startActivity(createWave);
-                                        progressBar.setProgress(100);
-                                        Log.d("Asset time = ", cursor.getString(3));
-                                        ApplicationContextProvider.setCurrentAssetDateTime(new Date(Long.valueOf(cursor.getString(3))));
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                        if (headers != null) {
-                                            for (Header h : headers) {
-                                                Log.d("................ failed   key: ", h.getName());
-                                                Log.d("................ failed value: ", h.getValue());
-                                            }
-                                        }
-                                        if (responseBody != null) {
-                                            Log.d("................ failed : ", new String(responseBody));
-                                        }
-                                        if (error != null) {
-                                            Log.d("................ failed error: ", error.toString());
-
-                                            String msg = "";
-                                            if (null != responseBody) {
-                                                try {
-                                                    JSONObject jsonResponse = new JSONObject(new String(responseBody));
-                                                    msg = jsonResponse.getString("error");
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            } else {
-                                                msg = error.getMessage();
-                                            }
-
-
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
-                                            builder.setTitle("Error")
-                                                    .setMessage(msg)
-                                                    .setCancelable(false)
-                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int id) {
-                                                        }
-                                                    });
-                                            AlertDialog alert = builder.create();
-                                            alert.show();
-                                        }
-                                    }
-
-
-                                    @Override
-                                    public void onFinish() {
-                                        super.onFinish();
-//                                        EWWave.hideLoadingIndicator();
-                                    }
-                                }
-                        );
+                        fOut = new FileOutputStream(tmpFile);
                     } catch (FileNotFoundException e) {
-                        Log.e("FileNotFound", e.toString());
                         e.printStackTrace();
                     }
+                    bm.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+//                    tmpFile.flush();
+//                    tmpFile.close();
 
+                    Intent uploadDetailsIntent = new Intent(activity, UploadProgressDetailsActivity.class);
+                    uploadDetailsIntent.putExtra("tmpFile", tmpFile);
+                    uploadDetailsIntent.putExtra("assetDate", new Date(timeTaken));
+                    uploadProgressDetailsActivityIsActive = true;
+                    activity.startActivityForResult(uploadDetailsIntent, 0);
 
-
+                    while (uploadProgressDetailsActivityIsActive == true) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
 
 //            ApplicationContextProvider.setCurrentAssetDateTime(new Date());
-            Intent navBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-            startActivity(navBarIntent);
-
         }
+
 
     }
 

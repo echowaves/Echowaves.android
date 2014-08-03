@@ -28,10 +28,9 @@ public class EWDataModel implements EWConstants {
 
     }
 
-//    public static void cancelAllSynchRequests(boolean mayInterruptIfRunning) {
-//        SYNC_HTTP_CLIENT.cancelAllRequests(mayInterruptIfRunning);
-//    }
-
+    public static void cancelAllSynchReuqests() {
+        SYNC_HTTP_CLIENT.cancelAllRequests(true);
+    }
 
     public static void showLoadingIndicator(Context context) {
         if (progressDialog == null) {

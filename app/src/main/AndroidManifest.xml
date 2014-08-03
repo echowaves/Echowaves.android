@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".model.ApplicationContextProvider"
@@ -35,19 +36,19 @@
         <activity
             android:name=".SignInActivity"
             android:label="@string/title_activity_sign_in"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NavigationTabBarActivity"
             android:label="@string/title_activity_navigation_tab_bar"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".WaveDetailsActivity"
             android:label="@string/title_activity_wave_details"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!-- <activity -->
         <!-- android:name=".WavingTabFragment" -->
         <!-- android:label="@string/title_activity_waving" > -->
@@ -63,19 +64,23 @@
         <activity
             android:name=".AddChildWaveActivity"
             android:label="@string/title_activity_add_child_wave"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DateTimePickerActivity"
             android:label="@string/title_activity_date_time_picker"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PickWavesForUploadActivity"
             android:label="@string/title_activity_pick_waves_for_upload"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UploadProgressActivity"
             android:label="@string/title_activity_upload_progress"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UploadProgressDetailsActivity"
+            android:label="@string/title_activity_upload_porgress_details"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

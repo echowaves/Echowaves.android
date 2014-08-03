@@ -27,5 +27,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_pick_waves_for_upload">PickWavesForUploadActivity</string>
     <string name="title_activity_upload_progress">UploadProgressActivity</string>
+    <string name="title_activity_upload_porgress_details">UploadPorgressDetailsActivity</string>
 
 </resources>
