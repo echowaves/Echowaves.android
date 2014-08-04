@@ -1,6 +1,7 @@
 package com.echowaves.android.model;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
 
 import java.io.File;
@@ -20,14 +21,13 @@ public class EWImage extends EWDataModel {
         HTTP_CLIENT.get(getAbsoluteUrl("/wave.json"), params, responseHandler);
     }
 
-    public static void uploadPhoto(File imageFile, AsyncHttpResponseHandler responseHandler) throws FileNotFoundException {
+    public static RequestHandle uploadPhoto(File imageFile, AsyncHttpResponseHandler responseHandler) throws FileNotFoundException {
 
         RequestParams params = new RequestParams();
         params.put("file", imageFile);
 
         params.setAutoCloseInputStreams(true);
 
-        HTTP_CLIENT.post(getAbsoluteUrl("/upload"), params, responseHandler);
-
+        return HTTP_CLIENT.post(getAbsoluteUrl("/upload"), params, responseHandler);
     }
 }

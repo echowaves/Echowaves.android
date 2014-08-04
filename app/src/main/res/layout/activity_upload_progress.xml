@@ -9,15 +9,70 @@
     tools:context="com.echowaves.android.UploadProgressActivity">
 
 
-    <TextView
-        android:id="@+id/uploadprogress_count"
+    <Button
+        android:id="@+id/upload_cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="..."
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/rounded_button"
+        android:padding="15dp"
+        android:text="cancel photo"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/upload_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/upload_cancelButton"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/upload_pauseAllButton"
+        android:layout_toStartOf="@+id/upload_pauseAllButton"
+        android:text="1000"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="100sp"
-        android:textStyle="bold"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/upload_pauseAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/upload_count"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/rounded_button"
+        android:padding="15dp"
+        android:text="pause all"
+        android:textColor="@android:color/white" />
+
+    <ProgressBar
+        android:id="@+id/upload_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/upload_cancelButton"
+        android:padding="5dp" />
+
+
+    <ImageView
+        android:id="@+id/upload_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/upload_progressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/upload_progressBar"
+        android:layout_below="@+id/upload_progressBar" />
 
 </RelativeLayout>

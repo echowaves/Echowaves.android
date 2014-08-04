@@ -1,7 +1,8 @@
 package com.echowaves.android;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,54 +13,94 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
+import com.echowaves.android.model.EWImage;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class UploadProgressActivity extends EWActivity {
-    public final static int OPERATION_CANCEL = 100;
-    public final static int OPERATION_PAUSE_ALL = 101;
-    public final static int OPERATION_CONTINUE = 102;
-
-
-    private boolean uploadProgressDetailsActivityIsActive = false;
     private TextView photosCount;
-    private WaveOperation waveOperation;
-    private Activity activity;
+    private ProgressBar progressBar;
+    private ImageView imageView;
+    private Button cancelButton;
+    private Button pauseAllButton;
 
+    private Date currentAssetDate;
+
+    private boolean uploadProgressDetailsActivityIsActive;
+
+    private WaveOperation waveOperation;
+    private RequestHandle currentUploadHandle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_progress);
-        activity = this;
-        photosCount = (TextView) findViewById(R.id.uploadprogress_count);
 
         waveOperation = new WaveOperation(this);
-        waveOperation.execute();
 
-    }
+        photosCount = (TextView) findViewById(R.id.upload_count);
+        photosCount.setText(String.valueOf(ApplicationContextProvider.getPhotosCountSinceLast()));
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intetData) {
-        Log.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^", "onActivityResult");
-        switch (resultCode) {
-            case OPERATION_CANCEL:
-                break;
-            case OPERATION_PAUSE_ALL:
-                break;
-            case OPERATION_CONTINUE:
-                break;
-        }
+        imageView = (ImageView) findViewById(R.id.upload_imageView);
+        progressBar = (ProgressBar) findViewById(R.id.upload_progressBar);
+
         uploadProgressDetailsActivityIsActive = false;
+
+        pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
+        //Listening to button event
+            pauseAllButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    if(currentUploadHandle != null) {
+                        currentUploadHandle.cancel(true);
+                        currentUploadHandle = null;
+                    }
+
+                    if (waveOperation != null) {
+                        waveOperation.cancel(true);
+                        waveOperation = null;
+                    }
+
+//                    finish();
+                    Intent navBarIntent = new Intent(pauseAllButton.getContext(), NavigationTabBarActivity.class);
+                    startActivity(navBarIntent);
+                }
+            });
+
+        cancelButton = (Button) findViewById(R.id.upload_cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Log.d("###################################", "canceling ");
+                if(currentUploadHandle != null) {
+                    currentUploadHandle.cancel(true);
+                }
+
+                ApplicationContextProvider.setCurrentAssetDateTime(currentAssetDate);
+                uploadProgressDetailsActivityIsActive = false;
+            }
+        });
+
+        waveOperation.execute();
     }
+
 
     private class WaveOperation extends AsyncTask<Void, Object, String> {
         private Context context;
@@ -94,6 +135,110 @@ public class UploadProgressActivity extends EWActivity {
         protected void onProgressUpdate(Object... params) {
             Integer totalCount = (Integer) params[0];
             photosCount.setText(totalCount.toString());
+
+            final File tmpFile = (File) params[1];
+            final Date assetDate = (Date) params[2];
+
+            Bitmap bitMap = BitmapFactory.decodeFile(tmpFile.getAbsolutePath());
+            imageView.setImageBitmap(bitMap);
+
+
+            try {
+                currentUploadHandle = EWImage.uploadPhoto(tmpFile,
+                        new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onProgress(int bytesWritten, int totalSize) {
+//                                        super.onProgress(bytesWritten, totalSize);
+//                                        Log.d("--------------progress: ", String.valueOf(bytesWritten) + " of " + String.valueOf(totalSize));
+                                progressBar.setProgress(100 * bytesWritten / totalSize);
+                            }
+
+
+                            @Override
+                            public void onStart() {
+                                super.onStart();
+//                                        EWWave.showLoadingIndicator(ApplicationContextProvider.getContext());
+                                progressBar.setProgress(0);
+
+                            }
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                Log.d(">>>>>>>>>>>>>>>>>>>> statusCode:" + statusCode, Arrays.toString(responseBody));
+                                //                                    Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+                                //                                    startActivity(createWave);
+//                                        progressBar.setProgress(100);
+                                ApplicationContextProvider.setCurrentAssetDateTime(assetDate);
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                if (headers != null) {
+                                    for (Header h : headers) {
+                                        Log.d("................ failed   key: ", h.getName());
+                                        Log.d("................ failed value: ", h.getValue());
+                                    }
+                                }
+                                if (responseBody != null) {
+                                    Log.d("................ failed : ", new String(responseBody));
+                                }
+                                if (error != null) {
+                                    Log.d("................ failed error: ", error.toString());
+
+                                    String msg = "";
+                                    if (null != responseBody) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                            msg = jsonResponse.getString("error");
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        msg = error.getMessage();
+                                    }
+
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
+                                    builder.setTitle("Error")
+                                            .setMessage(msg)
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                    boolean deleteSuccessfull = tmpFile.delete();
+                                    Log.d("1. delete file success ", String.valueOf(deleteSuccessfull));
+                                    uploadProgressDetailsActivityIsActive = false;
+                                }
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                Log.d("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "cancelled request");
+                                boolean deleteSuccessfull = tmpFile.delete();
+                                Log.d("2. delete file success ", String.valueOf(deleteSuccessfull));
+                                uploadProgressDetailsActivityIsActive = false;
+                            }
+
+
+                            @Override
+                            public void onFinish() {
+                                super.onFinish();
+//                                        EWWave.hideLoadingIndicator();
+                                boolean deleteSuccessfull = tmpFile.delete();
+                                Log.d("3. delete file success ", String.valueOf(deleteSuccessfull));
+                                uploadProgressDetailsActivityIsActive = false;
+                            }
+                        }
+                );
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Log.d("!!!!!!!!!!!!!!!!!!!!", "fileNotFound exception" + e.toString());
+            }
+
+
         }
 
 
@@ -137,8 +282,6 @@ public class UploadProgressActivity extends EWActivity {
 
                     bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true); // rotating bitmap
 
-                    //publish progress
-                    publishProgress(ApplicationContextProvider.getPhotosCountSinceLast());
 
                     // write temp file
                     String tmpPath = Environment.getExternalStorageDirectory().toString();
@@ -154,27 +297,24 @@ public class UploadProgressActivity extends EWActivity {
 //                    tmpFile.flush();
 //                    tmpFile.close();
 
-                    Intent uploadDetailsIntent = new Intent(activity, UploadProgressDetailsActivity.class);
-                    uploadDetailsIntent.putExtra("tmpFile", tmpFile);
-                    uploadDetailsIntent.putExtra("assetDate", new Date(timeTaken));
                     uploadProgressDetailsActivityIsActive = true;
-                    activity.startActivityForResult(uploadDetailsIntent, 0);
+                    currentAssetDate = new Date(Long.valueOf(cursor.getString(3)));
 
-                    while (uploadProgressDetailsActivityIsActive == true) {
+                    //publish progress
+                    publishProgress(ApplicationContextProvider.getPhotosCountSinceLast(), tmpFile, new Date(timeTaken));
+
+
+                    while (uploadProgressDetailsActivityIsActive) {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(100);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 }
+                currentUploadHandle = null;
             }
-
-
 //            ApplicationContextProvider.setCurrentAssetDateTime(new Date());
         }
-
-
     }
-
 }
