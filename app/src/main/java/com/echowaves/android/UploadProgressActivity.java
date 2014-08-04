@@ -86,17 +86,8 @@ public class UploadProgressActivity extends EWActivity {
             });
 
         cancelButton = (Button) findViewById(R.id.upload_cancelButton);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Log.d("###################################", "canceling ");
-                if(currentUploadHandle != null) {
-                    currentUploadHandle.cancel(true);
-                }
+        cancelButton.setEnabled(false);
 
-                ApplicationContextProvider.setCurrentAssetDateTime(currentAssetDate);
-                uploadProgressDetailsActivityIsActive = false;
-            }
-        });
 
         waveOperation.execute();
     }
@@ -133,6 +124,8 @@ public class UploadProgressActivity extends EWActivity {
 
         @Override
         protected void onProgressUpdate(Object... params) {
+            cancelButton.setEnabled(false);
+
             Integer totalCount = (Integer) params[0];
             photosCount.setText(totalCount.toString());
 
@@ -142,6 +135,26 @@ public class UploadProgressActivity extends EWActivity {
             Bitmap bitMap = BitmapFactory.decodeFile(tmpFile.getAbsolutePath());
             imageView.setImageBitmap(bitMap);
 
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    Log.d("###################################", "canceling ");
+                    if(currentUploadHandle != null) {
+                        currentUploadHandle.cancel(true);
+                    }
+
+                    ApplicationContextProvider.setCurrentAssetDateTime(currentAssetDate);
+                    uploadProgressDetailsActivityIsActive = false;
+                    cancelButton.setEnabled(false);
+
+                }
+            });
+
+
+//            try {
+//                Thread.sleep(3000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             try {
                 currentUploadHandle = EWImage.uploadPhoto(tmpFile,
@@ -211,6 +224,8 @@ public class UploadProgressActivity extends EWActivity {
                                     boolean deleteSuccessfull = tmpFile.delete();
                                     Log.d("1. delete file success ", String.valueOf(deleteSuccessfull));
                                     uploadProgressDetailsActivityIsActive = false;
+                                    cancelButton.setEnabled(false);
+
                                 }
                             }
 
@@ -220,6 +235,8 @@ public class UploadProgressActivity extends EWActivity {
                                 boolean deleteSuccessfull = tmpFile.delete();
                                 Log.d("2. delete file success ", String.valueOf(deleteSuccessfull));
                                 uploadProgressDetailsActivityIsActive = false;
+                                cancelButton.setEnabled(false);
+
                             }
 
 
@@ -230,9 +247,14 @@ public class UploadProgressActivity extends EWActivity {
                                 boolean deleteSuccessfull = tmpFile.delete();
                                 Log.d("3. delete file success ", String.valueOf(deleteSuccessfull));
                                 uploadProgressDetailsActivityIsActive = false;
+                                cancelButton.setEnabled(false);
+
                             }
                         }
                 );
+
+                cancelButton.setEnabled(true);
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Log.d("!!!!!!!!!!!!!!!!!!!!", "fileNotFound exception" + e.toString());
