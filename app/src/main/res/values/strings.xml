@@ -22,6 +22,7 @@
     <string name="add_new_blend_label">Add blending:</string>
     <string name="waveDetails">Wave details</string>
     <string name="title_activity_add_child_wave">Add New Wave</string>
+    <string name="title_activity_add_blending">Add Blending</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_date_time_picker">DateTimePickerActivity</string>
     <string name="dummy_button">Dummy Button</string>

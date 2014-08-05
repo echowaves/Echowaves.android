@@ -2,10 +2,10 @@ package com.echowaves.android;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 public class BlendwithActivity extends EWActivity {
 
@@ -24,8 +24,15 @@ public class BlendwithActivity extends EWActivity {
             }
         });
 
+        SearchView searchView = (SearchView) findViewById(R.id.blendwith_searchBox);
+//        searchView.requestFocus();
+
+        searchView.onActionViewExpanded();
+
+        if (searchView.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+
 
     }
-
-
 }

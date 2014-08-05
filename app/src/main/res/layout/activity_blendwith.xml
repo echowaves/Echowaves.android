@@ -16,7 +16,7 @@ tools:context="com.echowaves.android.BlendwithActivity">
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@color/ewColor"
-        android:text="@string/title_activity_add_child_wave"
+        android:text="@string/title_activity_add_blending"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
 </RelativeLayout>
@@ -43,11 +43,11 @@ tools:context="com.echowaves.android.BlendwithActivity">
 
 </RelativeLayout>
 
-<EditText
-    android:id="@+id/blendwith_undercontsruction"
+<SearchView
+    android:id="@+id/blendwith_searchBox"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="under construction"
+    android:queryHint="wave name to blend with"
     android:maxLines="1"
     android:singleLine="true"
     android:background="@drawable/rounded_inputtext"
