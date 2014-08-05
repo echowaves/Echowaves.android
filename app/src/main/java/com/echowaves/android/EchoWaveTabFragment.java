@@ -47,13 +47,11 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
     private void updateView() {
 
-
 //        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 //                Toast.makeText(HelloGridView.this, "" + position, Toast.LENGTH_SHORT).show();
 //            }
 //        });
-
 
         EWImage.getAllImagesForWave(WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
             @Override
@@ -72,7 +70,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
                     }
                 }
 
-                GridView gridview = (GridView) view.findViewById(R.id.gridView);
+                GridView gridview = (GridView) view.findViewById(R.id.echowave_gridView);
                 gridview.setAdapter(new ImageAdapter(view.getContext(), thumbUrls));
 
             }
@@ -96,7 +94,6 @@ public class EchoWaveTabFragment extends EWTabFragment {
         });
 
     }
-
 
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
@@ -142,6 +139,4 @@ public class EchoWaveTabFragment extends EWTabFragment {
             return imageView;
         }
     }
-
-
 }

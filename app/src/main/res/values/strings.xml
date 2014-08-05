@@ -19,6 +19,7 @@
     <string name="title_activity_echo_wave">EchoWaveActivity</string>
     <string name="title_activity_blends">BlendsActivity</string>
     <string name="add_new_wave_label">Add new wave:</string>
+    <string name="add_new_blend_label">Add blending:</string>
     <string name="waveDetails">Wave details</string>
     <string name="title_activity_add_child_wave">Add New Wave</string>
     <string name="hello_world">Hello world!</string>
