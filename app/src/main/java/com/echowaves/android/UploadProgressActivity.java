@@ -295,7 +295,7 @@ public class UploadProgressActivity extends EWActivity {
 
 //                    Log.d("###################### orientation: ", String.valueOf(orientation));
                     long timeTaken = cursor.getLong(3);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmssSSSS");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
 
                     final String dateTaken = simpleDateFormat.format(timeTaken);
 
