@@ -82,14 +82,14 @@ public class PickWavesForUploadActivity extends EWActivity {
                 wavesListView = (ListView) findViewById(R.id.pickwaves_listview);
 
                 ArrayAdapter<Model> waves_adapter =
-                        new ArrayAdapter<Model>(wavesListView.getContext(), R.layout.pick_wave_for_upload_row, waves) {
+                        new ArrayAdapter<Model>(wavesListView.getContext(), R.layout.row_pick_wave_for_upload, waves) {
                             @Override
                             public View getView(final int position, View convertView, ViewGroup parent) {
                                 View rowView = convertView;
                                 // reuse views
                                 if (rowView == null) {
                                     LayoutInflater inflater = getLayoutInflater();
-                                    rowView = inflater.inflate(R.layout.pick_wave_for_upload_row, null);
+                                    rowView = inflater.inflate(R.layout.row_pick_wave_for_upload, null);
                                     // configure view holder
                                     final ViewHolder viewHolder = new ViewHolder();
                                     viewHolder.waveName = (TextView) rowView.findViewById(R.id.waverow_name);
