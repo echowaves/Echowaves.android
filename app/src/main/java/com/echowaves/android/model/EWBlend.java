@@ -24,4 +24,23 @@ public class EWBlend extends EWDataModel {
         HTTP_CLIENT.post(getAbsoluteUrl("/request-blending.json"), params, responseHandler);
     }
 
+
+    public static void getRequestedBlends(AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("wave_name", WavePickerFragment.getCurrentWaveName());
+        HTTP_CLIENT.get(getAbsoluteUrl("/requested-blends.json"), params, responseHandler);
+    }
+
+    public static void getUnconfirmedBlends(AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("wave_name", WavePickerFragment.getCurrentWaveName());
+        HTTP_CLIENT.get(getAbsoluteUrl("/unconfirmed-blends.json"), params, responseHandler);
+    }
+
+    public static void getBlendedWith(AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("wave_name", WavePickerFragment.getCurrentWaveName());
+        HTTP_CLIENT.get(getAbsoluteUrl("/blended-with.json"), params, responseHandler);
+    }
+
 }

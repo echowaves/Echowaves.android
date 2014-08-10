@@ -18,6 +18,8 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 public class WavePickerFragment extends Fragment {
 
     private static String[] waves;
@@ -28,6 +30,7 @@ public class WavePickerFragment extends Fragment {
     public static String getCurrentWaveName() {
         return waves[currentWaveIndex];
     }
+
     public static void resetCurrentWaveIndex() {
         currentWaveIndex = 0;
     }
