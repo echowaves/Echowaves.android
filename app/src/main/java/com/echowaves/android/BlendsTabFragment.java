@@ -34,9 +34,10 @@ public class BlendsTabFragment extends EWTabFragment {
     private ListView unconfirmedBlendsListView;
     private ListView blendedWithListView;
 
-    private TextView requestedBlendsHeaderTextView;
-    private TextView unconfirmedBlendsHeaderTextView;
-    private TextView blendedWithHeaderTextView;
+    private View requestedBlendsHeader;
+    private View unconfirmedBlendsHeader;
+    private View blendedWithHeader;
+
 
     private LayoutInflater layoutInflater;
 
@@ -78,9 +79,17 @@ public class BlendsTabFragment extends EWTabFragment {
         unconfirmedBlendsListView = (ListView) view.findViewById(R.id.blends_unconfirmedBlends);
         blendedWithListView = (ListView) view.findViewById(R.id.blends_blendedWith);
 
-        requestedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_requestedBlends_textView);
-        unconfirmedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_unconfirmedBlends_textView);
-        requestedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_blendedWith_textView);
+        requestedBlendsHeader = layoutInflater.inflate(R.layout.header_requested_blends, null);
+        requestedBlendsListView.addHeaderView(requestedBlendsHeader);
+        unconfirmedBlendsHeader = layoutInflater.inflate(R.layout.header_unconfirmed_blends, null);
+        unconfirmedBlendsListView.addHeaderView(unconfirmedBlendsHeader);
+        blendedWithHeader = layoutInflater.inflate(R.layout.header_blended_with, null);
+        blendedWithListView.addHeaderView(blendedWithHeader);
+
+
+//        requestedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_requestedBlends_textView);
+//        unconfirmedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_unconfirmedBlends_textView);
+//        requestedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_blendedWith_textView);
 
         return view;
     }
@@ -100,7 +109,6 @@ public class BlendsTabFragment extends EWTabFragment {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
 
-
                 requestedBlends = new ArrayList<String>(jsonResponseArray.length());
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
@@ -112,14 +120,13 @@ public class BlendsTabFragment extends EWTabFragment {
                     }
                 }
 
+                TextView headerText = (TextView) requestedBlendsHeader.findViewById(R.id.header_requestedBlends_textView);
+                headerText.setText("TO " + waveName + ": " + requestedBlends.size());
+
                 RequestedBlendsCustomAdapter defaultAdapter = new RequestedBlendsCustomAdapter(getActivity(), requestedBlends);
                 requestedBlendsListView.setAdapter(defaultAdapter);
 
 
-                View header = layoutInflater.inflate(R.layout.header_requested_blends, null);
-                TextView headerText = (TextView) header.findViewById(R.id.header_requestedBlends_textView);
-                headerText.setText("TO " + waveName + ": " + requestedBlends.size());
-                requestedBlendsListView.addHeaderView(header);
 
 
                 // Click listener for the searched item that was selected
@@ -337,6 +344,248 @@ public class BlendsTabFragment extends EWTabFragment {
             }
         });
 
+        EWBlend.getUnconfirmedBlends(new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+//                EWWave.showLoadingIndicator(getApplicationContext());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
+                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
+
+                unconfirmedBlends = new ArrayList<String>(jsonResponseArray.length());
+                for (int i = 0; i < jsonResponseArray.length(); i++) {
+                    try {
+                        Log.d("jsonObject::::::::::::::::::::::", jsonResponseArray.getJSONObject(i).toString());
+                        Log.d("label:", jsonResponseArray.getJSONObject(i).getString("name"));
+                        unconfirmedBlends.add(jsonResponseArray.getJSONObject(i).getString("name"));
+                    } catch (JSONException e) {
+                        Log.d("JSONException", e.toString(), e);
+                    }
+                }
+
+                TextView headerText = (TextView) unconfirmedBlendsHeader.findViewById(R.id.header_unconfirmedBlends_textView);
+                headerText.setText("FROM " + waveName + ": " + unconfirmedBlends.size());
+
+                UnconfirmedBlendsCustomAdapter defaultAdapter = new UnconfirmedBlendsCustomAdapter(getActivity(), unconfirmedBlends);
+                unconfirmedBlendsListView.setAdapter(defaultAdapter);
+
+
+                // Click listener for the searched item that was selected
+//                requestedBlendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                        // Get the cursor, positioned to the corresponding row in the result set
+//                        String waveSelected = blendsList.get(position);
+//
+////                        blend wave request here
+//                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
+//                            @Override
+//                            public void onStart() {
+////                EWWave.showLoadingIndicator(getApplicationContext());
+//                            }
+//
+//                            @Override
+//                            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
+//                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
+//
+//
+//                                blendsList = new ArrayList<String>(jsonResponseArray.length());
+//                                for (int i = 0; i < jsonResponseArray.length(); i++) {
+//                                    try {
+//                                        Log.d("jsonObject::::::::::::::::::::::", jsonResponseArray.getJSONObject(i).toString());
+//                                        Log.d("label:", jsonResponseArray.getJSONObject(i).getString("label"));
+//                                        blendsList.add(jsonResponseArray.getJSONObject(i).getString("label"));
+//                                    } catch (JSONException e) {
+//                                        Log.d("JSONException", e.toString(), e);
+//                                    }
+//                                }
+//                                defaultAdapter = new BlendsCompletionCustomAdapter(getApplicationContext(), blendsList);
+//                                completionsListView.setAdapter(defaultAdapter);
+//
+//                                // Click listener for the searched item that was selected
+//                                completionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                                        // Get the cursor, positioned to the corresponding row in the result set
+//                                        String waveSelected = blendsList.get(position);
+//
+////                        blend wave request here
+//                                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
+//
+//                                            @Override
+//                                            public void onStart() {
+//                                                EWBlend.showLoadingIndicator(ApplicationContextProvider.getContext());
+//                                            }
+//
+//                                            @Override
+//                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+//                                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+//
+//
+//                                                Intent navBar = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+//                                                startActivity(navBar);
+//                                            }
+//
+//                                            @Override
+//                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+//                                                if (headers != null) {
+//                                                    for (Header h : headers) {
+//                                                        Log.d("................ failed   key: ", h.getName());
+//                                                        Log.d("................ failed value: ", h.getValue());
+//                                                    }
+//                                                }
+//                                                if (responseBody != null) {
+//                                                    Log.d("................ failed : ", responseBody);
+//                                                }
+//                                                if (error != null) {
+//                                                    Log.d("................ failed error: ", error.toString());
+//
+//                                                    String msg = "";
+//                                                    if (null != responseBody) {
+//                                                        try {
+//                                                            JSONObject jsonResponse = new JSONObject(responseBody);
+//                                                            msg = jsonResponse.getString("error");
+//                                                        } catch (JSONException e) {
+//                                                            e.printStackTrace();
+//                                                        }
+//                                                    } else {
+//                                                        msg = error.getMessage();
+//                                                    }
+//
+//
+//                                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
+//                                                    builder.setTitle("Error")
+//                                                            .setMessage(msg)
+//                                                            .setCancelable(false)
+//                                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                                                                public void onClick(DialogInterface dialog, int id) {
+//                                                                }
+//                                                            });
+//                                                    AlertDialog alert = builder.create();
+//                                                    alert.show();
+//                                                }
+//                                            }
+//
+//
+//                                            @Override
+//                                            public void onFinish() {
+//                                                EWBlend.hideLoadingIndicator();
+//                                            }
+//
+//                                        });
+//
+//                                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
+//                                    }
+//                                });
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+//                                if (headers != null) {
+//                                    for (Header h : headers) {
+//                                        Log.d("................ failed   key: ", h.getName());
+//                                        Log.d("................ failed value: ", h.getValue());
+//                                    }
+//                                }
+//                                if (responseBody != null) {
+//                                    Log.d("................ failed : ", responseBody);
+//                                }
+//                                if (error != null) {
+//                                    Log.d("................ failed error: ", error.toString());
+//
+//                                    String msg = "";
+//                                    if (null != responseBody) {
+//                                        try {
+//                                            JSONObject jsonResponse = new JSONObject(responseBody);
+//                                            msg = jsonResponse.getString("error");
+//                                        } catch (JSONException e) {
+//                                            e.printStackTrace();
+//                                        }
+//                                    } else {
+//                                        msg = error.getMessage();
+//                                    }
+//
+//
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+//                                    builder.setTitle("Error")
+//                                            .setMessage(msg)
+//                                            .setCancelable(false)
+//                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                }
+//                                            });
+//                                    AlertDialog alert = builder.create();
+//                                    alert.show();
+//                                }
+//                            }
+//
+//
+//                            @Override
+//                            public void onFinish() {
+////                EWWave.hideLoadingIndicator();
+//                            }
+//
+//
+//                        });
+//
+//
+//                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
+//                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+//                        startActivity(tuneIn);
+//                    }
+//                });
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                if (headers != null) {
+                    for (Header h : headers) {
+                        Log.d("................ failed   key: ", h.getName());
+                        Log.d("................ failed value: ", h.getValue());
+                    }
+                }
+                if (responseBody != null) {
+                    Log.d("................ failed : ", responseBody);
+                }
+                if (error != null) {
+                    Log.d("................ failed error: ", error.toString());
+
+                    String msg = "";
+                    if (null != responseBody) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(responseBody);
+                            msg = jsonResponse.getString("error");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        msg = error.getMessage();
+                    }
+
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Error")
+                            .setMessage(msg)
+                            .setCancelable(false)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }
+
+
+            @Override
+            public void onFinish() {
+//                EWWave.hideLoadingIndicator();
+            }
+        });
 
     }
 
