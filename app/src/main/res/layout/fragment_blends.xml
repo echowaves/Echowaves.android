@@ -10,12 +10,12 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/circle_button"
         android:gravity="center_horizontal"
         android:text="+"
         android:textColor="@android:color/white"
-        android:textSize="50sp"
-        android:layout_centerHorizontal="true" />
+        android:textSize="50sp" />
 
     <TextView
         android:id="@+id/blends_addBlendingLabel"
@@ -31,24 +31,38 @@
         android:text="@string/add_new_blend_label"
         android:textSize="20sp" />
 
-    <ListView
-        android:id="@+id/blends_requestedBlends"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/blends_addBlending"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/blends_addBlending">
 
-    <ListView
-        android:id="@+id/blends_unconfirmedBlends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/blends_requestedBlends"
-        android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/blends_blendedWith"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/blends_unconfirmedBlends"
-        android:layout_centerHorizontal="true" />
+            <ListView
+                android:id="@+id/blends_requestedBlends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true" />
+
+            <ListView
+                android:id="@+id/blends_unconfirmedBlends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/blends_requestedBlends"
+                android:layout_centerHorizontal="true" />
+
+            <ListView
+                android:id="@+id/blends_blendedWith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/blends_unconfirmedBlends"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50pt" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

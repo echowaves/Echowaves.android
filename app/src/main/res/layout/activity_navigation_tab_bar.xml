@@ -111,8 +111,7 @@
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <fragment
                     android:id="@+id/fragment_waving"
@@ -134,7 +133,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:layout="@layout/fragment_blends" />
-
             </FrameLayout>
 
             <TabWidget
