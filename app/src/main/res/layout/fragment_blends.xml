@@ -11,6 +11,7 @@
         android:layout_height="75dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
         android:background="@drawable/circle_button"
         android:gravity="center_horizontal"
         android:text="+"
@@ -60,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/blends_unconfirmedBlends"
                 android:layout_centerHorizontal="true" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50pt" />
