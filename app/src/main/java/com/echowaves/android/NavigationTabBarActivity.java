@@ -21,6 +21,11 @@ import org.json.JSONObject;
 
 public class NavigationTabBarActivity extends EWFragmentActivity implements TabHost.OnTabChangeListener, WavePickerFragment.OnWaveSelectedListener {
 
+    private WavingTabFragment wavingFragment;
+    private EchoWaveTabFragment echoWaveFragment;
+    private BlendsTabFragment blendsTabFragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,22 +139,29 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 
             }
         });
+
+        wavingFragment = (WavingTabFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_waving);
+        echoWaveFragment = (EchoWaveTabFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_echoWave);
+        blendsTabFragment = (BlendsTabFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_blends);
+
+//        if (WavePickerFragment.getCurrentWaveName() != null) {
+//            onAWaveSelected(WavePickerFragment.getCurrentWaveName());
+//        }
+
     }
 
     @Override
     public void onTabChanged(String tabId) {
         Log.d("$$$$$$$$$$$$$$$$$ NavigationTabBarActivity", "onTabChanged(): tabId=" + tabId);
+
     }
 
     @Override
     public void onAWaveSelected(String waveName) {
         Log.d("%%%%%%%%%%%%%%%%% NavigationTabBarActivity", "waveSelected:" + waveName);
-        WavingTabFragment wavingFragment = (WavingTabFragment) getFragmentManager()
-                .findFragmentById(R.id.fragment_waving);
-        EchoWaveTabFragment echoWaveFragment = (EchoWaveTabFragment) getFragmentManager()
-                .findFragmentById(R.id.fragment_echoWave);
-        BlendsTabFragment blendsTabFragment = (BlendsTabFragment) getFragmentManager()
-                .findFragmentById(R.id.fragment_blends);
 
 //        if (detailfragment != null && detailfragment.isInLayout()) {
 //        }
@@ -162,7 +174,6 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 //    @Override
 //    protected void onResume() {
 //        super.onResume();
-//        //return to parent wave
-//        onAWaveSelected(EWWave.getStoredWaveName());
 //    }
+
 }

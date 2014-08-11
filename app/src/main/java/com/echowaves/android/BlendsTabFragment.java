@@ -837,8 +837,6 @@ public class BlendsTabFragment extends EWTabFragment {
             }
         });
 
-
-
     }
 
 

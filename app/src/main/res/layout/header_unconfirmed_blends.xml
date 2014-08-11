@@ -18,6 +18,6 @@
         android:singleLine="true"
         android:text="HEADER"
         android:textColor="#ffffff"
-        android:textSize="25sp" />
+        android:textSize="12sp" />
 
 </LinearLayout>

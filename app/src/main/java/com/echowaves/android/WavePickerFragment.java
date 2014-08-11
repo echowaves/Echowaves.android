@@ -28,7 +28,10 @@ public class WavePickerFragment extends Fragment {
     private Spinner spinnerWaves;
 
     public static String getCurrentWaveName() {
-        return waves[currentWaveIndex];
+        if(waves != null) {
+            return waves[currentWaveIndex];
+        }
+        return null;
     }
 
     public static void resetCurrentWaveIndex() {
