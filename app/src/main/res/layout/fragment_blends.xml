@@ -43,20 +43,20 @@
 
             <ListView
                 android:id="@+id/blends_requestedBlends"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true" />
 
             <ListView
                 android:id="@+id/blends_unconfirmedBlends"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/blends_requestedBlends"
                 android:layout_centerHorizontal="true" />
 
             <ListView
                 android:id="@+id/blends_blendedWith"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/blends_unconfirmedBlends"
                 android:layout_centerHorizontal="true" />

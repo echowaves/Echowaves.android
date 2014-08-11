@@ -15,6 +15,7 @@
         android:layout_marginLeft="5dp"
         android:background="#ff727471"
         android:padding="10dp"
+        android:singleLine="true"
         android:text="HEADER"
         android:textColor="#ffffff"
         android:textSize="25sp" />

@@ -614,7 +614,7 @@ public class BlendsTabFragment extends EWTabFragment {
                 }
 
                 TextView headerText = (TextView) blendedWithHeader.findViewById(R.id.header_blendedWith_textView);
-                headerText.setText(waveName + " BLENDS IN WITH: " + blendedWith.size());
+                headerText.setText(waveName + " BLENDS WITH: " + blendedWith.size());
 
                 BlendedWithCustomAdapter defaultAdapter = new BlendedWithCustomAdapter(getActivity(), blendedWith);
                 blendedWithListView.setAdapter(defaultAdapter);
