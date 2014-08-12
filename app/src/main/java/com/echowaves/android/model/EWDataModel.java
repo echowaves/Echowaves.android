@@ -25,12 +25,14 @@ public class EWDataModel implements EWConstants {
         PersistentCookieStore cookieStore = new PersistentCookieStore(ApplicationContextProvider.getContext());
         HTTP_CLIENT.setCookieStore(cookieStore);
         SYNC_HTTP_CLIENT.setCookieStore(cookieStore);
+        HTTP_CLIENT.setTimeout(60000);
+        SYNC_HTTP_CLIENT.setTimeout(60000);
 
     }
 
-    public static void cancelAllSynchReuqests() {
-        SYNC_HTTP_CLIENT.cancelAllRequests(true);
-    }
+//    public static void cancelAllSynchReuqests() {
+//        SYNC_HTTP_CLIENT.cancelAllRequests(true);
+//    }
 
     public static void showLoadingIndicator(Context context) {
         if (progressDialog == null) {

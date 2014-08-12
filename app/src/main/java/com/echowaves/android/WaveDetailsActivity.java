@@ -72,11 +72,8 @@ public class WaveDetailsActivity extends EWActivity {
                                 deleteWaveButton.setOnClickListener(new View.OnClickListener() {
 
                                     public void onClick(final View v) {
-
                                         AlertDialog.Builder alertDialogConfirmWaveDeletion = new AlertDialog.Builder(
                                                 v.getContext());
-
-// set title
                                         alertDialogConfirmWaveDeletion.setTitle("Delete Wave?");
 
                                         // set dialog message

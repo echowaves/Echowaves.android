@@ -2,7 +2,6 @@ package com.echowaves.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,8 +29,7 @@ public class AddChildWaveActivity extends EWActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                Intent home = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                startActivity(home);
+                finish();
             }
         });
 
@@ -60,8 +58,7 @@ public class AddChildWaveActivity extends EWActivity {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-                                Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                                startActivity(createWave);
+                                finish();
                             }
 
                             @Override
@@ -110,7 +107,7 @@ public class AddChildWaveActivity extends EWActivity {
                                 EWWave.hideLoadingIndicator();
                             }
                         }
-                        );
+                );
 
             }
         });

@@ -3,7 +3,6 @@ package com.echowaves.android;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,8 +43,7 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
         backButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                Intent home = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                startActivity(home);
+                finish();
             }
         });
 
@@ -132,8 +130,7 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-                                Intent navTabBarIntent = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                                startActivity(navTabBarIntent);
+                                finish();
                             }
 
                             @Override

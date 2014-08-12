@@ -81,6 +81,10 @@
             android:name=".BlendwithActivity"
             android:label="@string/title_activity_blendwith"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".AcceptBlendingRequestActivity"
+            android:label="AcceptBlendingRequestActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

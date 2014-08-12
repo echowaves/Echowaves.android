@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.echowaves.android.model.EWBlend;
+import com.echowaves.android.model.EWWave;
 import com.echowaves.android.util.Utility;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -87,11 +88,6 @@ public class BlendsTabFragment extends EWTabFragment {
         blendedWithHeader = layoutInflater.inflate(R.layout.header_blended_with, null);
         blendedWithListView.addHeaderView(blendedWithHeader);
 
-
-//        requestedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_requestedBlends_textView);
-//        unconfirmedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_unconfirmedBlends_textView);
-//        requestedBlendsHeaderTextView = (TextView) view.findViewById(R.id.header_blendedWith_textView);
-
         return view;
     }
 
@@ -128,175 +124,6 @@ public class BlendsTabFragment extends EWTabFragment {
                 requestedBlendsListView.setAdapter(defaultAdapter);
 
                 Utility.setListViewHeightBasedOnChildren(requestedBlendsListView);
-
-
-
-
-                // Click listener for the searched item that was selected
-//                requestedBlendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                        // Get the cursor, positioned to the corresponding row in the result set
-//                        String waveSelected = blendsList.get(position);
-//
-////                        blend wave request here
-//                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
-//                            @Override
-//                            public void onStart() {
-////                EWWave.showLoadingIndicator(getApplicationContext());
-//                            }
-//
-//                            @Override
-//                            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
-//                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
-//
-//
-//                                blendsList = new ArrayList<String>(jsonResponseArray.length());
-//                                for (int i = 0; i < jsonResponseArray.length(); i++) {
-//                                    try {
-//                                        Log.d("jsonObject::::::::::::::::::::::", jsonResponseArray.getJSONObject(i).toString());
-//                                        Log.d("label:", jsonResponseArray.getJSONObject(i).getString("label"));
-//                                        blendsList.add(jsonResponseArray.getJSONObject(i).getString("label"));
-//                                    } catch (JSONException e) {
-//                                        Log.d("JSONException", e.toString(), e);
-//                                    }
-//                                }
-//                                defaultAdapter = new BlendsCompletionCustomAdapter(getApplicationContext(), blendsList);
-//                                completionsListView.setAdapter(defaultAdapter);
-//
-//                                // Click listener for the searched item that was selected
-//                                completionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                                        // Get the cursor, positioned to the corresponding row in the result set
-//                                        String waveSelected = blendsList.get(position);
-//
-////                        blend wave request here
-//                                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
-//
-//                                            @Override
-//                                            public void onStart() {
-//                                                EWBlend.showLoadingIndicator(ApplicationContextProvider.getContext());
-//                                            }
-//
-//                                            @Override
-//                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-//                                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-//
-//
-//                                                Intent navBar = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                                                startActivity(navBar);
-//                                            }
-//
-//                                            @Override
-//                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                                                if (headers != null) {
-//                                                    for (Header h : headers) {
-//                                                        Log.d("................ failed   key: ", h.getName());
-//                                                        Log.d("................ failed value: ", h.getValue());
-//                                                    }
-//                                                }
-//                                                if (responseBody != null) {
-//                                                    Log.d("................ failed : ", responseBody);
-//                                                }
-//                                                if (error != null) {
-//                                                    Log.d("................ failed error: ", error.toString());
-//
-//                                                    String msg = "";
-//                                                    if (null != responseBody) {
-//                                                        try {
-//                                                            JSONObject jsonResponse = new JSONObject(responseBody);
-//                                                            msg = jsonResponse.getString("error");
-//                                                        } catch (JSONException e) {
-//                                                            e.printStackTrace();
-//                                                        }
-//                                                    } else {
-//                                                        msg = error.getMessage();
-//                                                    }
-//
-//
-//                                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
-//                                                    builder.setTitle("Error")
-//                                                            .setMessage(msg)
-//                                                            .setCancelable(false)
-//                                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                                public void onClick(DialogInterface dialog, int id) {
-//                                                                }
-//                                                            });
-//                                                    AlertDialog alert = builder.create();
-//                                                    alert.show();
-//                                                }
-//                                            }
-//
-//
-//                                            @Override
-//                                            public void onFinish() {
-//                                                EWBlend.hideLoadingIndicator();
-//                                            }
-//
-//                                        });
-//
-//                                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
-//                                    }
-//                                });
-//
-//                            }
-//
-//                            @Override
-//                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                                if (headers != null) {
-//                                    for (Header h : headers) {
-//                                        Log.d("................ failed   key: ", h.getName());
-//                                        Log.d("................ failed value: ", h.getValue());
-//                                    }
-//                                }
-//                                if (responseBody != null) {
-//                                    Log.d("................ failed : ", responseBody);
-//                                }
-//                                if (error != null) {
-//                                    Log.d("................ failed error: ", error.toString());
-//
-//                                    String msg = "";
-//                                    if (null != responseBody) {
-//                                        try {
-//                                            JSONObject jsonResponse = new JSONObject(responseBody);
-//                                            msg = jsonResponse.getString("error");
-//                                        } catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    } else {
-//                                        msg = error.getMessage();
-//                                    }
-//
-//
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-//                                    builder.setTitle("Error")
-//                                            .setMessage(msg)
-//                                            .setCancelable(false)
-//                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                public void onClick(DialogInterface dialog, int id) {
-//                                                }
-//                                            });
-//                                    AlertDialog alert = builder.create();
-//                                    alert.show();
-//                                }
-//                            }
-//
-//
-//                            @Override
-//                            public void onFinish() {
-////                EWWave.hideLoadingIndicator();
-//                            }
-//
-//
-//                        });
-//
-//
-//                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
-//                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                        startActivity(tuneIn);
-//                    }
-//                });
 
             }
 
@@ -377,172 +204,6 @@ public class BlendsTabFragment extends EWTabFragment {
                 Utility.setListViewHeightBasedOnChildren(unconfirmedBlendsListView);
 
 
-                // Click listener for the searched item that was selected
-//                requestedBlendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                        // Get the cursor, positioned to the corresponding row in the result set
-//                        String waveSelected = blendsList.get(position);
-//
-////                        blend wave request here
-//                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
-//                            @Override
-//                            public void onStart() {
-////                EWWave.showLoadingIndicator(getApplicationContext());
-//                            }
-//
-//                            @Override
-//                            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
-//                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
-//
-//
-//                                blendsList = new ArrayList<String>(jsonResponseArray.length());
-//                                for (int i = 0; i < jsonResponseArray.length(); i++) {
-//                                    try {
-//                                        Log.d("jsonObject::::::::::::::::::::::", jsonResponseArray.getJSONObject(i).toString());
-//                                        Log.d("label:", jsonResponseArray.getJSONObject(i).getString("label"));
-//                                        blendsList.add(jsonResponseArray.getJSONObject(i).getString("label"));
-//                                    } catch (JSONException e) {
-//                                        Log.d("JSONException", e.toString(), e);
-//                                    }
-//                                }
-//                                defaultAdapter = new BlendsCompletionCustomAdapter(getApplicationContext(), blendsList);
-//                                completionsListView.setAdapter(defaultAdapter);
-//
-//                                // Click listener for the searched item that was selected
-//                                completionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                                        // Get the cursor, positioned to the corresponding row in the result set
-//                                        String waveSelected = blendsList.get(position);
-//
-////                        blend wave request here
-//                                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
-//
-//                                            @Override
-//                                            public void onStart() {
-//                                                EWBlend.showLoadingIndicator(ApplicationContextProvider.getContext());
-//                                            }
-//
-//                                            @Override
-//                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-//                                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-//
-//
-//                                                Intent navBar = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                                                startActivity(navBar);
-//                                            }
-//
-//                                            @Override
-//                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                                                if (headers != null) {
-//                                                    for (Header h : headers) {
-//                                                        Log.d("................ failed   key: ", h.getName());
-//                                                        Log.d("................ failed value: ", h.getValue());
-//                                                    }
-//                                                }
-//                                                if (responseBody != null) {
-//                                                    Log.d("................ failed : ", responseBody);
-//                                                }
-//                                                if (error != null) {
-//                                                    Log.d("................ failed error: ", error.toString());
-//
-//                                                    String msg = "";
-//                                                    if (null != responseBody) {
-//                                                        try {
-//                                                            JSONObject jsonResponse = new JSONObject(responseBody);
-//                                                            msg = jsonResponse.getString("error");
-//                                                        } catch (JSONException e) {
-//                                                            e.printStackTrace();
-//                                                        }
-//                                                    } else {
-//                                                        msg = error.getMessage();
-//                                                    }
-//
-//
-//                                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
-//                                                    builder.setTitle("Error")
-//                                                            .setMessage(msg)
-//                                                            .setCancelable(false)
-//                                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                                public void onClick(DialogInterface dialog, int id) {
-//                                                                }
-//                                                            });
-//                                                    AlertDialog alert = builder.create();
-//                                                    alert.show();
-//                                                }
-//                                            }
-//
-//
-//                                            @Override
-//                                            public void onFinish() {
-//                                                EWBlend.hideLoadingIndicator();
-//                                            }
-//
-//                                        });
-//
-//                                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
-//                                    }
-//                                });
-//
-//                            }
-//
-//                            @Override
-//                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                                if (headers != null) {
-//                                    for (Header h : headers) {
-//                                        Log.d("................ failed   key: ", h.getName());
-//                                        Log.d("................ failed value: ", h.getValue());
-//                                    }
-//                                }
-//                                if (responseBody != null) {
-//                                    Log.d("................ failed : ", responseBody);
-//                                }
-//                                if (error != null) {
-//                                    Log.d("................ failed error: ", error.toString());
-//
-//                                    String msg = "";
-//                                    if (null != responseBody) {
-//                                        try {
-//                                            JSONObject jsonResponse = new JSONObject(responseBody);
-//                                            msg = jsonResponse.getString("error");
-//                                        } catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    } else {
-//                                        msg = error.getMessage();
-//                                    }
-//
-//
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-//                                    builder.setTitle("Error")
-//                                            .setMessage(msg)
-//                                            .setCancelable(false)
-//                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                public void onClick(DialogInterface dialog, int id) {
-//                                                }
-//                                            });
-//                                    AlertDialog alert = builder.create();
-//                                    alert.show();
-//                                }
-//                            }
-//
-//
-//                            @Override
-//                            public void onFinish() {
-////                EWWave.hideLoadingIndicator();
-//                            }
-//
-//
-//                        });
-//
-//
-//                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
-//                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                        startActivity(tuneIn);
-//                    }
-//                });
-
             }
 
             @Override
@@ -620,173 +281,6 @@ public class BlendsTabFragment extends EWTabFragment {
                 blendedWithListView.setAdapter(defaultAdapter);
 
                 Utility.setListViewHeightBasedOnChildren(blendedWithListView);
-
-
-                // Click listener for the searched item that was selected
-//                requestedBlendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                        // Get the cursor, positioned to the corresponding row in the result set
-//                        String waveSelected = blendsList.get(position);
-//
-////                        blend wave request here
-//                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
-//                            @Override
-//                            public void onStart() {
-////                EWWave.showLoadingIndicator(getApplicationContext());
-//                            }
-//
-//                            @Override
-//                            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
-//                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
-//
-//
-//                                blendsList = new ArrayList<String>(jsonResponseArray.length());
-//                                for (int i = 0; i < jsonResponseArray.length(); i++) {
-//                                    try {
-//                                        Log.d("jsonObject::::::::::::::::::::::", jsonResponseArray.getJSONObject(i).toString());
-//                                        Log.d("label:", jsonResponseArray.getJSONObject(i).getString("label"));
-//                                        blendsList.add(jsonResponseArray.getJSONObject(i).getString("label"));
-//                                    } catch (JSONException e) {
-//                                        Log.d("JSONException", e.toString(), e);
-//                                    }
-//                                }
-//                                defaultAdapter = new BlendsCompletionCustomAdapter(getApplicationContext(), blendsList);
-//                                completionsListView.setAdapter(defaultAdapter);
-//
-//                                // Click listener for the searched item that was selected
-//                                completionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                                        // Get the cursor, positioned to the corresponding row in the result set
-//                                        String waveSelected = blendsList.get(position);
-//
-////                        blend wave request here
-//                                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
-//
-//                                            @Override
-//                                            public void onStart() {
-//                                                EWBlend.showLoadingIndicator(ApplicationContextProvider.getContext());
-//                                            }
-//
-//                                            @Override
-//                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-//                                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-//
-//
-//                                                Intent navBar = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                                                startActivity(navBar);
-//                                            }
-//
-//                                            @Override
-//                                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                                                if (headers != null) {
-//                                                    for (Header h : headers) {
-//                                                        Log.d("................ failed   key: ", h.getName());
-//                                                        Log.d("................ failed value: ", h.getValue());
-//                                                    }
-//                                                }
-//                                                if (responseBody != null) {
-//                                                    Log.d("................ failed : ", responseBody);
-//                                                }
-//                                                if (error != null) {
-//                                                    Log.d("................ failed error: ", error.toString());
-//
-//                                                    String msg = "";
-//                                                    if (null != responseBody) {
-//                                                        try {
-//                                                            JSONObject jsonResponse = new JSONObject(responseBody);
-//                                                            msg = jsonResponse.getString("error");
-//                                                        } catch (JSONException e) {
-//                                                            e.printStackTrace();
-//                                                        }
-//                                                    } else {
-//                                                        msg = error.getMessage();
-//                                                    }
-//
-//
-//                                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
-//                                                    builder.setTitle("Error")
-//                                                            .setMessage(msg)
-//                                                            .setCancelable(false)
-//                                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                                public void onClick(DialogInterface dialog, int id) {
-//                                                                }
-//                                                            });
-//                                                    AlertDialog alert = builder.create();
-//                                                    alert.show();
-//                                                }
-//                                            }
-//
-//
-//                                            @Override
-//                                            public void onFinish() {
-//                                                EWBlend.hideLoadingIndicator();
-//                                            }
-//
-//                                        });
-//
-//                                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
-//                                    }
-//                                });
-//
-//                            }
-//
-//                            @Override
-//                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                                if (headers != null) {
-//                                    for (Header h : headers) {
-//                                        Log.d("................ failed   key: ", h.getName());
-//                                        Log.d("................ failed value: ", h.getValue());
-//                                    }
-//                                }
-//                                if (responseBody != null) {
-//                                    Log.d("................ failed : ", responseBody);
-//                                }
-//                                if (error != null) {
-//                                    Log.d("................ failed error: ", error.toString());
-//
-//                                    String msg = "";
-//                                    if (null != responseBody) {
-//                                        try {
-//                                            JSONObject jsonResponse = new JSONObject(responseBody);
-//                                            msg = jsonResponse.getString("error");
-//                                        } catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    } else {
-//                                        msg = error.getMessage();
-//                                    }
-//
-//
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-//                                    builder.setTitle("Error")
-//                                            .setMessage(msg)
-//                                            .setCancelable(false)
-//                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                                public void onClick(DialogInterface dialog, int id) {
-//                                                }
-//                                            });
-//                                    AlertDialog alert = builder.create();
-//                                    alert.show();
-//                                }
-//                            }
-//
-//
-//                            @Override
-//                            public void onFinish() {
-////                EWWave.hideLoadingIndicator();
-//                            }
-//
-//
-//                        });
-//
-//
-//                        Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%", "waveSelected:" + waveSelected);
-//                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-//                        startActivity(tuneIn);
-//                    }
-//                });
 
             }
 
@@ -885,7 +379,7 @@ public class BlendsTabFragment extends EWTabFragment {
         public View getView(int position, View view, ViewGroup viewGroup) {
 
             // create a ViewHolder reference
-            ViewHolder holder;
+            final ViewHolder holder;
 
             //check to see if the reused view is null or not, if is not null then reuse it
             if (view == null) {
@@ -901,14 +395,183 @@ public class BlendsTabFragment extends EWTabFragment {
                 holder = (ViewHolder) view.getTag();
             }
 
+
             //get the string item from the position "position" from array list to put it on the TextView
-            String stringItem = mListItems.get(position);
-            if (stringItem != null) {
+            final String waveName = mListItems.get(position);
+            if (waveName != null) {
                 if (holder.itemName != null) {
                     //set the item name on the TextView
-                    holder.itemName.setText(stringItem);
+                    holder.itemName.setText(waveName);
                 }
             }
+
+
+            Button deleteButton = (Button) view.findViewById(R.id.row_requestedBlends_deleteButton);
+
+//                Click listener for the searched item that was selected
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(final View v) {
+                    AlertDialog.Builder alertDialogConfirmWaveDeletion = new AlertDialog.Builder(
+                            v.getContext());
+                    alertDialogConfirmWaveDeletion.setTitle("Unblend Wave?");
+
+                    // set dialog message
+                    alertDialogConfirmWaveDeletion
+                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your wave " + WavePickerFragment.getCurrentWaveName() + " !")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onStart() {
+                                            EWWave.showLoadingIndicator(v.getContext());
+                                        }
+
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                            Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                                            WavePickerFragment.resetCurrentWaveIndex();
+                                            ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                            if (headers != null) {
+                                                for (Header h : headers) {
+                                                    Log.d("................ failed   key: ", h.getName());
+                                                    Log.d("................ failed value: ", h.getValue());
+                                                }
+                                            }
+                                            if (responseBody != null) {
+                                                Log.d("................ failed : ", responseBody);
+                                            }
+                                            if (error != null) {
+                                                Log.d("................ failed error: ", error.toString());
+
+                                                String msg = "";
+                                                if (null != responseBody) {
+                                                    try {
+                                                        JSONObject jsonResponse = new JSONObject(responseBody);
+                                                        msg = jsonResponse.getString("error");
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                } else {
+                                                    msg = error.getMessage();
+                                                }
+
+
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                builder.setTitle("Error")
+                                                        .setMessage(msg)
+                                                        .setCancelable(false)
+                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                            }
+                                                        });
+                                                AlertDialog alert = builder.create();
+                                                alert.show();
+                                            }
+                                        }
+
+
+                                        @Override
+                                        public void onFinish() {
+                                            EWWave.hideLoadingIndicator();
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogConfirmWaveDeletion.create();
+
+                    // show it
+                    alertDialog.show();
+
+                }
+            });
+
+
+            Button addButton = (Button) view.findViewById(R.id.row_requestedBlends_addButton);
+
+//                Click listener for the searched item that was selected
+
+            addButton.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(final View v) {
+                    EWBlend.confirmBlendingWith(waveName, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onStart() {
+                            EWWave.showLoadingIndicator(v.getContext());
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                            Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                            ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                            if (headers != null) {
+                                for (Header h : headers) {
+                                    Log.d("................ failed   key: ", h.getName());
+                                    Log.d("................ failed value: ", h.getValue());
+                                }
+                            }
+                            if (responseBody != null) {
+                                Log.d("................ failed : ", responseBody);
+                            }
+                            if (error != null) {
+                                Log.d("................ failed error: ", error.toString());
+
+                                String msg = "";
+                                if (null != responseBody) {
+                                    try {
+                                        JSONObject jsonResponse = new JSONObject(responseBody);
+                                        msg = jsonResponse.getString("error");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    msg = error.getMessage();
+                                }
+
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                builder.setTitle("Error")
+                                        .setMessage(msg)
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+                            }
+                        }
+
+
+                        @Override
+                        public void onFinish() {
+                            EWWave.hideLoadingIndicator();
+                        }
+                    });
+                }
+            });
+
 
             //this method must return the view corresponding to the data at the specified position.
             return view;
@@ -970,13 +633,112 @@ public class BlendsTabFragment extends EWTabFragment {
             }
 
             //get the string item from the position "position" from array list to put it on the TextView
-            String stringItem = mListItems.get(position);
-            if (stringItem != null) {
+            final String waveName = mListItems.get(position);
+            if (waveName != null) {
                 if (holder.itemName != null) {
                     //set the item name on the TextView
-                    holder.itemName.setText(stringItem);
+                    holder.itemName.setText(waveName);
                 }
             }
+
+
+            Button deleteButton = (Button) view.findViewById(R.id.row_unconfirmedBlends_deleteButton);
+
+//                Click listener for the searched item that was selected
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(final View v) {
+                    AlertDialog.Builder alertDialogConfirmWaveDeletion = new AlertDialog.Builder(
+                            v.getContext());
+                    alertDialogConfirmWaveDeletion.setTitle("Unblend Wave?");
+
+                    // set dialog message
+                    alertDialogConfirmWaveDeletion
+                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your wave " + WavePickerFragment.getCurrentWaveName() + " !")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onStart() {
+                                            EWWave.showLoadingIndicator(v.getContext());
+                                        }
+
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                            Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                                            WavePickerFragment.resetCurrentWaveIndex();
+                                            ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                            if (headers != null) {
+                                                for (Header h : headers) {
+                                                    Log.d("................ failed   key: ", h.getName());
+                                                    Log.d("................ failed value: ", h.getValue());
+                                                }
+                                            }
+                                            if (responseBody != null) {
+                                                Log.d("................ failed : ", responseBody);
+                                            }
+                                            if (error != null) {
+                                                Log.d("................ failed error: ", error.toString());
+
+                                                String msg = "";
+                                                if (null != responseBody) {
+                                                    try {
+                                                        JSONObject jsonResponse = new JSONObject(responseBody);
+                                                        msg = jsonResponse.getString("error");
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                } else {
+                                                    msg = error.getMessage();
+                                                }
+
+
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                builder.setTitle("Error")
+                                                        .setMessage(msg)
+                                                        .setCancelable(false)
+                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                            }
+                                                        });
+                                                AlertDialog alert = builder.create();
+                                                alert.show();
+                                            }
+                                        }
+
+
+                                        @Override
+                                        public void onFinish() {
+                                            EWWave.hideLoadingIndicator();
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogConfirmWaveDeletion.create();
+
+                    // show it
+                    alertDialog.show();
+
+                }
+            });
+
 
             //this method must return the view corresponding to the data at the specified position.
             return view;
@@ -1038,13 +800,121 @@ public class BlendsTabFragment extends EWTabFragment {
             }
 
             //get the string item from the position "position" from array list to put it on the TextView
-            String stringItem = mListItems.get(position);
-            if (stringItem != null) {
+            final String waveName = mListItems.get(position);
+            if (waveName != null) {
                 if (holder.itemName != null) {
                     //set the item name on the TextView
-                    holder.itemName.setText(stringItem);
+                    holder.itemName.setText(waveName);
                 }
             }
+
+
+            Button deleteButton = (Button) view.findViewById(R.id.row_blendedWith_deleteButton);
+
+//                Click listener for the searched item that was selected
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(final View v) {
+                    AlertDialog.Builder alertDialogConfirmWaveDeletion = new AlertDialog.Builder(
+                            v.getContext());
+                    alertDialogConfirmWaveDeletion.setTitle("Unblend Wave?");
+
+                    // set dialog message
+                    alertDialogConfirmWaveDeletion
+                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your wave " + WavePickerFragment.getCurrentWaveName() + " !")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onStart() {
+                                            EWWave.showLoadingIndicator(v.getContext());
+                                        }
+
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                            Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                                            WavePickerFragment.resetCurrentWaveIndex();
+                                            ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                            if (headers != null) {
+                                                for (Header h : headers) {
+                                                    Log.d("................ failed   key: ", h.getName());
+                                                    Log.d("................ failed value: ", h.getValue());
+                                                }
+                                            }
+                                            if (responseBody != null) {
+                                                Log.d("................ failed : ", responseBody);
+                                            }
+                                            if (error != null) {
+                                                Log.d("................ failed error: ", error.toString());
+
+                                                String msg = "";
+                                                if (null != responseBody) {
+                                                    try {
+                                                        JSONObject jsonResponse = new JSONObject(responseBody);
+                                                        msg = jsonResponse.getString("error");
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                } else {
+                                                    msg = error.getMessage();
+                                                }
+
+
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                                builder.setTitle("Error")
+                                                        .setMessage(msg)
+                                                        .setCancelable(false)
+                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                            }
+                                                        });
+                                                AlertDialog alert = builder.create();
+                                                alert.show();
+                                            }
+                                        }
+
+
+                                        @Override
+                                        public void onFinish() {
+                                            EWWave.hideLoadingIndicator();
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogConfirmWaveDeletion.create();
+
+                    // show it
+                    alertDialog.show();
+
+                }
+            });
+
+
+            view.setOnClickListener(new View.OnClickListener() {
+                public void onClick(final View v) {
+                    Intent acceptBlendingIntent = new Intent(v.getContext(), AcceptBlendingRequestActivity.class);
+                    acceptBlendingIntent.putExtra("FROM_WAVE", waveName);
+                    startActivity(acceptBlendingIntent);
+                }
+            });
+
 
             //this method must return the view corresponding to the data at the specified position.
             return view;

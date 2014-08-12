@@ -147,10 +147,14 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
         blendsTabFragment = (BlendsTabFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_blends);
 
-//        if (WavePickerFragment.getCurrentWaveName() != null) {
-//            onAWaveSelected(WavePickerFragment.getCurrentWaveName());
-//        }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("==========================================: ", "onResume called");
+        onAWaveSelected(WavePickerFragment.getCurrentWaveName());
     }
 
     @Override
@@ -163,17 +167,12 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
     public void onAWaveSelected(String waveName) {
         Log.d("%%%%%%%%%%%%%%%%% NavigationTabBarActivity", "waveSelected:" + waveName);
 
-//        if (detailfragment != null && detailfragment.isInLayout()) {
-//        }
-
-        wavingFragment.updateWave(WavePickerFragment.getCurrentWaveName());
-        echoWaveFragment.updateWave(WavePickerFragment.getCurrentWaveName());
-        blendsTabFragment.updateWave(WavePickerFragment.getCurrentWaveName());
+        if (WavePickerFragment.getCurrentWaveName() != null) {
+            wavingFragment.updateWave(WavePickerFragment.getCurrentWaveName());
+            echoWaveFragment.updateWave(WavePickerFragment.getCurrentWaveName());
+            blendsTabFragment.updateWave(WavePickerFragment.getCurrentWaveName());
+        }
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//    }
 
 }
