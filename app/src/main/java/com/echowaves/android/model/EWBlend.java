@@ -17,10 +17,10 @@ public class EWBlend extends EWDataModel {
         HTTP_CLIENT.get(getAbsoluteUrl("/autocomplete-wave-name.json"), params, responseHandler);
     }
 
-    public static void requestBlendingWith(String waveName, AsyncHttpResponseHandler responseHandler) {
+    public static void requestBlendingWith(String waveName, String fromWaveName, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("wave_name", waveName);
-        params.put("from_wave", WavePickerFragment.getCurrentWaveName());
+        params.put("from_wave", fromWaveName);
         HTTP_CLIENT.post(getAbsoluteUrl("/request-blending.json"), params, responseHandler);
     }
 
@@ -45,17 +45,17 @@ public class EWBlend extends EWDataModel {
 
 
 
-    public static void confirmBlendingWith(String waveName, AsyncHttpResponseHandler responseHandler) {
+    public static void confirmBlendingWith(String waveName, String fromWaveName, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("wave_name", waveName);
-        params.put("from_wave", WavePickerFragment.getCurrentWaveName());
+        params.put("from_wave", fromWaveName);
         HTTP_CLIENT.post(getAbsoluteUrl("/confirm-blending.json"), params, responseHandler);
     }
 
-    public static void unblendFrom(String waveName, String currentWave, AsyncHttpResponseHandler responseHandler) {
+    public static void unblendFrom(String waveName, String fromWaveName, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("wave_name", waveName);
-        params.put("from_wave", currentWave);
+        params.put("from_wave", fromWaveName);
         HTTP_CLIENT.post(getAbsoluteUrl("/unblend.json"), params, responseHandler);
     }
 

@@ -13,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.echowaves.android.model.EWBlend;
 import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -139,13 +141,113 @@ public class AcceptBlendingRequestActivity extends EWActivity {
         Button acceptButton = (Button) findViewById(R.id.acceptBlending_acceptButton);
         acceptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                if(currentlySelectedWaveName.equals(WavePickerFragment.getCurrentWaveName()) ||
-                   currentlySelectedWaveName.equals(fromWave)) {
+                if (currentlySelectedWaveName.equals(WavePickerFragment.getCurrentWaveName()) ||
+                        currentlySelectedWaveName.equals(fromWave)) {
                     finish();
                 }
 
+                EWBlend.unblendFrom(fromWave, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        EWWave.showLoadingIndicator(getLayoutInflater().getContext());
+                        Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        EWWave.hideLoadingIndicator();
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                        Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
+
+
+                        EWBlend.requestBlendingWith(currentlySelectedWaveName, fromWave, new JsonHttpResponseHandler() {
+
+                            @Override
+                            public void onStart() {
+                                super.onStart();
+                                EWWave.showLoadingIndicator(getLayoutInflater().getContext());
+                                Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                EWWave.hideLoadingIndicator();
+                            }
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
+
+
+                                EWBlend.confirmBlendingWith(currentlySelectedWaveName, fromWave, new JsonHttpResponseHandler() {
+
+                                    @Override
+                                    public void onStart() {
+                                        super.onStart();
+                                        EWWave.showLoadingIndicator(getLayoutInflater().getContext());
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        EWWave.hideLoadingIndicator();
+                                    }
+
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
+                                        finish();
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                        if (headers != null) {
+                                            for (Header h : headers) {
+                                                Log.d("................ failed   key: ", h.getName());
+                                                Log.d("................ failed value: ", h.getValue());
+                                            }
+                                        }
+                                        if (responseBody != null) {
+                                            Log.d("................ failed : ", responseBody);
+                                        }
+                                        if (error != null) {
+                                            Log.d("................ failed error: ", error.toString());
+
+                                        }
+                                    }
+                                });
+
+
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
+                                if (headers != null) {
+                                    for (Header h : headers) {
+                                        Log.d("................ failed   key: ", h.getName());
+                                        Log.d("................ failed value: ", h.getValue());
+                                    }
+                                }
+                                if (responseBody != null) {
+                                    Log.d("................ failed : ", responseBody);
+                                }
+                                if (error != null) {
+                                    Log.d("................ failed error: ", error.toString());
+
+                                }
+                            }
+                        });
+                    }
+                });
 
             }
+
         });
 
     }

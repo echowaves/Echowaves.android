@@ -121,7 +121,7 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
                         String waveSelected = blendsList.get(position);
 
 //                        blend wave request here
-                        EWBlend.requestBlendingWith(waveSelected, new JsonHttpResponseHandler() {
+                        EWBlend.requestBlendingWith(waveSelected, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
                             @Override
                             public void onStart() {
                                 EWBlend.showLoadingIndicator(searchView.getContext());

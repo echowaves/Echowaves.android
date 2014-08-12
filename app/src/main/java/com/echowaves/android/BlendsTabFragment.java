@@ -511,7 +511,7 @@ public class BlendsTabFragment extends EWTabFragment {
             addButton.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(final View v) {
-                    EWBlend.confirmBlendingWith(waveName, new JsonHttpResponseHandler() {
+                    EWBlend.confirmBlendingWith(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
                         @Override
                         public void onStart() {
                             EWWave.showLoadingIndicator(v.getContext());
