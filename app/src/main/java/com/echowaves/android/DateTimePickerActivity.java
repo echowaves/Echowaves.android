@@ -11,6 +11,7 @@ import android.widget.TimePicker;
 import com.echowaves.android.model.ApplicationContextProvider;
 
 import java.util.Calendar;
+import java.util.Date;
 
 // http://www.yogeshblogspot.com/datepicker-and-timepicker/
 
@@ -35,10 +36,10 @@ public class DateTimePickerActivity extends EWActivity {
         });
 
 
-        DatePicker datePicker = (DatePicker) findViewById(R.id.dtpicker_datePicker);
-        TimePicker timePicker = (TimePicker) findViewById(R.id.dtpicker_timePicker);
+        final DatePicker datePicker = (DatePicker) findViewById(R.id.dtpicker_datePicker);
+        final TimePicker timePicker = (TimePicker) findViewById(R.id.dtpicker_timePicker);
 
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.setTime(ApplicationContextProvider.getCurrentAssetDateTime());
         datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
@@ -63,6 +64,19 @@ public class DateTimePickerActivity extends EWActivity {
 
                 Intent navTabBarActivity = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                 startActivity(navTabBarActivity);
+            }
+        });
+
+        Button setTimeButtonNow = (Button) findViewById(R.id.dtpicker_nowbutton);
+        //Listening to button event
+        setTimeButtonNow.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                cal.setTime(new Date());
+                datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+                timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+                timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
+
             }
         });
 

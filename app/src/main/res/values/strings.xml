@@ -9,6 +9,7 @@
     <string name="tuneIn">TuneIn</string>
     <string name="pickWaves">Pick Waves</string>
     <string name="setDateTime">Set Date and Time</string>
+    <string name="setDateTimeNow">reset to now</string>
     <string name="tuneOut">TuneOut</string>
     <string name="createWave">Create New Wave</string>
     <string name="createChildWave">Create Wave</string>
