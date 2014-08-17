@@ -47,7 +47,7 @@ public class ApplicationContextProvider extends Application {
         return getPhotosCountSince(getCurrentAssetDateTime());
     }
 
-    private static int getPhotosCountSince(Date date) {
+    public static int getPhotosCountSince(Date date) {
 //  http://stackoverflow.com/questions/22302357/delete-image-from-android-gallery-captured-after-particular-date-time
         String[] projection = new String[]{
 //                MediaStore.Images.ImageColumns._ID,
