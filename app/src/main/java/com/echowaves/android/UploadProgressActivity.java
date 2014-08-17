@@ -79,8 +79,6 @@ public class UploadProgressActivity extends EWActivity {
                         waveOperation = null;
                     }
                     finish();
-//                    Intent navBarIntent = new Intent(pauseAllButton.getContext(), NavigationTabBarActivity.class);
-//                    startActivity(navBarIntent);
                 }
             });
 
