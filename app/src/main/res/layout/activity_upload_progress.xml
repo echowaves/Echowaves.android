@@ -19,7 +19,7 @@
         android:layout_marginRight="5dp"
         android:background="@drawable/rounded_button"
         android:padding="15dp"
-        android:text="cancel photo"
+        android:text="Skip Photo"
         android:textColor="@android:color/white" />
 
     <TextView
