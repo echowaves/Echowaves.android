@@ -15,6 +15,7 @@ import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,7 +101,7 @@ public class SignUpActivity extends EWActivity {
 
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                    builder.setTitle("Error")
+                                    builder.setTitle("Error1")
                                             .setMessage(msg)
                                             .setCancelable(false)
                                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -111,6 +112,36 @@ public class SignUpActivity extends EWActivity {
                                     alert.show();
                                 }
                             }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                builder.setTitle("Error2")
+                                        .setMessage(errorResponse.toString())
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                builder.setTitle("Error3")
+                                        .setMessage(errorResponse.toString())
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+                            }
+
 
 
                             @Override
