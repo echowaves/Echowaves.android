@@ -12,13 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.echowaves.android.model.EWWave;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.util.ArrayList;
 
 public class WavePickerFragment extends Fragment {
 
@@ -28,7 +26,7 @@ public class WavePickerFragment extends Fragment {
     private Spinner spinnerWaves;
 
     public static String getCurrentWaveName() {
-        if(waves != null) {
+        if (waves != null) {
             return waves[currentWaveIndex];
         }
         return null;
@@ -64,7 +62,7 @@ public class WavePickerFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_wave_picker, container, false);
         Log.i("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Waving fragment ", "onCreateView()");
 
-        EWWave.getAllMyWaves(new JsonHttpResponseHandler() {
+        EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(view.getContext()) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -118,22 +116,6 @@ public class WavePickerFragment extends Fragment {
 
             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                }
-            }
         });
 
 

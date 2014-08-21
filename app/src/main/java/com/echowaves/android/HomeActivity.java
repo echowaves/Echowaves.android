@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWWave;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -26,7 +26,7 @@ public class HomeActivity extends EWActivity {
         final String storedWavePassword = EWWave.getStoredWavePassword();
         // auto tunein
         if (!"".equals(storedWaveName) && tuneInCount == 0) {
-            EWWave.tuneInWithNameAndPassword(storedWaveName, storedWavePassword, new JsonHttpResponseHandler() {
+            EWWave.tuneInWithNameAndPassword(storedWaveName, storedWavePassword, new EWJsonHttpResponseHandler(this) {
 //                @Override
 //                public void onStart() {
 //                    EWWave.showLoadingIndicator(ApplicationContextProvider.getContext());
@@ -41,46 +41,6 @@ public class HomeActivity extends EWActivity {
 
                     Intent tuneIn = new Intent(ApplicationContextProvider.getContext(), NavigationTabBarActivity.class);
                     startActivity(tuneIn);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                    if (headers != null) {
-                        for (Header h : headers) {
-                            Log.d("................ failed   key: ", h.getName());
-                            Log.d("................ failed value: ", h.getValue());
-                        }
-                    }
-                    if (responseBody != null) {
-                        Log.d("................ failed : ", responseBody);
-                    }
-                    if (error != null) {
-                        Log.d("................ failed error: ", error.toString());
-
-//                        String msg = "";
-//                        if (null != responseBody) {
-//                            try {
-//                                JSONObject jsonResponse = new JSONObject(new String(responseBody));
-//                                msg = jsonResponse.getString("error");
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        } else {
-//                            msg = error.getMessage();
-//                        }
-
-
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
-//                        builder.setTitle("Error")
-//                                .setMessage(msg)
-//                                .setCancelable(false)
-//                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                    }
-//                                });
-//                        AlertDialog alert = builder.create();
-//                        alert.show();
-                    }
                 }
 
 

@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.echowaves.android.model.EWWave;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -48,7 +48,7 @@ public class PickWavesForUploadActivity extends EWActivity {
         });
 
 
-        EWWave.getAllMyWaves(new JsonHttpResponseHandler() {
+        EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(this) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -105,7 +105,7 @@ public class PickWavesForUploadActivity extends EWActivity {
                                                     Log.d("making a wave active: " + position + ":", String.valueOf(isChecked));
                                                     waves.get(position).setActive(isChecked);
 
-                                                    EWWave.makeWaveActive(waves.get(position).getName(), isChecked, new JsonHttpResponseHandler() {
+                                                    EWWave.makeWaveActive(waves.get(position).getName(), isChecked, new EWJsonHttpResponseHandler(buttonView.getContext()) {
                                                         @Override
                                                         public void onStart() {
                                                             super.onStart();
@@ -124,23 +124,6 @@ public class PickWavesForUploadActivity extends EWActivity {
                                                             Log.d(">>>>>>>>>>>>>>>>>>>> making wave active finished Loading successfully", jsonResponseArray.toString());
                                                         }
 
-                                                        @Override
-                                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active finished Loading error", "");
-                                                            if (headers != null) {
-                                                                for (Header h : headers) {
-                                                                    Log.d("................ failed   key: ", h.getName());
-                                                                    Log.d("................ failed value: ", h.getValue());
-                                                                }
-                                                            }
-                                                            if (responseBody != null) {
-                                                                Log.d("................ failed : ", responseBody);
-                                                            }
-                                                            if (error != null) {
-                                                                Log.d("................ failed error: ", error.toString());
-
-                                                            }
-                                                        }
                                                     });
 
 
@@ -166,26 +149,10 @@ public class PickWavesForUploadActivity extends EWActivity {
 
             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                }
-            }
         });
 
 
-        Button waveNowButton = (Button)findViewById(R.id.pickwaves_waveNowButton);
+        Button waveNowButton = (Button) findViewById(R.id.pickwaves_waveNowButton);
         //Listening to button event
         waveNowButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {

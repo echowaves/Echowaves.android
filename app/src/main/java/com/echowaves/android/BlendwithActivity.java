@@ -1,8 +1,6 @@
 package com.echowaves.android;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +15,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.echowaves.android.model.EWBlend;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -32,11 +30,13 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
     private ListView completionsListView;
     private BlendsCompletionCustomAdapter defaultAdapter;
     private ArrayList<String> blendsList = new ArrayList<String>();
+    private Context activityContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blendwith);
+        activityContext = this;
 
         ImageView backButton = (ImageView) findViewById(R.id.blendwith_imageViewBack);
         //Listening to button event
@@ -89,7 +89,7 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
 
     private void displayResults(String query) {
 
-        EWBlend.autoCompleteFor(query, new JsonHttpResponseHandler() {
+        EWBlend.autoCompleteFor(query, new EWJsonHttpResponseHandler(activityContext) {
             @Override
             public void onStart() {
 //                EWWave.showLoadingIndicator(getApplicationContext());
@@ -121,7 +121,7 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
                         String waveSelected = blendsList.get(position);
 
 //                        blend wave request here
-                        EWBlend.requestBlendingWith(waveSelected, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                        EWBlend.requestBlendingWith(waveSelected, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(activityContext) {
                             @Override
                             public void onStart() {
                                 EWBlend.showLoadingIndicator(searchView.getContext());
@@ -131,46 +131,6 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
                                 finish();
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                if (headers != null) {
-                                    for (Header h : headers) {
-                                        Log.d("................ failed   key: ", h.getName());
-                                        Log.d("................ failed value: ", h.getValue());
-                                    }
-                                }
-                                if (responseBody != null) {
-                                    Log.d("................ failed : ", responseBody);
-                                }
-                                if (error != null) {
-                                    Log.d("................ failed error: ", error.toString());
-
-                                    String msg = "";
-                                    if (null != responseBody) {
-                                        try {
-                                            JSONObject jsonResponse = new JSONObject(responseBody);
-                                            msg = jsonResponse.getString("error");
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    } else {
-                                        msg = error.getMessage();
-                                    }
-
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                                    builder.setTitle("Error")
-                                            .setMessage(msg)
-                                            .setCancelable(false)
-                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-                                }
                             }
 
 
@@ -185,46 +145,6 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
                     }
                 });
 
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                    String msg = "";
-                    if (null != responseBody) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(responseBody);
-                            msg = jsonResponse.getString("error");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        msg = error.getMessage();
-                    }
-
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                    builder.setTitle("Error")
-                            .setMessage(msg)
-                            .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                }
             }
 
 

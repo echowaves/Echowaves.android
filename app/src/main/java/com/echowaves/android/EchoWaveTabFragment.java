@@ -11,7 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.echowaves.android.model.EWImage;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 import com.loopj.android.image.SmartImageView;
 
 import org.apache.http.Header;
@@ -53,7 +53,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
 //            }
 //        });
 
-        EWImage.getAllImagesForWave(WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+        EWImage.getAllImagesForWave(WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(view.getContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveTabFragment finished Loading images", Integer.toString(jsonResponseArray.length()));
@@ -75,22 +75,6 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                }
-            }
         });
 
     }
@@ -126,11 +110,11 @@ public class EchoWaveTabFragment extends EWTabFragment {
             SmartImageView imageView;
 
 //            if (convertView == null) {  // if it's not recycled, initialize some attributes
-                imageView = new SmartImageView(mContext);
+            imageView = new SmartImageView(mContext);
 
-                imageView.setLayoutParams(new GridView.LayoutParams(parent.getWidth() / 3 - 5, parent.getWidth() / 3 - 5));
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setPadding(2, 2, 2, 2);
+            imageView.setLayoutParams(new GridView.LayoutParams(parent.getWidth() / 3 - 5, parent.getWidth() / 3 - 5));
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setPadding(2, 2, 2, 2);
 //            } else {
 //                imageView = (SmartImageView) convertView;
 //            }

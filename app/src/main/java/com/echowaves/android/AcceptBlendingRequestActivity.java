@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.echowaves.android.model.EWBlend;
 import com.echowaves.android.model.EWWave;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -59,7 +59,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
 
         currentlySelectedWaveName = WavePickerFragment.getCurrentWaveName();
 
-        EWWave.getAllMyWaves(new JsonHttpResponseHandler() {
+        EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -119,22 +119,6 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                 allMyWavesListView.setOnItemClickListener(itemClickListener);
             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                }
-            }
         });
 
 
@@ -146,7 +130,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                     finish();
                 }
 
-                EWBlend.unblendFrom(fromWave, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                EWBlend.unblendFrom(fromWave, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                     @Override
                     public void onStart() {
@@ -165,7 +149,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                         Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
 
 
-                        EWBlend.requestBlendingWith(currentlySelectedWaveName, fromWave, new JsonHttpResponseHandler() {
+                        EWBlend.requestBlendingWith(currentlySelectedWaveName, fromWave, new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                             @Override
                             public void onStart() {
@@ -184,7 +168,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
 
 
-                                EWBlend.confirmBlendingWith(currentlySelectedWaveName, fromWave, new JsonHttpResponseHandler() {
+                                EWBlend.confirmBlendingWith(currentlySelectedWaveName, fromWave, new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                                     @Override
                                     public void onStart() {
@@ -205,43 +189,11 @@ public class AcceptBlendingRequestActivity extends EWActivity {
 
                                     }
 
-                                    @Override
-                                    public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                        if (headers != null) {
-                                            for (Header h : headers) {
-                                                Log.d("................ failed   key: ", h.getName());
-                                                Log.d("................ failed value: ", h.getValue());
-                                            }
-                                        }
-                                        if (responseBody != null) {
-                                            Log.d("................ failed : ", responseBody);
-                                        }
-                                        if (error != null) {
-                                            Log.d("................ failed error: ", error.toString());
-
-                                        }
-                                    }
                                 });
 
 
                             }
 
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                if (headers != null) {
-                                    for (Header h : headers) {
-                                        Log.d("................ failed   key: ", h.getName());
-                                        Log.d("................ failed value: ", h.getValue());
-                                    }
-                                }
-                                if (responseBody != null) {
-                                    Log.d("................ failed : ", responseBody);
-                                }
-                                if (error != null) {
-                                    Log.d("................ failed error: ", error.toString());
-
-                                }
-                            }
                         });
                     }
                 });

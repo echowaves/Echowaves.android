@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.echowaves.android.model.EWBlend;
 import com.echowaves.android.model.EWWave;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 import com.echowaves.android.util.Utility;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -96,7 +96,7 @@ public class BlendsTabFragment extends EWTabFragment {
         super.updateWave(waveName);
         Log.d("BlendsTabFragment updateWave", waveName);
 
-        EWBlend.getRequestedBlends(new JsonHttpResponseHandler() {
+        EWBlend.getRequestedBlends(new EWJsonHttpResponseHandler(getActivity()) {
             @Override
             public void onStart() {
 //                EWWave.showLoadingIndicator(getApplicationContext());
@@ -128,53 +128,12 @@ public class BlendsTabFragment extends EWTabFragment {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                    String msg = "";
-                    if (null != responseBody) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(responseBody);
-                            msg = jsonResponse.getString("error");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        msg = error.getMessage();
-                    }
-
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Error")
-                            .setMessage(msg)
-                            .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                }
-            }
-
-
-            @Override
             public void onFinish() {
 //                EWWave.hideLoadingIndicator();
             }
         });
 
-        EWBlend.getUnconfirmedBlends(new JsonHttpResponseHandler() {
+        EWBlend.getUnconfirmedBlends(new EWJsonHttpResponseHandler(getActivity()) {
             @Override
             public void onStart() {
 //                EWWave.showLoadingIndicator(getApplicationContext());
@@ -207,53 +166,12 @@ public class BlendsTabFragment extends EWTabFragment {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                    String msg = "";
-                    if (null != responseBody) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(responseBody);
-                            msg = jsonResponse.getString("error");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        msg = error.getMessage();
-                    }
-
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Error")
-                            .setMessage(msg)
-                            .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                }
-            }
-
-
-            @Override
             public void onFinish() {
 //                EWWave.hideLoadingIndicator();
             }
         });
 
-        EWBlend.getBlendedWith(new JsonHttpResponseHandler() {
+        EWBlend.getBlendedWith(new EWJsonHttpResponseHandler(getActivity()) {
             @Override
             public void onStart() {
 //                EWWave.showLoadingIndicator(getApplicationContext());
@@ -283,47 +201,6 @@ public class BlendsTabFragment extends EWTabFragment {
                 Utility.setListViewHeightBasedOnChildren(blendedWithListView);
 
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                if (headers != null) {
-                    for (Header h : headers) {
-                        Log.d("................ failed   key: ", h.getName());
-                        Log.d("................ failed value: ", h.getValue());
-                    }
-                }
-                if (responseBody != null) {
-                    Log.d("................ failed : ", responseBody);
-                }
-                if (error != null) {
-                    Log.d("................ failed error: ", error.toString());
-
-                    String msg = "";
-                    if (null != responseBody) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(responseBody);
-                            msg = jsonResponse.getString("error");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        msg = error.getMessage();
-                    }
-
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Error")
-                            .setMessage(msg)
-                            .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                }
-            }
-
 
             @Override
             public void onFinish() {
@@ -425,7 +302,7 @@ public class BlendsTabFragment extends EWTabFragment {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // if this button is clicked, close
                                     // current activity
-                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
                                         @Override
                                         public void onStart() {
                                             EWWave.showLoadingIndicator(v.getContext());
@@ -437,47 +314,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                             WavePickerFragment.resetCurrentWaveIndex();
                                             ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
                                         }
-
-                                        @Override
-                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                            if (headers != null) {
-                                                for (Header h : headers) {
-                                                    Log.d("................ failed   key: ", h.getName());
-                                                    Log.d("................ failed value: ", h.getValue());
-                                                }
-                                            }
-                                            if (responseBody != null) {
-                                                Log.d("................ failed : ", responseBody);
-                                            }
-                                            if (error != null) {
-                                                Log.d("................ failed error: ", error.toString());
-
-                                                String msg = "";
-                                                if (null != responseBody) {
-                                                    try {
-                                                        JSONObject jsonResponse = new JSONObject(responseBody);
-                                                        msg = jsonResponse.getString("error");
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                } else {
-                                                    msg = error.getMessage();
-                                                }
-
-
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                                builder.setTitle("Error")
-                                                        .setMessage(msg)
-                                                        .setCancelable(false)
-                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                            }
-                                                        });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                            }
-                                        }
-
 
                                         @Override
                                         public void onFinish() {
@@ -511,7 +347,7 @@ public class BlendsTabFragment extends EWTabFragment {
             addButton.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(final View v) {
-                    EWBlend.confirmBlendingWith(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                    EWBlend.confirmBlendingWith(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
                         @Override
                         public void onStart() {
                             EWWave.showLoadingIndicator(v.getContext());
@@ -521,46 +357,6 @@ public class BlendsTabFragment extends EWTabFragment {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                             Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
                             ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                            if (headers != null) {
-                                for (Header h : headers) {
-                                    Log.d("................ failed   key: ", h.getName());
-                                    Log.d("................ failed value: ", h.getValue());
-                                }
-                            }
-                            if (responseBody != null) {
-                                Log.d("................ failed : ", responseBody);
-                            }
-                            if (error != null) {
-                                Log.d("................ failed error: ", error.toString());
-
-                                String msg = "";
-                                if (null != responseBody) {
-                                    try {
-                                        JSONObject jsonResponse = new JSONObject(responseBody);
-                                        msg = jsonResponse.getString("error");
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    msg = error.getMessage();
-                                }
-
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                builder.setTitle("Error")
-                                        .setMessage(msg)
-                                        .setCancelable(false)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                            }
-                                        });
-                                AlertDialog alert = builder.create();
-                                alert.show();
-                            }
                         }
 
 
@@ -661,7 +457,7 @@ public class BlendsTabFragment extends EWTabFragment {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // if this button is clicked, close
                                     // current activity
-                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
                                         @Override
                                         public void onStart() {
                                             EWWave.showLoadingIndicator(v.getContext());
@@ -672,46 +468,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                             Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
                                             WavePickerFragment.resetCurrentWaveIndex();
                                             ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
-                                        }
-
-                                        @Override
-                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                            if (headers != null) {
-                                                for (Header h : headers) {
-                                                    Log.d("................ failed   key: ", h.getName());
-                                                    Log.d("................ failed value: ", h.getValue());
-                                                }
-                                            }
-                                            if (responseBody != null) {
-                                                Log.d("................ failed : ", responseBody);
-                                            }
-                                            if (error != null) {
-                                                Log.d("................ failed error: ", error.toString());
-
-                                                String msg = "";
-                                                if (null != responseBody) {
-                                                    try {
-                                                        JSONObject jsonResponse = new JSONObject(responseBody);
-                                                        msg = jsonResponse.getString("error");
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                } else {
-                                                    msg = error.getMessage();
-                                                }
-
-
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                                builder.setTitle("Error")
-                                                        .setMessage(msg)
-                                                        .setCancelable(false)
-                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                            }
-                                                        });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                            }
                                         }
 
 
@@ -828,7 +584,7 @@ public class BlendsTabFragment extends EWTabFragment {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // if this button is clicked, close
                                     // current activity
-                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new JsonHttpResponseHandler() {
+                                    EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
                                         @Override
                                         public void onStart() {
                                             EWWave.showLoadingIndicator(v.getContext());
@@ -839,46 +595,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                             Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
                                             WavePickerFragment.resetCurrentWaveIndex();
                                             ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
-                                        }
-
-                                        @Override
-                                        public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                            if (headers != null) {
-                                                for (Header h : headers) {
-                                                    Log.d("................ failed   key: ", h.getName());
-                                                    Log.d("................ failed value: ", h.getValue());
-                                                }
-                                            }
-                                            if (responseBody != null) {
-                                                Log.d("................ failed : ", responseBody);
-                                            }
-                                            if (error != null) {
-                                                Log.d("................ failed error: ", error.toString());
-
-                                                String msg = "";
-                                                if (null != responseBody) {
-                                                    try {
-                                                        JSONObject jsonResponse = new JSONObject(responseBody);
-                                                        msg = jsonResponse.getString("error");
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                } else {
-                                                    msg = error.getMessage();
-                                                }
-
-
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                                builder.setTitle("Error")
-                                                        .setMessage(msg)
-                                                        .setCancelable(false)
-                                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                            public void onClick(DialogInterface dialog, int id) {
-                                                            }
-                                                        });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                            }
                                         }
 
 
