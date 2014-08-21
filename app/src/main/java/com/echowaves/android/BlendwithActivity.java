@@ -90,10 +90,6 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
     private void displayResults(String query) {
 
         EWBlend.autoCompleteFor(query, new EWJsonHttpResponseHandler(activityContext) {
-            @Override
-            public void onStart() {
-//                EWWave.showLoadingIndicator(getApplicationContext());
-            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
@@ -122,21 +118,11 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
 
 //                        blend wave request here
                         EWBlend.requestBlendingWith(waveSelected, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(activityContext) {
-                            @Override
-                            public void onStart() {
-                                EWBlend.showLoadingIndicator(searchView.getContext());
-                            }
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
                                 finish();
-                            }
-
-
-                            @Override
-                            public void onFinish() {
-                                EWBlend.hideLoadingIndicator();
                             }
 
                         });
@@ -148,10 +134,6 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
             }
 
 
-            @Override
-            public void onFinish() {
-//                EWWave.hideLoadingIndicator();
-            }
         });
     }
 

@@ -60,17 +60,6 @@ public class AcceptBlendingRequestActivity extends EWActivity {
         currentlySelectedWaveName = WavePickerFragment.getCurrentWaveName();
 
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
-            @Override
-            public void onStart() {
-                super.onStart();
-                EWWave.showLoadingIndicator(getLayoutInflater().getContext());
-                Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
-            }
-
-            @Override
-            public void onFinish() {
-                EWWave.hideLoadingIndicator();
-            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
@@ -133,18 +122,6 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                 EWBlend.unblendFrom(fromWave, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                     @Override
-                    public void onStart() {
-                        super.onStart();
-                        EWWave.showLoadingIndicator(getLayoutInflater().getContext());
-                        Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        EWWave.hideLoadingIndicator();
-                    }
-
-                    @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
 
@@ -152,35 +129,11 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                         EWBlend.requestBlendingWith(currentlySelectedWaveName, fromWave, new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                             @Override
-                            public void onStart() {
-                                super.onStart();
-                                EWWave.showLoadingIndicator(getLayoutInflater().getContext());
-                                Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                EWWave.hideLoadingIndicator();
-                            }
-
-                            @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
 
 
                                 EWBlend.confirmBlendingWith(currentlySelectedWaveName, fromWave, new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
-
-                                    @Override
-                                    public void onStart() {
-                                        super.onStart();
-                                        EWWave.showLoadingIndicator(getLayoutInflater().getContext());
-                                        Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
-                                    }
-
-                                    @Override
-                                    public void onFinish() {
-                                        EWWave.hideLoadingIndicator();
-                                    }
 
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {

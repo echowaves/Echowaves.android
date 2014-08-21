@@ -60,10 +60,6 @@ public class SignInActivity extends EWActivity {
                 final String wavePassword = ((EditText) findViewById(R.id.tunein_wave_password)).getText().toString();
 
                 EWWave.tuneInWithNameAndPassword(waveName, wavePassword, new EWJsonHttpResponseHandler(v.getContext()) {
-                    @Override
-                    public void onStart() {
-                        EWWave.showLoadingIndicator(v.getContext());
-                    }
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -76,10 +72,6 @@ public class SignInActivity extends EWActivity {
                         startActivity(tuneIn);
                     }
 
-                    @Override
-                    public void onFinish() {
-                        EWWave.hideLoadingIndicator();
-                    }
                 });
             }
         });

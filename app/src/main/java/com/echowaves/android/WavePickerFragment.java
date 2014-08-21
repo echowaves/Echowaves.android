@@ -63,11 +63,6 @@ public class WavePickerFragment extends Fragment {
         Log.i("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Waving fragment ", "onCreateView()");
 
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(view.getContext()) {
-            @Override
-            public void onStart() {
-                super.onStart();
-                Log.d(">>>>>>>>>>>>>>>>>>>> WavePickerFragment starting Loading", "");
-            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {

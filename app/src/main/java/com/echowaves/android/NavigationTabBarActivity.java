@@ -75,10 +75,6 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
             public void onClick(final View v) {
 
                 EWWave.tuneOut(new EWJsonHttpResponseHandler(v.getContext()) {
-                    @Override
-                    public void onStart() {
-                        EWWave.showLoadingIndicator(v.getContext());
-                    }
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -88,10 +84,6 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
                         startActivity(home);
                     }
 
-                    @Override
-                    public void onFinish() {
-                        EWWave.hideLoadingIndicator();
-                    }
                 });
 
             }

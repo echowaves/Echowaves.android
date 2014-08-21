@@ -54,10 +54,6 @@ public class SignUpActivity extends EWActivity {
                         wavePassword,
                         confirmPassword,
                         new EWJsonHttpResponseHandler(v.getContext()) {
-                            @Override
-                            public void onStart() {
-                                EWWave.showLoadingIndicator(v.getContext());
-                            }
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -69,11 +65,6 @@ public class SignUpActivity extends EWActivity {
                                 startActivity(createWave);
                             }
 
-
-                            @Override
-                            public void onFinish() {
-                                EWWave.hideLoadingIndicator();
-                            }
                         }
                 );
             }

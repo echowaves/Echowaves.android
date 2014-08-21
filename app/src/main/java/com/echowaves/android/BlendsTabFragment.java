@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.echowaves.android.model.EWBlend;
-import com.echowaves.android.model.EWWave;
 import com.echowaves.android.util.EWJsonHttpResponseHandler;
 import com.echowaves.android.util.Utility;
 
@@ -97,10 +96,6 @@ public class BlendsTabFragment extends EWTabFragment {
         Log.d("BlendsTabFragment updateWave", waveName);
 
         EWBlend.getRequestedBlends(new EWJsonHttpResponseHandler(getActivity()) {
-            @Override
-            public void onStart() {
-//                EWWave.showLoadingIndicator(getApplicationContext());
-            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
@@ -127,17 +122,9 @@ public class BlendsTabFragment extends EWTabFragment {
 
             }
 
-            @Override
-            public void onFinish() {
-//                EWWave.hideLoadingIndicator();
-            }
         });
 
         EWBlend.getUnconfirmedBlends(new EWJsonHttpResponseHandler(getActivity()) {
-            @Override
-            public void onStart() {
-//                EWWave.showLoadingIndicator(getApplicationContext());
-            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
@@ -165,18 +152,9 @@ public class BlendsTabFragment extends EWTabFragment {
 
             }
 
-            @Override
-            public void onFinish() {
-//                EWWave.hideLoadingIndicator();
-            }
         });
 
         EWBlend.getBlendedWith(new EWJsonHttpResponseHandler(getActivity()) {
-            @Override
-            public void onStart() {
-//                EWWave.showLoadingIndicator(getApplicationContext());
-            }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
@@ -202,10 +180,6 @@ public class BlendsTabFragment extends EWTabFragment {
 
             }
 
-            @Override
-            public void onFinish() {
-//                EWWave.hideLoadingIndicator();
-            }
         });
 
     }
@@ -303,10 +277,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                     // if this button is clicked, close
                                     // current activity
                                     EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
-                                        @Override
-                                        public void onStart() {
-                                            EWWave.showLoadingIndicator(v.getContext());
-                                        }
 
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -315,10 +285,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                             ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
                                         }
 
-                                        @Override
-                                        public void onFinish() {
-                                            EWWave.hideLoadingIndicator();
-                                        }
                                     });
                                 }
                             })
@@ -348,10 +314,6 @@ public class BlendsTabFragment extends EWTabFragment {
 
                 public void onClick(final View v) {
                     EWBlend.confirmBlendingWith(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
-                        @Override
-                        public void onStart() {
-                            EWWave.showLoadingIndicator(v.getContext());
-                        }
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -360,10 +322,6 @@ public class BlendsTabFragment extends EWTabFragment {
                         }
 
 
-                        @Override
-                        public void onFinish() {
-                            EWWave.hideLoadingIndicator();
-                        }
                     });
                 }
             });
@@ -458,10 +416,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                     // if this button is clicked, close
                                     // current activity
                                     EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
-                                        @Override
-                                        public void onStart() {
-                                            EWWave.showLoadingIndicator(v.getContext());
-                                        }
 
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -470,11 +424,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                             ((NavigationTabBarActivity) getActivity()).onAWaveSelected(WavePickerFragment.getCurrentWaveName());
                                         }
 
-
-                                        @Override
-                                        public void onFinish() {
-                                            EWWave.hideLoadingIndicator();
-                                        }
                                     });
                                 }
                             })
@@ -585,10 +534,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                     // if this button is clicked, close
                                     // current activity
                                     EWBlend.unblendFrom(waveName, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
-                                        @Override
-                                        public void onStart() {
-                                            EWWave.showLoadingIndicator(v.getContext());
-                                        }
 
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -598,10 +543,6 @@ public class BlendsTabFragment extends EWTabFragment {
                                         }
 
 
-                                        @Override
-                                        public void onFinish() {
-                                            EWWave.hideLoadingIndicator();
-                                        }
                                     });
                                 }
                             })

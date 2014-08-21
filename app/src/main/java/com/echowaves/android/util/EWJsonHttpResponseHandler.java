@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 
+import com.echowaves.android.model.EWWave;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -91,6 +92,19 @@ public class EWJsonHttpResponseHandler extends JsonHttpResponseHandler {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+
+    @Override
+    final public void onStart() {
+        super.onStart();
+        EWWave.showLoadingIndicator(context);
+    }
+
+    @Override
+    final public void onFinish() {
+        super.onFinish();
+        EWWave.hideLoadingIndicator();
     }
 
 

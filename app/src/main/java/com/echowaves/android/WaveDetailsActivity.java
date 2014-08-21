@@ -46,10 +46,6 @@ public class WaveDetailsActivity extends EWActivity {
         EWWave.getWaveDetails(WavePickerFragment.getCurrentWaveName(),
 
                 new EWJsonHttpResponseHandler(this) {
-                    @Override
-                    public void onStart() {
-                        EWWave.showLoadingIndicator(getLayoutInflater().getContext());
-                    }
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -86,10 +82,6 @@ public class WaveDetailsActivity extends EWActivity {
                                                         // if this button is clicked, close
                                                         // current activity
                                                         EWWave.deleteChildWave(WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(v.getContext()) {
-                                                            @Override
-                                                            public void onStart() {
-                                                                EWWave.showLoadingIndicator(v.getContext());
-                                                            }
 
                                                             @Override
                                                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -99,10 +91,6 @@ public class WaveDetailsActivity extends EWActivity {
                                                                 startActivity(navTabBarIntent);
                                                             }
 
-                                                            @Override
-                                                            public void onFinish() {
-                                                                EWWave.hideLoadingIndicator();
-                                                            }
                                                         });
 
                                                     }
@@ -133,11 +121,6 @@ public class WaveDetailsActivity extends EWActivity {
                         }
                     }
 
-
-                    @Override
-                    public void onFinish() {
-                        EWWave.hideLoadingIndicator();
-                    }
                 }
         );
 

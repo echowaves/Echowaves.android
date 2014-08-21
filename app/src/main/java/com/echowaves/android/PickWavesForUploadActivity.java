@@ -49,17 +49,6 @@ public class PickWavesForUploadActivity extends EWActivity {
 
 
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(this) {
-            @Override
-            public void onStart() {
-                super.onStart();
-                EWWave.showLoadingIndicator(getLayoutInflater().getContext());
-                Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity starting Loading", "");
-            }
-
-            @Override
-            public void onFinish() {
-                EWWave.hideLoadingIndicator();
-            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
@@ -106,18 +95,6 @@ public class PickWavesForUploadActivity extends EWActivity {
                                                     waves.get(position).setActive(isChecked);
 
                                                     EWWave.makeWaveActive(waves.get(position).getName(), isChecked, new EWJsonHttpResponseHandler(buttonView.getContext()) {
-                                                        @Override
-                                                        public void onStart() {
-                                                            super.onStart();
-                                                            EWWave.showLoadingIndicator(getLayoutInflater().getContext());
-                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active starting Loading", "");
-                                                        }
-
-                                                        @Override
-                                                        public void onFinish() {
-                                                            EWWave.hideLoadingIndicator();
-                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active done Loading", "");
-                                                        }
 
                                                         @Override
                                                         public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {

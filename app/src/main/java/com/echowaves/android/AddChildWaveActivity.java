@@ -47,10 +47,6 @@ public class AddChildWaveActivity extends EWActivity {
             public void onClick(final View v) {
                 EWWave.createChildWaveWithName(waveName.getText().toString(),
                         new EWJsonHttpResponseHandler(v.getContext()) {
-                            @Override
-                            public void onStart() {
-                                EWWave.showLoadingIndicator(v.getContext());
-                            }
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -58,10 +54,6 @@ public class AddChildWaveActivity extends EWActivity {
                                 finish();
                             }
 
-                            @Override
-                            public void onFinish() {
-                                EWWave.hideLoadingIndicator();
-                            }
                         }
                 );
 
