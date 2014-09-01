@@ -50,6 +50,7 @@ public class AddChildWaveActivity extends EWActivity {
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                WavePickerFragment.resetCurrentWaveIndex();
                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
                                 finish();
                             }

@@ -24,6 +24,7 @@ public class WavePickerFragment extends Fragment {
     private static int currentWaveIndex;
     private OnWaveSelectedListener mOnWaveSelectedListener;
     private Spinner spinnerWaves;
+    private static View view;
 
     public static String getCurrentWaveName() {
         if (waves != null) {
@@ -59,9 +60,16 @@ public class WavePickerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_wave_picker, container, false);
+        view = inflater.inflate(R.layout.fragment_wave_picker, container, false);
         Log.i("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Waving fragment ", "onCreateView()");
 
+        reloadWaves();
+
+
+        return view;
+    }
+
+    public void reloadWaves() {
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(view.getContext()) {
 
             @Override
@@ -112,9 +120,6 @@ public class WavePickerFragment extends Fragment {
             }
 
         });
-
-
-        return view;
     }
 
     // NavigationTabBarActivity must implement this interface
