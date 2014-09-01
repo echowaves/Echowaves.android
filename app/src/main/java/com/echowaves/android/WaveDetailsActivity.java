@@ -86,7 +86,7 @@ public class WaveDetailsActivity extends EWActivity {
                                                             @Override
                                                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                                                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-//                                                                WavePickerFragment.relo();
+                                                                WavePickerFragment.reloadWaves();
                                                                 finish();
                                                             }
 

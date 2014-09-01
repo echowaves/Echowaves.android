@@ -22,8 +22,8 @@ public class WavePickerFragment extends Fragment {
 
     private static String[] waves;
     private static int currentWaveIndex;
-    private OnWaveSelectedListener mOnWaveSelectedListener;
-    private Spinner spinnerWaves;
+    private static OnWaveSelectedListener mOnWaveSelectedListener;
+    private static Spinner spinnerWaves;
     private static View view;
 
     public static String getCurrentWaveName() {
@@ -62,20 +62,17 @@ public class WavePickerFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_wave_picker, container, false);
         Log.i("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Waving fragment ", "onCreateView()");
-
         reloadWaves();
-
-
         return view;
     }
 
-    public void reloadWaves() {
+    public static void reloadWaves() {
+        resetCurrentWaveIndex();
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(view.getContext()) {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> WavePickerFragment finished Loading", jsonResponseArray.toString());
-
                 waves = new String[jsonResponseArray.length()];
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
