@@ -2,9 +2,11 @@ package com.echowaves.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -88,6 +90,21 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 
             }
         });
+
+
+        // photo cam button
+        ImageButton takePictureButton = (ImageButton) findViewById(R.id.nav_takePictureButton);
+        //Listening to button event
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(final View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(takePictureIntent);
+                }
+            }
+        });
+
 
         wavingFragment = (WavingTabFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_waving);
