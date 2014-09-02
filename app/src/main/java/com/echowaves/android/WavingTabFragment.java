@@ -16,6 +16,17 @@ import java.text.DateFormat;
 public class WavingTabFragment extends EWTabFragment {
 
     private TextView photosCount;
+    private Button sinceDateTimeValueButton;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("!!!!!!!!!!!!!", "WavingTabFragment onResume()");
+        photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
+        sinceDateTimeValueButton.setText(DateFormat.getDateTimeInstance(
+                DateFormat.MEDIUM, DateFormat.SHORT).format(ApplicationContextProvider.getCurrentAssetDateTime()));
+
+    }
 
 
     @Override
@@ -23,6 +34,8 @@ public class WavingTabFragment extends EWTabFragment {
         super.onStart();
         Log.d("!!!!!!!!!!!!!", "WavingTabFragment onStart()");
         photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
+        sinceDateTimeValueButton.setText(DateFormat.getDateTimeInstance(
+                DateFormat.MEDIUM, DateFormat.SHORT).format(ApplicationContextProvider.getCurrentAssetDateTime()));
 
     }
 
@@ -32,7 +45,7 @@ public class WavingTabFragment extends EWTabFragment {
         View view = inflater.inflate(R.layout.fragment_waving, container, false);
         Log.d("WavingTabFragment", view.toString());
 
-        Button sinceDateTimeValueButton = (Button) view.findViewById(R.id.waving_sinceDateTimeValueButton);
+        sinceDateTimeValueButton = (Button) view.findViewById(R.id.waving_sinceDateTimeValueButton);
         sinceDateTimeValueButton.setText(DateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM, DateFormat.SHORT).format(ApplicationContextProvider.getCurrentAssetDateTime()));
         //Listening to button event
