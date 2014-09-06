@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.loopj.android.image.SmartImageView;
 
@@ -17,15 +16,14 @@ public class DetailedImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_detailed_image, container, false);
 
         imageUrl = getArguments().getString("imageUrl");
 
-        TextView textView = (TextView) rootView.findViewById(R.id.detailedimage_text);
-
-        textView.setText(imageUrl);
+//        TextView textView = (TextView) rootView.findViewById(R.id.detailedimage_text);
+//
+//        textView.setText(imageUrl);
 
 
         SmartImageView myImage = (SmartImageView) rootView.findViewById(R.id.detailedimage_image);
