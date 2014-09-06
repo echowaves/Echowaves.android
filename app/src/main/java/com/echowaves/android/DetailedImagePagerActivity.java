@@ -40,8 +40,12 @@ public class DetailedImagePagerActivity extends EWFragmentActivity {
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.detailedimagepage_pager);
 
+
         mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this, images);
+
         mPager.setAdapter(mPagerAdapter);
+
+        mPager.setCurrentItem(position);
     }
 
     @Override

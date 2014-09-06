@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.loopj.android.image.SmartImageView;
+
 
 public class DetailedImageFragment extends Fragment {
 
@@ -24,6 +26,11 @@ public class DetailedImageFragment extends Fragment {
         TextView textView = (TextView) rootView.findViewById(R.id.detailedimage_text);
 
         textView.setText(imageUrl);
+
+
+        SmartImageView myImage = (SmartImageView) rootView.findViewById(R.id.detailedimage_image);
+
+        myImage.setImageUrl(imageUrl);
 
         return rootView;
     }

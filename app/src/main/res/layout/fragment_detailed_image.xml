@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.echowaves.android.DetailedImageFragment">
 
-    <ImageView
+    <com.loopj.android.image.SmartImageView
         android:id="@+id/detailedimage_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
