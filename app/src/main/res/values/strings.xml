@@ -33,5 +33,6 @@
     <string name="title_activity_upload_porgress_details">UploadPorgressDetailsActivity</string>
     <string name="title_activity_blendwith">BlendwithActivity</string>
     <string name="title_activity_accept_blending_request">Accept Blending Request</string>
+    <string name="title_activity_detailed_image">DetailedImageActivity</string>
 
 </resources>

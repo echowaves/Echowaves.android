@@ -1,6 +1,7 @@
 package com.echowaves.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,6 +80,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
     }
 
+
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
         // references to our images
@@ -120,7 +122,32 @@ public class EchoWaveTabFragment extends EWTabFragment {
 //            }
             imageView.setImageUrl(mThumbURLs[position]);
 
+            // image view click listener
+            imageView.setOnClickListener(new OnImageClickListener(position));
+
             return imageView;
         }
+
+        class OnImageClickListener implements View.OnClickListener {
+
+            int postion;
+
+            // constructor
+            public OnImageClickListener(int position) {
+                this.postion = position;
+            }
+
+            @Override
+            public void onClick(View v) {
+                // on selecting grid view image
+                // launch full screen activity
+                Intent deatailedImageIntent = new Intent(getActivity(), DetailedImagePagerActivity.class);
+                deatailedImageIntent.putExtra("images", mThumbURLs);
+                deatailedImageIntent.putExtra("position", postion);
+                startActivity(deatailedImageIntent);
+            }
+
+        }
     }
+
 }
