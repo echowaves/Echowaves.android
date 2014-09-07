@@ -35,7 +35,7 @@ public class AddChildWaveActivity extends EWActivity {
         waveName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-//add a . to the end of the new wave name
+//add a . to the end of the new waveName name
         waveName.setText(WavePickerFragment.getCurrentWaveName() + ".");
 //        set cursor to the end
         waveName.setSelection(waveName.getText().length());

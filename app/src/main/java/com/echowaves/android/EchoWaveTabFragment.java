@@ -19,6 +19,8 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Date;
+
 public class EchoWaveTabFragment extends EWTabFragment {
 
     private View view;
@@ -57,22 +59,27 @@ public class EchoWaveTabFragment extends EWTabFragment {
         EWImage.getAllImagesForWave(WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(view.getContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
-                Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveTabFragment finished Loading images", Integer.toString(jsonResponseArray.length()));
+                Log.d(">>>>>>>>>>>>>>>>>>>> EchoWaveTabFragment finished Loading imageNames", Integer.toString(jsonResponseArray.length()));
 
-                String[] thumbUrls = new String[jsonResponseArray.length()];
+                String[] imageNames = new String[jsonResponseArray.length()];
+                String[] waveNames = new String[jsonResponseArray.length()];
 
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
-                        String thumb = EWConstants.EWAWSBucket + "/img/" + jsonResponseArray.getJSONObject(i).getString("name_2") + "/thumb_" + jsonResponseArray.getJSONObject(i).getString("name");
-//                        Log.d("thumbUrl:", thumb);
-                        thumbUrls[i] = thumb;
+//                        String thumb = EWConstants.EWAWSBucket + "/img/" + jsonResponseArray.getJSONObject(i).getString("name_2") + "/thumb_" + jsonResponseArray.getJSONObject(i).getString("name");
+//                        String fullUrl = EWConstants.EWAWSBucket + "/img/" + jsonResponseArray.getJSONObject(i).getString("name_2") + "/" + jsonResponseArray.getJSONObject(i).getString("name");
+//                        String waveName = jsonResponseArray.getJSONObject(i).getString("name_2");
+
+                        imageNames[i] = jsonResponseArray.getJSONObject(i).getString("name");
+                        waveNames[i] = jsonResponseArray.getJSONObject(i).getString("name_2");
+
                     } catch (JSONException e) {
                         Log.d("JSONException", e.toString(), e);
                     }
                 }
 
                 GridView gridview = (GridView) view.findViewById(R.id.echowave_gridView);
-                gridview.setAdapter(new ImageAdapter(view.getContext(), thumbUrls));
+                gridview.setAdapter(new ImageAdapter(view.getContext(), imageNames, waveNames));
 
             }
 
@@ -83,16 +90,18 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
-        // references to our images
-        private String[] mThumbURLs = {};
+        // references to our imageNames
+        private String[] imageNames;
+        private String[] waveNames;
 
-        public ImageAdapter(Context c, String[] thumbURLs) {
+        public ImageAdapter(Context c, String[] thumbURLs, String[] waves) {
             mContext = c;
-            mThumbURLs = thumbURLs;
+            this.imageNames = thumbURLs;
+            this.waveNames = waves;
         }
 
         public int getCount() {
-            return mThumbURLs.length;
+            return imageNames.length;
         }
 
         public Object getItem(int position) {
@@ -107,7 +116,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int position, View convertView, ViewGroup parent) {
-            Log.d("@@@@@@@@@@@@@@@ImageViewAdapter ", "position:" + position + " url:" + mThumbURLs[position]);
+            Log.d("@@@@@@@@@@@@@@@ImageViewAdapter ", "position:" + position + " url:" + imageNames[position]);
 
             SmartImageView imageView;
 
@@ -120,7 +129,10 @@ public class EchoWaveTabFragment extends EWTabFragment {
 //            } else {
 //                imageView = (SmartImageView) convertView;
 //            }
-            imageView.setImageUrl(mThumbURLs[position]);
+
+            String thumb = EWConstants.EWAWSBucket + "/img/" + waveNames[position] + "/thumb_" + imageNames[position];
+
+            imageView.setImageUrl(thumb);
 
             // image view click listener
             imageView.setOnClickListener(new OnImageClickListener(position));
@@ -142,7 +154,8 @@ public class EchoWaveTabFragment extends EWTabFragment {
                 // on selecting grid view image
                 // launch full screen activity
                 Intent deatailedImageIntent = new Intent(getActivity(), DetailedImagePagerActivity.class);
-                deatailedImageIntent.putExtra("images", mThumbURLs);
+                deatailedImageIntent.putExtra("imageNames", imageNames);
+                deatailedImageIntent.putExtra("waveNames", waveNames);
                 deatailedImageIntent.putExtra("position", postion);
                 startActivity(deatailedImageIntent);
             }

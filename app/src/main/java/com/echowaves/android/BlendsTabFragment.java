@@ -270,7 +270,7 @@ public class BlendsTabFragment extends EWTabFragment {
 
                     // set dialog message
                     alertDialogConfirmWaveDeletion
-                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your wave " + WavePickerFragment.getCurrentWaveName() + " !")
+                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your waveName " + WavePickerFragment.getCurrentWaveName() + " !")
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -409,7 +409,7 @@ public class BlendsTabFragment extends EWTabFragment {
 
                     // set dialog message
                     alertDialogConfirmWaveDeletion
-                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your wave " + WavePickerFragment.getCurrentWaveName() + " !")
+                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your waveName " + WavePickerFragment.getCurrentWaveName() + " !")
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -527,7 +527,7 @@ public class BlendsTabFragment extends EWTabFragment {
 
                     // set dialog message
                     alertDialogConfirmWaveDeletion
-                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your wave " + WavePickerFragment.getCurrentWaveName() + " !")
+                            .setMessage("Are you really sure you want to unblend? The " + waveName + "'s photos will be gone from your waveName " + WavePickerFragment.getCurrentWaveName() + " !")
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {

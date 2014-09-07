@@ -14,7 +14,8 @@ import android.support.v4.view.ViewPager;
  */
 public class DetailedImagePagerActivity extends EWFragmentActivity {
 
-    String[] images;
+    String[] imageNames;
+    String[] waveNames;
     int position;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -32,7 +33,8 @@ public class DetailedImagePagerActivity extends EWFragmentActivity {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
-        images = extras.getStringArray("images");
+        imageNames = extras.getStringArray("imageNames");
+        waveNames = extras.getStringArray("waveNames");
         position = extras.getInt("position");
 
         setContentView(R.layout.activity_detailed_image_page);
@@ -41,7 +43,7 @@ public class DetailedImagePagerActivity extends EWFragmentActivity {
         mPager = (ViewPager) findViewById(R.id.detailedimagepage_pager);
 
 
-        mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this, images);
+        mPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this, imageNames, waveNames);
 
         mPager.setAdapter(mPagerAdapter);
 
@@ -64,24 +66,27 @@ public class DetailedImagePagerActivity extends EWFragmentActivity {
 
     public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         Context context;
-        String[] images;
+        String[] imagesNames;
+        String[] waveNames;
 
-        public ViewPagerAdapter(FragmentManager fm, Context context, String[] images) {
+        public ViewPagerAdapter(FragmentManager fm, Context context, String[] imagesNames, String[] waveNames) {
             super(fm);
             this.context = context;
-            this.images = images;
+            this.imagesNames = imagesNames;
+            this.waveNames = waveNames;
         }
 
         @Override
         public int getCount() {
-            return images.length;
+            return imagesNames.length;
         }
 
         @Override
         public Fragment getItem(int position) {
             DetailedImageFragment detailedImageFragment = new DetailedImageFragment();
             Bundle args = new Bundle();
-            args.putString("imageUrl", images[position]);
+            args.putString("imageName", imagesNames[position]);
+            args.putString("waveName", waveNames[position]);
             detailedImageFragment.setArguments(args);
             return detailedImageFragment;
         }

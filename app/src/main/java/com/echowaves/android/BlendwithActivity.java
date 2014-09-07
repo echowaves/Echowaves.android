@@ -116,7 +116,7 @@ public class BlendwithActivity extends EWActivity implements SearchView.OnQueryT
                         // Get the cursor, positioned to the corresponding row in the result set
                         String waveSelected = blendsList.get(position);
 
-//                        blend wave request here
+//                        blend waveName request here
                         EWBlend.requestBlendingWith(waveSelected, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(activityContext) {
 
                             @Override

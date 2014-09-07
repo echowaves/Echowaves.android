@@ -3,17 +3,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.echowaves.android.DetailedImageFragment">
+    <!-- Action Bar -->
+
+
+    <!-- Action Bar -->
+
+    <RelativeLayout
+        android:id="@+id/detailedimage_navBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:background="@color/ewColor">
+
+        <ImageView
+            android:id="@+id/detailedimage_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:background="@color/ewColor"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/detailedimage_dateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/ewColor"
+            android:padding="5dp"
+            android:text="dateTime"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+        <ImageButton
+            android:id="@+id/detailedimage_deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:drawable/ic_menu_delete"
+            android:padding="5dp"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/detailedimage_shareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/detailedimage_deleteButton"
+            android:layout_toStartOf="@+id/detailedimage_deleteButton"
+            android:background="@android:drawable/ic_menu_share"
+            android:padding="5dp"
+            android:visibility="gone" />
+
+
+        <ImageButton
+            android:id="@+id/detailedimage_saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:drawable/ic_menu_save"
+            android:padding="5dp"
+            android:visibility="gone" />
+
+
+        <!--<TextView-->
+        <!--android:id="@+id/textViewTitle"-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:text="@string/tuneIn"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textSize="18sp" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageViewSearch"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginRight="25dp"-->
+        <!--android:layout_toLeftOf="@+id/imageViewPlus"-->
+        <!--android:src="@drawable/search" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageViewPlus"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:src="@drawable/add_new" />-->
+    </RelativeLayout>
+
 
     <com.loopj.android.image.SmartImageView
         android:id="@+id/detailedimage_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@+id/detailedimage_navBar"
         android:scaleType="fitCenter" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/detailedimage_text"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:text="this is an image"/>-->
+    <TextView
+        android:id="@+id/detailedimage_waveName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/detailedimage_image"
+        android:layout_centerHorizontal="true"
+        android:text="waveName" />
 
 </RelativeLayout>

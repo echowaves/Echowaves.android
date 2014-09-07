@@ -77,7 +77,7 @@ public class WavePickerFragment extends Fragment {
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
                         Log.d("jsonObject", jsonResponseArray.getJSONObject(i).toString());
-                        Log.d("wave", jsonResponseArray.getJSONObject(i).getString("name"));
+                        Log.d("waveName", jsonResponseArray.getJSONObject(i).getString("name"));
                         waves[i] = jsonResponseArray.getJSONObject(i).getString("name");
                     } catch (JSONException e) {
                         Log.d("JSONException", e.toString(), e);

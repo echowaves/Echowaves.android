@@ -75,7 +75,7 @@ public class WaveDetailsActivity extends EWActivity {
                                         alertDialogConfirmWaveDeletion
                                                 .setMessage("Are you really sure you want to delete " +
                                                         WavePickerFragment.getCurrentWaveName() +
-                                                        " wave? All wave's photos will be gone!")
+                                                        " waveName? All waveName's photos will be gone!")
                                                 .setCancelable(false)
                                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int id) {

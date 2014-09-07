@@ -60,7 +60,7 @@ public class PickWavesForUploadActivity extends EWActivity {
                         Log.d("jsonObject", jsonResponseArray.getJSONObject(i).toString());
                         String waveName = jsonResponseArray.getJSONObject(i).getString("name");
                         boolean waveActive = jsonResponseArray.getJSONObject(i).getInt("active") == 1;
-                        Log.d("wave", waveName);
+                        Log.d("waveName", waveName);
                         Log.d("waveStatus", String.valueOf(waveActive));
                         waves.add(new Model(waveName, waveActive));
                     } catch (JSONException e) {
@@ -91,14 +91,14 @@ public class PickWavesForUploadActivity extends EWActivity {
                                                 @Override
                                                 public void onCheckedChanged(CompoundButton buttonView,
                                                                              boolean isChecked) {
-                                                    Log.d("making a wave active: " + position + ":", String.valueOf(isChecked));
+                                                    Log.d("making a waveName active: " + position + ":", String.valueOf(isChecked));
                                                     waves.get(position).setActive(isChecked);
 
                                                     EWWave.makeWaveActive(waves.get(position).getName(), isChecked, new EWJsonHttpResponseHandler(buttonView.getContext()) {
 
                                                         @Override
                                                         public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
-                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making wave active finished Loading successfully", jsonResponseArray.toString());
+                                                            Log.d(">>>>>>>>>>>>>>>>>>>> making waveName active finished Loading successfully", jsonResponseArray.toString());
                                                         }
 
                                                     });

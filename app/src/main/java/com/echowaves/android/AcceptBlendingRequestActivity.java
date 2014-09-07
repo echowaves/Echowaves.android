@@ -70,7 +70,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                     try {
                         Log.d("jsonObject", jsonResponseArray.getJSONObject(i).toString());
                         String waveName = jsonResponseArray.getJSONObject(i).getString("name");
-                        Log.d("wave", waveName);
+                        Log.d("waveName", waveName);
                         allMyWaves.add(waveName);
                     } catch (JSONException e) {
                         Log.d("JSONException", e.toString(), e);
@@ -100,7 +100,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
                         currentlySelectedWaveName = allMyWaves.get(position);
-                        Log.d("************************************* selected wave: ", currentlySelectedWaveName);
+                        Log.d("************************************* selected waveName: ", currentlySelectedWaveName);
                     }
                 };
 
