@@ -30,4 +30,15 @@ public class EWImage extends EWDataModel {
 
         return HTTP_CLIENT.post(getAbsoluteUrl("/upload"), params, responseHandler);
     }
+
+    public static void deleteImage(String imageName, String waveName, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("image_name", imageName);
+        params.put("wave_name", waveName);
+        HTTP_CLIENT.post(getAbsoluteUrl("/delete-image.json"), params, responseHandler);
+    }
+
+//    +(void) saveImageToAssetLibrary:(UIImage*) image
+
+
 }

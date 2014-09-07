@@ -1,5 +1,7 @@
 package com.echowaves.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,7 +12,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.echowaves.android.model.EWImage;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 import com.loopj.android.image.SmartImageView;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -24,7 +31,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_detailed_image, container, false);
 
         imageName = getArguments().getString("imageName");
@@ -54,12 +61,48 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         ImageButton deleteButton = (ImageButton) rootView.findViewById(R.id.detailedimage_deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                getActivity().finish();
+
+
+                AlertDialog.Builder alertDialogConfirmImageDeletion = new AlertDialog.Builder(
+                        rootView.getContext());
+                alertDialogConfirmImageDeletion.setTitle("Delete Photo?");
+
+                // set dialog message
+                alertDialogConfirmImageDeletion
+                        .setMessage("Delete?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                EWImage.deleteImage(imageName, waveName, new EWJsonHttpResponseHandler(rootView.getContext()) {
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                                Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                                                getActivity().finish();
+                                            }
+                                        }
+                                );
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogConfirmImageDeletion.create();
+
+                // show it
+                alertDialog.show();
             }
         });
 
-        if(waveName.equals(WavePickerFragment.getCurrentWaveName())) {
-            shareButton.setVisibility(View.VISIBLE);
+        if (waveName.equals(WavePickerFragment.getCurrentWaveName())) {
+//            shareButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
         } else {
             saveButton.setVisibility(View.VISIBLE);
@@ -71,7 +114,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
 
             TextView dateTimeTextView = (TextView) rootView.findViewById(R.id.detailedimage_dateTime);
             dateTimeTextView.setText(naturalDateFormat.format(dateTime));
-        } catch(ParseException ew) {
+        } catch (ParseException ew) {
             Log.e("parsing exception", ew.toString(), ew);
         }
 

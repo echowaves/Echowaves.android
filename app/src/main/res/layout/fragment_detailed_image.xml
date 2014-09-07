@@ -44,6 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/detailedimage_shareButton"
+            android:layout_toStartOf="@+id/detailedimage_shareButton"
             android:background="@android:drawable/ic_menu_delete"
             android:padding="5dp"
             android:visibility="gone" />
@@ -52,9 +54,8 @@
             android:id="@+id/detailedimage_shareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/detailedimage_deleteButton"
-            android:layout_toStartOf="@+id/detailedimage_deleteButton"
             android:background="@android:drawable/ic_menu_share"
             android:padding="5dp"
             android:visibility="gone" />
