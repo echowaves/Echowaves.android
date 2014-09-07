@@ -2,6 +2,7 @@ package com.echowaves.android;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import android.widget.TextView;
 
 import com.loopj.android.image.SmartImageView;
 
+import java.text.ParseException;
+import java.util.Date;
 
-public class DetailedImageFragment extends Fragment {
+
+public class DetailedImageFragment extends Fragment implements EWConstants {
 
     String imageName;
     String waveName;
@@ -25,13 +29,6 @@ public class DetailedImageFragment extends Fragment {
 
         imageName = getArguments().getString("imageName");
         waveName = getArguments().getString("waveName");
-
-//        Log.d(imageName)
-
-//        TextView textView = (TextView) rootView.findViewById(R.id.detailedimage_text);
-//
-//        textView.setText(imageName);
-
 
         ImageView backButton = (ImageView) rootView.findViewById(R.id.detailedimage_back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +58,23 @@ public class DetailedImageFragment extends Fragment {
             }
         });
 
-        TextView dateTime = (TextView) rootView.findViewById(R.id.detailedimage_dateTime);
-        dateTime.setText(imageName);
+        if(waveName.equals(WavePickerFragment.getCurrentWaveName())) {
+            shareButton.setVisibility(View.VISIBLE);
+            deleteButton.setVisibility(View.VISIBLE);
+        } else {
+            saveButton.setVisibility(View.VISIBLE);
+        }
+
+        try {
+            String dateTimeString = imageName.split("\\.")[0];
+            Date dateTime = simpleDateFormat.parse(dateTimeString);
+
+            TextView dateTimeTextView = (TextView) rootView.findViewById(R.id.detailedimage_dateTime);
+            dateTimeTextView.setText(naturalDateFormat.format(dateTime));
+        } catch(ParseException ew) {
+            Log.e("parsing exception", ew.toString(), ew);
+        }
+
 
         TextView waveNameTextView = (TextView) rootView.findViewById(R.id.detailedimage_waveName);
         waveNameTextView.setText(waveName);

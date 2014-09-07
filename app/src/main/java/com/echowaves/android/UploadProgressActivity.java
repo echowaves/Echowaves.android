@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -67,20 +66,20 @@ public class UploadProgressActivity extends EWActivity {
 
         pauseAllButton = (Button) findViewById(R.id.upload_pauseAllButton);
         //Listening to button event
-            pauseAllButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View arg0) {
-                    if(currentUploadHandle != null) {
-                        currentUploadHandle.cancel(true);
-                        currentUploadHandle = null;
-                    }
-
-                    if (waveOperation != null) {
-                        waveOperation.cancel(true);
-                        waveOperation = null;
-                    }
-                    finish();
+        pauseAllButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                if (currentUploadHandle != null) {
+                    currentUploadHandle.cancel(true);
+                    currentUploadHandle = null;
                 }
-            });
+
+                if (waveOperation != null) {
+                    waveOperation.cancel(true);
+                    waveOperation = null;
+                }
+                finish();
+            }
+        });
 
         cancelButton = (Button) findViewById(R.id.upload_cancelButton);
         cancelButton.setEnabled(false);
@@ -135,7 +134,7 @@ public class UploadProgressActivity extends EWActivity {
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
                     Log.d("###################################", "canceling ");
-                    if(currentUploadHandle != null) {
+                    if (currentUploadHandle != null) {
                         currentUploadHandle.cancel(true);
                     }
 
@@ -292,7 +291,6 @@ public class UploadProgressActivity extends EWActivity {
 
 //                    Log.d("###################### orientation: ", String.valueOf(orientation));
                     long timeTaken = cursor.getLong(3);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
 
                     final String dateTaken = simpleDateFormat.format(timeTaken);
 
