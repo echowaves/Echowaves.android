@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.echowaves.android.model.EWImage;
@@ -26,24 +27,40 @@ import java.util.Date;
 
 public class DetailedImageFragment extends Fragment implements EWConstants {
 
-    String imageName;
-    String waveName;
+    private static boolean navVisible = true;
+    private RelativeLayout navBar;
+    private String imageName;
+    private String waveName;
+    private ImageView backButton;
+    private ImageButton saveButton;
+    private ImageButton shareButton;
+    private ImageButton deleteButton;
+    private TextView dateTimeTextView;
+    private TextView waveNameTextView;
+    private SmartImageView imageView;
 
-    ImageView backButton;
+    @Override
+    public View getView() {
+        if (navVisible) {
+            navBar.setVisibility(View.VISIBLE);
+            waveNameTextView.setVisibility(View.VISIBLE);
+        } else {
+            navBar.setVisibility(View.GONE);
+            waveNameTextView.setVisibility(View.GONE);
+        }
+        return super.getView();
+    }
 
-    ImageButton saveButton;
-    ImageButton shareButton;
-    ImageButton deleteButton;
-
-    TextView dateTimeTextView;
-    TextView waveNameTextView;
-    SmartImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_detailed_image, container, false);
+
+        navBar = (RelativeLayout) rootView.findViewById(R.id.detailedimage_navBar);
+
 
         imageName = getArguments().getString("imageName");
         waveName = getArguments().getString("waveName");
@@ -149,6 +166,21 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
 
         imageView = (TouchImageView) rootView.findViewById(R.id.detailedimage_image);
         imageView.setImageUrl(EWConstants.EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName);
+
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$", "cicked");
+                if (navVisible) {
+                    navBar.setVisibility(View.GONE);
+                    navVisible = false;
+                } else {
+                    navBar.setVisibility(View.VISIBLE);
+                    navVisible = true;
+                }
+            }
+        });
 
         return rootView;
     }
