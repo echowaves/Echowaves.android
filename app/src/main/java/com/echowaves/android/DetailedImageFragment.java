@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.echowaves.android.model.EWImage;
 import com.echowaves.android.util.EWJsonHttpResponseHandler;
+import com.echowaves.android.util.TouchImageView;
 import com.loopj.android.image.SmartImageView;
 
 import org.apache.http.Header;
@@ -146,7 +147,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         waveNameTextView = (TextView) rootView.findViewById(R.id.detailedimage_waveName);
         waveNameTextView.setText(waveName);
 
-        imageView = (SmartImageView) rootView.findViewById(R.id.detailedimage_image);
+        imageView = (TouchImageView) rootView.findViewById(R.id.detailedimage_image);
         imageView.setImageUrl(EWConstants.EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName);
 
         return rootView;

@@ -103,7 +103,7 @@
     </RelativeLayout>
 
 
-    <com.loopj.android.image.SmartImageView
+    <com.echowaves.android.util.TouchImageView
         android:id="@+id/detailedimage_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
