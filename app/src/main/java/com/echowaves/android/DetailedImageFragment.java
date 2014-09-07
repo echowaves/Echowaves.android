@@ -28,6 +28,16 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
     String imageName;
     String waveName;
 
+    ImageView backButton;
+
+    ImageButton saveButton;
+    ImageButton shareButton;
+    ImageButton deleteButton;
+
+    TextView dateTimeTextView;
+    TextView waveNameTextView;
+    SmartImageView imageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,28 +47,42 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         imageName = getArguments().getString("imageName");
         waveName = getArguments().getString("waveName");
 
-        ImageView backButton = (ImageView) rootView.findViewById(R.id.detailedimage_back);
+        backButton = (ImageView) rootView.findViewById(R.id.detailedimage_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 getActivity().finish();
             }
         });
 
-        ImageButton saveButton = (ImageButton) rootView.findViewById(R.id.detailedimage_saveButton);
+        saveButton = (ImageButton) rootView.findViewById(R.id.detailedimage_saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                getActivity().finish();
+
+                if (EWImage.saveImageToAssetLibrary(imageName, waveName, false)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
+                    builder.setTitle("Saved")
+                            .setMessage("Photo Saved Locally")
+                            .setCancelable(false)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                }
+
             }
         });
 
-        ImageButton shareButton = (ImageButton) rootView.findViewById(R.id.detailedimage_shareButton);
+        shareButton = (ImageButton) rootView.findViewById(R.id.detailedimage_shareButton);
         shareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 getActivity().finish();
             }
         });
 
-        ImageButton deleteButton = (ImageButton) rootView.findViewById(R.id.detailedimage_deleteButton);
+        deleteButton = (ImageButton) rootView.findViewById(R.id.detailedimage_deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
@@ -112,19 +136,18 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
             String dateTimeString = imageName.split("\\.")[0];
             Date dateTime = simpleDateFormat.parse(dateTimeString);
 
-            TextView dateTimeTextView = (TextView) rootView.findViewById(R.id.detailedimage_dateTime);
+            dateTimeTextView = (TextView) rootView.findViewById(R.id.detailedimage_dateTime);
             dateTimeTextView.setText(naturalDateFormat.format(dateTime));
         } catch (ParseException ew) {
             Log.e("parsing exception", ew.toString(), ew);
         }
 
 
-        TextView waveNameTextView = (TextView) rootView.findViewById(R.id.detailedimage_waveName);
+        waveNameTextView = (TextView) rootView.findViewById(R.id.detailedimage_waveName);
         waveNameTextView.setText(waveName);
 
-        SmartImageView myImage = (SmartImageView) rootView.findViewById(R.id.detailedimage_image);
-        String thumb = EWConstants.EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName;
-        myImage.setImageUrl(thumb);
+        imageView = (SmartImageView) rootView.findViewById(R.id.detailedimage_image);
+        imageView.setImageUrl(EWConstants.EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName);
 
         return rootView;
     }

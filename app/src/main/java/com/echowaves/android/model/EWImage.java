@@ -1,8 +1,14 @@
 package com.echowaves.android.model;
 
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.util.Log;
+
+import com.echowaves.android.EWConstants;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.image.WebImage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,7 +44,23 @@ public class EWImage extends EWDataModel {
         HTTP_CLIENT.post(getAbsoluteUrl("/delete-image.json"), params, responseHandler);
     }
 
-//    +(void) saveImageToAssetLibrary:(UIImage*) image
+    public static boolean saveImageToAssetLibrary(String imageName, String waveName, boolean fullImage) {
+        String urlString;
+        if (fullImage) {
+            urlString = EWConstants.EWAWSBucket + "/img/" + waveName + "/" + imageName;
+        } else {
+            urlString = EWConstants.EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName;
+        }
+
+        WebImage webImage = new WebImage(urlString);
+
+        Bitmap bitmap = webImage.getBitmap(ApplicationContextProvider.getContext());
+
+        Log.d("***************************** bitMap: ", bitmap.toString());
+
+        MediaStore.Images.Media.insertImage(ApplicationContextProvider.getContext().getContentResolver(), bitmap, waveName + "_" + imageName, waveName + "_" + imageName);
+        return true;
+    }
 
 
 }
