@@ -62,7 +62,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
             waveNameTextView.setVisibility(View.VISIBLE);
         } else {
             navBar.setVisibility(View.GONE);
-            waveNameTextView.setVisibility(View.GONE);
+            waveNameTextView.setVisibility(View.INVISIBLE);
         }
         return super.getView();
     }
