@@ -118,4 +118,24 @@
         android:layout_centerHorizontal="true"
         android:text="waveName" />
 
+    <Button
+        android:id="@+id/detailedimage_fullResButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/detailedimage_navBar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:alpha="0.5"
+        android:background="@drawable/rounded_button"
+        android:text="high quality"
+        android:textColor="#ffffffff" />
+
+    <ProgressBar
+        android:id="@+id/detailedimage_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/detailedimage_navBar"
+        android:visibility="gone" />
+
 </RelativeLayout>

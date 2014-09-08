@@ -2,33 +2,49 @@ package com.echowaves.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.opengl.GLES10;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWImage;
 import com.echowaves.android.util.EWJsonHttpResponseHandler;
 import com.echowaves.android.util.TouchImageView;
-import com.loopj.android.image.SmartImageView;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.text.ParseException;
 import java.util.Date;
+
+import javax.microedition.khronos.opengles.GL10;
 
 
 public class DetailedImageFragment extends Fragment implements EWConstants {
 
     private static boolean navVisible = true;
+//    private boolean fullRes = false;
     private RelativeLayout navBar;
+
+    private Button fullResButton;
+    private ProgressBar progressBar;
+
+
     private String imageName;
     private String waveName;
     private ImageView backButton;
@@ -37,7 +53,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
     private ImageButton deleteButton;
     private TextView dateTimeTextView;
     private TextView waveNameTextView;
-    private SmartImageView imageView;
+    private TouchImageView imageView;
 
     @Override
     public View getView() {
@@ -61,6 +77,132 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
 
         navBar = (RelativeLayout) rootView.findViewById(R.id.detailedimage_navBar);
 
+        fullResButton = (Button) rootView.findViewById(R.id.detailedimage_fullResButton);
+        fullResButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+//                fullRes = true;
+                fullResButton.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+
+//                imageView.setImageUrl(EWConstants.EWAWSBucket + "/img/" + waveName + "/" + imageName);
+//                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                imageView.setMaxZoom(10f);
+                EWImage.loadFullImage(imageName, waveName, new AsyncHttpResponseHandler() {
+
+                            @Override
+                            public void onProgress(int bytesWritten, int totalSize) {
+                                progressBar.setProgress(100 * bytesWritten / totalSize);
+                            }
+
+
+                            @Override
+                            public void onStart() {
+                                super.onStart();
+                                progressBar.setProgress(0);
+                                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                                imageView.setMaxZoom(1f);
+                                imageView.sharedConstructing(rootView.getContext());
+                            }
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                int[] maxSize = new int[1];
+                                GLES10.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, maxSize, 0);
+                                int maxDim = maxSize[0];
+
+                                Bitmap bmp = BitmapFactory.decodeStream(new ByteArrayInputStream(responseBody));
+
+                                final int height = bmp.getHeight();
+                                final int width = bmp.getWidth();
+                                int scale = 1;
+
+
+
+                                if(height > maxDim || width > maxDim) {
+                                    // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+                                    // height and width larger than the requested height and width.
+                                    while ((height / scale) > maxDim
+                                            || (width / scale) > maxDim) {
+                                        scale *= 2;
+                                    }
+
+                                    Bitmap scaled = Bitmap.createScaledBitmap(bmp, bmp.getWidth()/scale , bmp.getHeight()/scale , true);
+
+                                    imageView.setImageBitmap(scaled);
+
+                                } else {
+                                    imageView.setImageBitmap(bmp);
+                                }
+
+                                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                                imageView.setMaxZoom(10f);
+                                imageView.sharedConstructing(rootView.getContext());
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                if (headers != null) {
+                                    for (Header h : headers) {
+                                        Log.d("................ failed   key: ", h.getName());
+                                        Log.d("................ failed value: ", h.getValue());
+                                    }
+                                }
+                                if (responseBody != null) {
+                                    Log.d("................ failed : ", new String(responseBody));
+                                }
+                                if (error != null) {
+                                    Log.d("................ failed error: ", error.toString());
+
+                                    String msg = "";
+                                    if (null != responseBody) {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                            msg = jsonResponse.getString("error");
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        msg = error.getMessage();
+                                    }
+
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
+                                    builder.setTitle("Error")
+                                            .setMessage(msg)
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+
+                                }
+                            }
+
+//                            @Override
+//                            public void onCancel() {
+//                                Log.d("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", "cancelled request");
+//                                boolean deleteSuccessfull = tmpFile.delete();
+//                                Log.d("2. delete file success ", String.valueOf(deleteSuccessfull));
+//                                uploadProgressDetailsActivityIsActive = false;
+//                                cancelButton.setEnabled(false);
+//
+//                            }
+
+
+                            @Override
+                            public void onFinish() {
+                                super.onFinish();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                );
+            }
+        });
+
+
+        progressBar = (ProgressBar) rootView.findViewById(R.id.detailedimage_progressBar);
 
         imageName = getArguments().getString("imageName");
         waveName = getArguments().getString("waveName");
@@ -75,7 +217,6 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         saveButton = (ImageButton) rootView.findViewById(R.id.detailedimage_saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-
                 if (EWImage.saveImageToAssetLibrary(imageName, waveName, false)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
                     builder.setTitle("Saved")
@@ -165,22 +306,91 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         waveNameTextView.setText(waveName);
 
         imageView = (TouchImageView) rootView.findViewById(R.id.detailedimage_image);
-        imageView.setImageUrl(EWConstants.EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName);
+
+        EWImage.loadThumbImage(imageName, waveName, new AsyncHttpResponseHandler() {
 
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$", "cicked");
-                if (navVisible) {
-                    navBar.setVisibility(View.GONE);
-                    navVisible = false;
-                } else {
-                    navBar.setVisibility(View.VISIBLE);
-                    navVisible = true;
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                        Bitmap bmp = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
+                        imageView = (TouchImageView) rootView.findViewById(R.id.detailedimage_image);
+                        imageView.setImageBitmap(bmp);
+
+                        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                                imageView.setMaxZoom(10f);
+                        imageView.sharedConstructing(rootView.getContext());
+
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("$$$$$$$$$$$$$$$$$$$$$$$$$$$$", "cicked");
+                                if (navVisible) {
+                                    navBar.setVisibility(View.GONE);
+                                    navVisible = false;
+                                } else {
+                                    navBar.setVisibility(View.VISIBLE);
+                                    navVisible = true;
+                                }
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        if (headers != null) {
+                            for (Header h : headers) {
+                                Log.d("................ failed   key: ", h.getName());
+                                Log.d("................ failed value: ", h.getValue());
+                            }
+                        }
+                        if (responseBody != null) {
+                            Log.d("................ failed : ", new String(responseBody));
+                        }
+                        if (error != null) {
+                            Log.d("................ failed error: ", error.toString());
+
+                            String msg = "";
+                            if (null != responseBody) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(new String(responseBody));
+                                    msg = jsonResponse.getString("error");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                msg = error.getMessage();
+                            }
+
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
+                            builder.setTitle("Error")
+                                    .setMessage(msg)
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+
+                        }
+                    }
+
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
                 }
-            }
-        });
+        );
+
 
         return rootView;
     }

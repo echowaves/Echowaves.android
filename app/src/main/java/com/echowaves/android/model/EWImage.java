@@ -62,5 +62,13 @@ public class EWImage extends EWDataModel {
         return true;
     }
 
+    public static void loadFullImage(String imageName, String waveName, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        HTTP_CLIENT.get(EWAWSBucket + "/img/" + waveName + "/" + imageName, params, responseHandler);
+    }
 
+    public static void loadThumbImage(String imageName, String waveName, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        HTTP_CLIENT.get(EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName, params, responseHandler);
+    }
 }

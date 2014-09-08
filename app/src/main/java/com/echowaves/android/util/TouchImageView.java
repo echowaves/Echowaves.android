@@ -9,14 +9,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-
-import com.loopj.android.image.SmartImageView;
+import android.widget.ImageView;
 
 /**
  * Created by dmitry on 9/6/14.
  *
  */
-public class TouchImageView extends SmartImageView {
+public class TouchImageView extends ImageView {
 
     // We can be in one of these 3 states
     static final int NONE = 0;
@@ -52,7 +51,7 @@ public class TouchImageView extends SmartImageView {
         sharedConstructing(context);
     }
 
-    private void sharedConstructing(Context context) {
+    public void sharedConstructing(Context context) {
         super.setClickable(true);
         this.context = context;
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
@@ -115,7 +114,7 @@ public class TouchImageView extends SmartImageView {
         maxScale = x;
     }
 
-    void fixTrans() {
+    public void fixTrans() {
         matrix.getValues(m);
         float transX = m[Matrix.MTRANS_X];
         float transY = m[Matrix.MTRANS_Y];
