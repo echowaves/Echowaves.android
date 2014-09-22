@@ -52,6 +52,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
         // Create the tabspec based on the textview childs in the xml file.
         // Or create simple tabspec instances in any other way...
         for (int index = 0; index < originalTextViews.length; index++) {
+            Log.d("~~~~~~~~~~~~~~~~~~~~~ Loading tab", String.valueOf(index));
             final TextView tabWidgetTextView = originalTextViews[index];
             final View tabContentView = tabContent.getChildAt(index);
             TabHost.TabSpec tabSpec = tabHost.newTabSpec((String) tabWidgetTextView.getTag());
@@ -61,11 +62,11 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
                     return tabContentView;
                 }
             });
-            if (tabWidgetTextView.getBackground() == null) {
-                tabSpec.setIndicator(tabWidgetTextView.getText());
-            } else {
+//            if (tabWidgetTextView.getBackground() == null) {
+//                tabSpec.setIndicator(tabWidgetTextView.getText());
+//            } else {
                 tabSpec.setIndicator(tabWidgetTextView.getText(), tabWidgetTextView.getBackground());
-            }
+//            }
             tabHost.addTab(tabSpec);
         }
 

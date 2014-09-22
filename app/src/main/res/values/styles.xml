@@ -9,21 +9,25 @@
 
     <!-- <color name="white_opaque">#FFFFFFFF</color> -->
 
-    <style name="AppBaseTheme" parent="android:Theme.NoTitleBar">
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.NoActionBar">
 
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/white</item>
-        <!-- <item name="android:colorBackground">@color/white_opaque</item> -->
+        <!--<item name="android:background">@android:color/transparent</item>-->
+        <!--<item name="android:windowBackground">@android:color/white</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="metaButtonBarStyle">@style/ButtonBar</item>-->
+        <!--<item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>-->
+
     </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:tabWidgetStyle">@android:style/Widget.TabWidget</item>
     </style>
 
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
