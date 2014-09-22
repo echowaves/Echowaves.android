@@ -122,12 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <fragment
-                    android:id="@+id/fragment_waving"
-                    android:name="com.echowaves.android.WavingTabFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:layout="@layout/fragment_waving" />
 
                 <fragment
                     android:id="@+id/fragment_echoWave"
@@ -135,6 +129,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:layout="@layout/fragment_echo_wave" />
+
+                <fragment
+                    android:id="@+id/fragment_waving"
+                    android:name="com.echowaves.android.WavingTabFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout="@layout/fragment_waving" />
 
                 <fragment
                     android:id="@+id/fragment_blends"
@@ -153,18 +154,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:background="@drawable/waving32"
+                    android:background="@drawable/echowave32"
                     android:colorBackground="@color/ewColor"
                     android:tag="tab0"
-                    android:text="Waving" />
+                    android:text="EchoWave" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:background="@drawable/echowave32"
+                    android:background="@drawable/waving32"
                     android:colorBackground="@color/ewColor"
                     android:tag="tab1"
-                    android:text="EchoWave" />
+                    android:text="Waving" />
+
 
                 <TextView
                     android:layout_width="wrap_content"

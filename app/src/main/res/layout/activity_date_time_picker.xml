@@ -43,24 +43,25 @@
 
     <DatePicker
         android:id="@+id/dtpicker_datePicker"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:endYear="2030"
-        android:startYear="2010" />
+        android:startYear="2010"
+        android:calendarViewShown="false" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp" />
 
     <TimePicker
         android:id="@+id/dtpicker_timePicker"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:soundEffectsEnabled="true" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
