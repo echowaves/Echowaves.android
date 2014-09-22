@@ -46,7 +46,7 @@ public class DateTimePickerActivity extends EWActivity {
 
         datePicker = (DatePicker) findViewById(R.id.dtpicker_datePicker);
         timePicker = (TimePicker) findViewById(R.id.dtpicker_timePicker);
-        timePicker.setIs24HourView(true);
+//        timePicker.setIs24HourView(true);
 
         Date dt = ApplicationContextProvider.getCurrentAssetDateTime();
 
@@ -110,7 +110,7 @@ public class DateTimePickerActivity extends EWActivity {
         cal.set(Calendar.YEAR, datePicker.getYear());
         cal.set(Calendar.MONTH, datePicker.getMonth());
         cal.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
-        cal.set(Calendar.HOUR, timePicker.getCurrentHour());
+        cal.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
         cal.set(Calendar.MINUTE, timePicker.getCurrentMinute());
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
