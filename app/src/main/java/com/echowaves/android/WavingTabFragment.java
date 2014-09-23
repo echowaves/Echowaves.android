@@ -97,7 +97,7 @@ public class WavingTabFragment extends EWTabFragment {
         View view = getView();
         if (view != null) {
             Button editWaveButton = (Button) view.findViewById(R.id.waving_editWaveButton);
-            editWaveButton.setText(waveName);
+//            editWaveButton.setText(waveName);
             //Listening to button event
             editWaveButton.
                     setOnClickListener(

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.echowaves.android.model.EWImage;
 import com.echowaves.android.util.EWJsonHttpResponseHandler;
@@ -19,11 +20,11 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.Date;
-
 public class EchoWaveTabFragment extends EWTabFragment {
 
     private View view;
+    private TextView emptyWaveText;
+
 
     @Override
     public void onStart() {
@@ -35,6 +36,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.fragment_echo_wave, container, false);
+        this.emptyWaveText = (TextView) view.findViewById(R.id.echowave_emptyWaveText);
 
         Log.d("EchoWaveTabFragment", view.toString());
 
@@ -64,6 +66,9 @@ public class EchoWaveTabFragment extends EWTabFragment {
                 String[] imageNames = new String[jsonResponseArray.length()];
                 String[] waveNames = new String[jsonResponseArray.length()];
 
+                if (jsonResponseArray.length() == 0) {
+                    emptyWaveText.setVisibility(View.VISIBLE);
+                }
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
 //                        String thumb = EWConstants.EWAWSBucket + "/img/" + jsonResponseArray.getJSONObject(i).getString("name_2") + "/thumb_" + jsonResponseArray.getJSONObject(i).getString("name");

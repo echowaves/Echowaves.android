@@ -14,4 +14,13 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="5dp" />
 
+    <TextView
+        android:id="@+id/echowave_emptyWaveText"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_margin="50dp"
+        android:text="You don\'t seem to have any Photos in this wave. Take some pictures with your phone camera and go to the Waving tab to wave your photos to the cloud." />
+
 </RelativeLayout>
