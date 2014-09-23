@@ -68,6 +68,8 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
                 if (jsonResponseArray.length() == 0) {
                     emptyWaveText.setVisibility(View.VISIBLE);
+                } else {
+                    emptyWaveText.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
