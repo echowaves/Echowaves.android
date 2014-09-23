@@ -155,6 +155,15 @@ public class AcceptBlendingRequestActivity extends EWActivity {
 
         });
 
+
+        Button cancelButton = (Button) findViewById(R.id.acceptBlending_cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                finish();
+            }
+
+        });
+
     }
 
 

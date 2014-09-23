@@ -78,6 +78,19 @@
             android:layout_below="@+id/acceptBlending_explanation" />
 
         <Button
+            android:id="@+id/acceptBlending_cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="right"
+            android:background="@android:color/transparent"
+            android:padding="15dp"
+            android:text="cancel"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp" />
+        <Button
             android:id="@+id/acceptBlending_acceptButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,10 +98,10 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="right"
-            android:background="@android:color/transparent"
+            android:background="@drawable/rounded_button"
             android:padding="15dp"
             android:text="Accept"
-            android:textColor="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
             android:textSize="20sp" />
     </RelativeLayout>
 </LinearLayout>
