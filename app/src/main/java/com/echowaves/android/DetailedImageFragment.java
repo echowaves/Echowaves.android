@@ -2,10 +2,12 @@ package com.echowaves.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES10;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 
 public class DetailedImageFragment extends Fragment implements EWConstants {
+    static final int REQUEST_SELECT_CONTACT = 1;
 
     private static boolean navVisible = true;
 //    private boolean fullRes = false;
@@ -234,10 +237,16 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
             }
         });
 
+
+
         shareButton = (ImageButton) rootView.findViewById(R.id.detailedimage_shareButton);
         shareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                getActivity().finish();
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivityForResult(intent, REQUEST_SELECT_CONTACT);
+                }
             }
         });
 
@@ -285,7 +294,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         });
 
         if (waveName.equals(WavePickerFragment.getCurrentWaveName())) {
-//            shareButton.setVisibility(View.VISIBLE);
+            shareButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
         } else {
             saveButton.setVisibility(View.VISIBLE);

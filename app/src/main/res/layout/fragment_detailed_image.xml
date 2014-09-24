@@ -54,8 +54,10 @@
             android:id="@+id/detailedimage_shareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/detailedimage_dateTime"
+            android:layout_marginRight="39dp"
             android:background="@android:drawable/ic_menu_share"
             android:padding="5dp"
             android:visibility="gone" />
@@ -132,7 +134,7 @@
         android:id="@+id/detailedimage_progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="4dp"
         android:layout_below="@+id/detailedimage_navBar"
         android:visibility="gone" />
 
