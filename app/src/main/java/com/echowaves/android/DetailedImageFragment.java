@@ -1,14 +1,18 @@
 package com.echowaves.android;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.opengl.GLES10;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +45,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
     static final int REQUEST_SELECT_CONTACT = 1;
 
     private static boolean navVisible = true;
-//    private boolean fullRes = false;
+    //    private boolean fullRes = false;
     private RelativeLayout navBar;
 
     private Button fullResButton;
@@ -120,8 +124,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                                 int scale = 1;
 
 
-
-                                if(height > maxDim || width > maxDim) {
+                                if (height > maxDim || width > maxDim) {
                                     // Calculate the largest inSampleSize value that is a power of 2 and keeps both
                                     // height and width larger than the requested height and width.
                                     while ((height / scale) > maxDim
@@ -129,7 +132,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                                         scale *= 2;
                                     }
 
-                                    Bitmap scaled = Bitmap.createScaledBitmap(bmp, bmp.getWidth()/scale , bmp.getHeight()/scale , true);
+                                    Bitmap scaled = Bitmap.createScaledBitmap(bmp, bmp.getWidth() / scale, bmp.getHeight() / scale, true);
 
                                     imageView.setImageBitmap(scaled);
 
@@ -238,17 +241,17 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         });
 
 
-
         shareButton = (ImageButton) rootView.findViewById(R.id.detailedimage_shareButton);
         shareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
                 if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(intent, REQUEST_SELECT_CONTACT);
                 }
             }
         });
+
 
         deleteButton = (ImageButton) rootView.findViewById(R.id.detailedimage_deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -404,4 +407,30 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         return rootView;
     }
 
+    /**
+     * the following method is used to send sms based on the contact information returned from the address book
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_SELECT_CONTACT && resultCode == Activity.RESULT_OK) {
+            Uri contactUri = data.getData();
+            String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
+            Cursor cursor = getActivity().getContentResolver().query(contactUri, projection,
+                    null, null, null);
+            // If the cursor returned is valid, get the phone number
+            if (cursor != null && cursor.moveToFirst()) {
+                int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String number = cursor.getString(numberIndex);
+                // Do something with the phone number
+                Log.d("!!!!!!!!!!!!!!!!!! result number", number);
+
+                SmsManager sm = SmsManager.getDefault();
+
+                String msg = "Hi there, please visit http://echowaves.com";
+                sm.sendTextMessage(number, null, msg, null, null);
+
+            }
+        }
+    }
 }
