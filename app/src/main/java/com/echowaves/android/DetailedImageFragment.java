@@ -415,47 +415,85 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
 
         if (requestCode == REQUEST_SELECT_CONTACT && resultCode == Activity.RESULT_OK) {
             Uri contactUri = data.getData();
-            String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
+            String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,
+                    ContactsContract.Contacts.DISPLAY_NAME,};
             final Cursor cursor = getActivity().getContentResolver().query(contactUri, projection,
                     null, null, null);
             // If the cursor returned is valid, get the phone number
             if (cursor != null && cursor.moveToFirst()) {
                 // Do something with the phone number
 
-                EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-                        int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                        String number = cursor.getString(numberIndex);
-                        Log.d("!!!!!!!!!!!!!!!!!! result number", number);
-                        SmsManager sm = SmsManager.getDefault();
-
-                        try {
-                            String msg = "I want to share photo with you http://echowaves.com/mobile?token=" + jsonResponse.getString("token");
-                            sm.sendTextMessage(number, null, msg, null, null);
-                        } catch (JSONException jsonException) {
-                            Log.e("json exception", jsonException.toString());
-                        }
+                int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+                final String number = cursor.getString(numberIndex);
+                final String name = cursor.getString(nameIndex);
+                Log.d("!!!!!!!!!!!!!!!!!! result number", number);
+                Log.d("!!!!!!!!!!!!!!!!!! result name  ", name);
 
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Success!")
-                                .setMessage("SMS successfully sent")
-                                .setCancelable(false)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Confirm SMS Sending")
+                        .setMessage("Do you want to send SMS invite to " + name + " " + number + "?")
+                        .setCancelable(true)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+
+                                        try {
+                                            final String token = jsonResponse.getString("token");
+
+                                            final String msg = "I want to share photo with you http://echowaves.com/mobile?token=" + token;
+                                            SmsManager sm = SmsManager.getDefault();
+                                            sm.sendTextMessage(number, null, msg, null, null);
+
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                            builder.setTitle("Success!")
+                                                    .setMessage("SMS invite successfully sent to " + name)
+                                                    .setCancelable(false)
+                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                        }
+                                                    });
+                                            AlertDialog alert = builder.create();
+                                            alert.show();
+                                        } catch (JSONException jsonException) {
+                                            Log.e("json exception", jsonException.toString());
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                            builder.setTitle("Error!")
+                                                    .setMessage("Error.")
+                                                    .setCancelable(false)
+                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                        }
+                                                    });
+                                            AlertDialog alert = builder.create();
+                                            alert.show();
+
+                                        }
+
+
                                     }
                                 });
-                        AlertDialog alert = builder.create();
-                        alert.show();
 
-//                        getActivity().finish();
-                    }
-                });
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
 
 
             }
         }
+
     }
 }
