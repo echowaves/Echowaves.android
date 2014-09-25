@@ -381,7 +381,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                             }
 
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationContextProvider.getContext());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle("Error")
                                     .setMessage(msg)
                                     .setCancelable(false)
@@ -416,19 +416,44 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         if (requestCode == REQUEST_SELECT_CONTACT && resultCode == Activity.RESULT_OK) {
             Uri contactUri = data.getData();
             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
-            Cursor cursor = getActivity().getContentResolver().query(contactUri, projection,
+            final Cursor cursor = getActivity().getContentResolver().query(contactUri, projection,
                     null, null, null);
             // If the cursor returned is valid, get the phone number
             if (cursor != null && cursor.moveToFirst()) {
-                int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                String number = cursor.getString(numberIndex);
                 // Do something with the phone number
-                Log.d("!!!!!!!!!!!!!!!!!! result number", number);
 
-                SmsManager sm = SmsManager.getDefault();
+                EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                        int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                        String number = cursor.getString(numberIndex);
+                        Log.d("!!!!!!!!!!!!!!!!!! result number", number);
+                        SmsManager sm = SmsManager.getDefault();
 
-                String msg = "Hi there, please visit http://echowaves.com";
-                sm.sendTextMessage(number, null, msg, null, null);
+                        try {
+                            String msg = "I want to share photo with you http://echowaves.com/mobile?token=" + jsonResponse.getString("token");
+                            sm.sendTextMessage(number, null, msg, null, null);
+                        } catch (JSONException jsonException) {
+                            Log.e("json exception", jsonException.toString());
+                        }
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Success!")
+                                .setMessage("SMS successfully sent")
+                                .setCancelable(false)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
+//                        getActivity().finish();
+                    }
+                });
+
 
             }
         }

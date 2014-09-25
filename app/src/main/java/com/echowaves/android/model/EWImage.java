@@ -71,4 +71,12 @@ public class EWImage extends EWDataModel {
         RequestParams params = new RequestParams();
         HTTP_CLIENT.get(EWAWSBucket + "/img/" + waveName + "/thumb_" + imageName, params, responseHandler);
     }
+
+
+    public static void shareImage(String imageName, String waveName, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("image_name", imageName);
+        params.put("wave_name", waveName);
+        HTTP_CLIENT.post(getAbsoluteUrl("/share-image.json"), params, responseHandler);
+    }
 }

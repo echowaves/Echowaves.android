@@ -123,7 +123,7 @@ public class EchoWaveTabFragment extends EWTabFragment {
 
         // create a new ImageView for each item referenced by the Adapter
         public View getView(int position, View convertView, ViewGroup parent) {
-            Log.d("@@@@@@@@@@@@@@@ImageViewAdapter ", "position:" + position + " url:" + imageNames[position]);
+//            Log.d("@@@@@@@@@@@@@@@ImageViewAdapter ", "position:" + position + " url:" + imageNames[position]);
 
             SmartImageView imageView;
 
