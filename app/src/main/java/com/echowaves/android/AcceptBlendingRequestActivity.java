@@ -33,6 +33,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
 
     String currentlySelectedWaveName;
 
+    String origToWaveName;
 
     ArrayList<String> allMyWaves;
 
@@ -65,7 +66,7 @@ public class AcceptBlendingRequestActivity extends EWActivity {
 
         currentlySelectedWaveName = WavePickerFragment.getCurrentWaveName();
         toWaveView.setText(currentlySelectedWaveName);
-
+        origToWaveName = currentlySelectedWaveName;
 
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
@@ -129,35 +130,12 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                     finish();
                 }
 
-                EWBlend.unblendFrom(fromWaveView.getText().toString(), WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
+                EWBlend.acceptBlending(origToWaveName, toWaveView.getText().toString(), fromWaveView.getText().toString(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
-
-
-                        EWBlend.requestBlendingWith(currentlySelectedWaveName, fromWaveView.getText().toString(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
-
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
-
-
-                                EWBlend.confirmBlendingWith(currentlySelectedWaveName, fromWaveView.getText().toString(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
-
-                                    @Override
-                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                        Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
-                                        finish();
-
-                                    }
-
-                                });
-
-
-                            }
-
-                        });
+                        finish();
                     }
                 });
 
