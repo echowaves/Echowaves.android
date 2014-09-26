@@ -26,8 +26,10 @@ import java.util.ArrayList;
 
 
 public class AcceptBlendingRequestActivity extends EWActivity {
+    TextView fromWaveView;
+    TextView toWaveView;
+    TextView blendWaveLabelView;
 
-    String fromWave;
 
     String currentlySelectedWaveName;
 
@@ -49,15 +51,21 @@ public class AcceptBlendingRequestActivity extends EWActivity {
             }
         });
 
+        fromWaveView = (TextView) findViewById(R.id.acceptBlending_fromWaveName);
+        toWaveView = (TextView) findViewById(R.id.acceptBlending_toWaveName);
+        blendWaveLabelView = (TextView) findViewById(R.id.acceptBlending_blendWaveLabel);
+
+        resetBlendWaveLabel();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            fromWave = extras.getString("FROM_WAVE");
-            TextView fromWaveView = (TextView) findViewById(R.id.acceptBlending_fromWaveName);
-            fromWaveView.setText(fromWave);
+            fromWaveView.setText(extras.getString("FROM_WAVE"));
         }
 
+
         currentlySelectedWaveName = WavePickerFragment.getCurrentWaveName();
+        toWaveView.setText(currentlySelectedWaveName);
+
 
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
@@ -101,6 +109,8 @@ public class AcceptBlendingRequestActivity extends EWActivity {
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
                         currentlySelectedWaveName = allMyWaves.get(position);
                         Log.d("************************************* selected waveName: ", currentlySelectedWaveName);
+                        toWaveView.setText(currentlySelectedWaveName);
+                        resetBlendWaveLabel();
                     }
                 };
 
@@ -115,25 +125,25 @@ public class AcceptBlendingRequestActivity extends EWActivity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 if (currentlySelectedWaveName.equals(WavePickerFragment.getCurrentWaveName()) ||
-                        currentlySelectedWaveName.equals(fromWave)) {
+                        currentlySelectedWaveName.equals(fromWaveView.getText())) {
                     finish();
                 }
 
-                EWBlend.unblendFrom(fromWave, WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
+                EWBlend.unblendFrom(fromWaveView.getText().toString(), WavePickerFragment.getCurrentWaveName(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
 
 
-                        EWBlend.requestBlendingWith(currentlySelectedWaveName, fromWave, new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
+                        EWBlend.requestBlendingWith(currentlySelectedWaveName, fromWaveView.getText().toString(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                                 Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponse.toString());
 
 
-                                EWBlend.confirmBlendingWith(currentlySelectedWaveName, fromWave, new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
+                                EWBlend.confirmBlendingWith(currentlySelectedWaveName, fromWaveView.getText().toString(), new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
@@ -166,5 +176,9 @@ public class AcceptBlendingRequestActivity extends EWActivity {
 
     }
 
+    private void resetBlendWaveLabel() {
+        blendWaveLabelView.setText("You will be able to see " + fromWaveView.getText() + "'s photos blended with your wave " + toWaveView.getText() +
+                ". Your " + toWaveView.getText() + "'s photos will be visible to " + fromWaveView.getText() + " as well");
+    }
 
 }
