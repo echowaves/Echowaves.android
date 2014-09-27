@@ -3,7 +3,6 @@ package com.echowaves.android;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -106,8 +105,10 @@ public class UploadProgressActivity extends EWActivity {
         protected void onPostExecute(String result) {
             // might want to change "executed" for the returned string passed
             // into onPostExecute() but that is upto you
-            Intent navBarIntent = new Intent(context, NavigationTabBarActivity.class);
-            startActivity(navBarIntent);
+//            Intent navBarIntent = new Intent(context, NavigationTabBarActivity.class);
+//            startActivity(navBarIntent);
+            setResult(2);
+            finish();
         }
 
         @Override

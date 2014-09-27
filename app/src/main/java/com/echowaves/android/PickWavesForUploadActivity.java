@@ -134,10 +134,18 @@ public class PickWavesForUploadActivity extends EWActivity {
         waveNowButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent uploadIntent = new Intent(getApplicationContext(), UploadProgressActivity.class);
-                startActivity(uploadIntent);
+                startActivityForResult(uploadIntent, 0);
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("@@@@@@@@@@@@@@@@@@@@@@@@@ result code", String.valueOf(resultCode));
+        if(resultCode==2){//this is the parent activity that must be closed when child activity clases with code 2
+            finish();
+        }
     }
 
     static class ViewHolder {
