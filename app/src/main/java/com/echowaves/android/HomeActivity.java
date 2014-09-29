@@ -1,6 +1,7 @@
 package com.echowaves.android;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +18,22 @@ public class HomeActivity extends EWActivity {
 
     private static int tuneInCount = 0;
 
+    public static String shareToken = null; // we will access this property in deep actions to determine if need to open nested actions
+
     @Override
     protected void onResume() {
         super.onResume();
         // The activity has become visible (it is now "resumed").
+
+        Intent intent = getIntent();
+// check if this intent is started via custom scheme link
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = intent.getData();
+            // may be some test here with your custom uri
+            shareToken = uri.getQueryParameter("token"); // "token" is set
+            Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%% token", shareToken);
+        }
+
 
         final String storedWaveName = EWWave.getStoredWaveName();
         final String storedWavePassword = EWWave.getStoredWavePassword();

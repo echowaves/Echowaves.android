@@ -42,25 +42,25 @@
             android:id="@+id/detailedimage_deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/detailedimage_shareButton"
-            android:layout_toStartOf="@+id/detailedimage_shareButton"
             android:background="@android:drawable/ic_menu_delete"
             android:padding="5dp"
-            android:visibility="gone" />
+            android:visibility="visible"
+            android:layout_alignTop="@+id/detailedimage_shareButton"
+            android:layout_toLeftOf="@+id/detailedimage_shareButton"
+            android:layout_toStartOf="@+id/detailedimage_shareButton" />
+
 
         <ImageButton
             android:id="@+id/detailedimage_shareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/detailedimage_dateTime"
-            android:layout_marginRight="39dp"
             android:background="@android:drawable/ic_menu_share"
             android:padding="5dp"
-            android:visibility="gone" />
+            android:visibility="visible"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/detailedimage_dateTime"
+            android:layout_alignBottom="@+id/detailedimage_dateTime" />
 
 
         <ImageButton

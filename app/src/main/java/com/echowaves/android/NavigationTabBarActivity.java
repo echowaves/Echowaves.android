@@ -1,5 +1,7 @@
 package com.echowaves.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -65,7 +67,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 //            if (tabWidgetTextView.getBackground() == null) {
 //                tabSpec.setIndicator(tabWidgetTextView.getText());
 //            } else {
-                tabSpec.setIndicator(tabWidgetTextView.getText(), tabWidgetTextView.getBackground());
+            tabSpec.setIndicator(tabWidgetTextView.getText(), tabWidgetTextView.getBackground());
 //            }
             tabHost.addTab(tabSpec);
         }
@@ -114,6 +116,30 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
         blendsTabFragment = (BlendsTabFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_blends);
 
+
+        //check if the entry into the application was through the share token
+        if (HomeActivity.shareToken != null) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(
+                    this);
+            alert.setTitle("Sharing");
+
+            // set dialog message
+            alert
+                    .setMessage("Sharing photo with you, token " + HomeActivity.shareToken)
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+
+            // create alert dialog
+            AlertDialog alertDialog = alert.create();
+
+            // show it
+            alertDialog.show();
+
+            HomeActivity.shareToken = null;
+        }
 
     }
 
