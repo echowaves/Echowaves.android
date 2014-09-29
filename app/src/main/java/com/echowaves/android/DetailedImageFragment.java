@@ -446,7 +446,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                                         try {
                                             final String token = jsonResponse.getString("token");
 
-                                            final String msg = "I want to share photo with you http://echowaves.com/mobile?token=" + token;
+                                            final String msg = "Look at my photo and blend with my wave http://echowaves.com/mobile?token=" + token;
                                             SmsManager sm = SmsManager.getDefault();
                                             sm.sendTextMessage(number, null, msg, null, null);
 
