@@ -79,4 +79,10 @@ public class EWImage extends EWDataModel {
         params.put("wave_name", waveName);
         HTTP_CLIENT.post(getAbsoluteUrl("/share-image.json"), params, responseHandler);
     }
+
+    public static void retreiveImageByToken(String token, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put("token", token);
+        HTTP_CLIENT.post(getAbsoluteUrl("/image-by-token.json"), params, responseHandler);
+    }
 }

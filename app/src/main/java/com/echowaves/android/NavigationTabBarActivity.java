@@ -1,7 +1,5 @@
 package com.echowaves.android;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,10 +11,12 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.echowaves.android.model.EWImage;
 import com.echowaves.android.model.EWWave;
 import com.echowaves.android.util.EWJsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -119,26 +119,30 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 
         //check if the entry into the application was through the share token
         if (HomeActivity.shareToken != null) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(
-                    this);
-            alert.setTitle("Sharing");
+            final Intent acceptBlendingIntent = new Intent(this, AcceptBlendingRequestActivity.class);
+            //  here we will will have to figure out the waveName from the token and pass it along to the next activity
+            EWImage.retreiveImageByToken(HomeActivity.shareToken, new EWJsonHttpResponseHandler(this) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                    try {
+                        String imageName = jsonResponse.getString("name");
+                        String waveName = jsonResponse.getString("name_2");
 
-            // set dialog message
-            alert
-                    .setMessage("Sharing photo with you, token " + HomeActivity.shareToken)
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
+                        HomeActivity.shareToken = null;
 
-            // create alert dialog
-            AlertDialog alertDialog = alert.create();
+                        acceptBlendingIntent.putExtra("FROM_WAVE", waveName);
+                        acceptBlendingIntent.putExtra("SHARED_IMAGE", imageName);
+                        startActivity(acceptBlendingIntent);
 
-            // show it
-            alertDialog.show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-            HomeActivity.shareToken = null;
+                }
+
+            });
+
+
         }
 
     }
