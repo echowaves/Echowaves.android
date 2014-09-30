@@ -1,5 +1,6 @@
 package com.echowaves.android;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,6 +62,10 @@ public class AcceptBlendingRequestActivity extends EWActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromWaveView.setText(extras.getString("FROM_WAVE"));
+            if (extras.getString("SHARED_IMAGE") != null) {// let's preview the image that was shared first
+                Intent detailedImageIntent = new Intent(this, DetailedImageSharingPreviewActivity.class);
+                startActivity(detailedImageIntent);
+            }
         }
 
 

@@ -35,5 +35,6 @@
     <string name="title_activity_accept_blending_request">Accept Blending Request</string>
     <string name="title_activity_detailed_image">DetailedImageActivity</string>
     <string name="title_activity_share">ShareActivity</string>
+    <string name="title_activity_detailed_image_sharing_preview">DetailedImageSharingPreviewActivity</string>
 
 </resources>

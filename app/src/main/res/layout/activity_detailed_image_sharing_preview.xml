@@ -1,0 +1,123 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.echowaves.android.DetailedImageSharingPreviewActivity">
+
+    <!-- Action Bar -->
+
+
+    <!-- Action Bar -->
+
+    <RelativeLayout
+        android:id="@+id/detailedimagePreview_navBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abs__action_bar_default_height"
+        android:background="@color/ewColor">
+
+        <TextView
+            android:id="@+id/detailedimagePreview_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:background="@color/ewColor"
+            android:textColor="@android:color/white"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="&lt;OK"
+            android:gravity="center"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/detailedimagePreview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/ewColor"
+            android:padding="5dp"
+            android:text="Preview"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+
+
+
+        <ImageButton
+            android:id="@+id/detailedimagePreview_saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@android:drawable/ic_menu_save"
+            android:padding="5dp"
+            android:visibility="visible" />
+
+
+        <!--<TextView-->
+        <!--android:id="@+id/textViewTitle"-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:text="@string/tuneIn"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textSize="18sp" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageViewSearch"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginRight="25dp"-->
+        <!--android:layout_toLeftOf="@+id/imageViewPlus"-->
+        <!--android:src="@drawable/search" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageViewPlus"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:src="@drawable/add_new" />-->
+    </RelativeLayout>
+
+
+    <com.echowaves.android.util.TouchImageView
+        android:id="@+id/detailedimagePreview_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/detailedimagePreview_navBar"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/detailedimagePreview_waveName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/detailedimagePreview_image"
+        android:layout_centerHorizontal="true"
+        android:text="waveName" />
+
+    <Button
+        android:id="@+id/detailedimagePreview_fullResButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/detailedimagePreview_waveName"
+        android:alpha="0.5"
+        android:background="@drawable/rounded_button"
+        android:text="high quality"
+        android:textColor="#ffffffff" />
+
+    <ProgressBar
+        android:id="@+id/detailedimagePreview_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/detailedimagePreview_navBar"
+        android:visibility="gone" />
+
+</RelativeLayout>

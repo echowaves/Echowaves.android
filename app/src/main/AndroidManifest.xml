@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.echowaves.android">
+    package="com.echowaves.android" >
 
     <supports-screens
         android:largeScreens="true"
@@ -30,20 +30,21 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".HomeActivity"
             android:background="@android:color/white"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:label="echowaves">
+            <intent-filter android:label="echowaves" >
                 <action android:name="android.intent.action.VIEW" />
-                <data
-                    android:scheme="echowaves" />
+
+                <data android:scheme="echowaves" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
@@ -90,6 +91,10 @@
         <activity
             android:name=".DetailedImagePagerActivity"
             android:label="@string/title_activity_detailed_image" />
+        <activity
+            android:name=".DetailedImageSharingPreviewActivity"
+            android:label="@string/title_activity_detailed_image_sharing_preview" >
+        </activity>
     </application>
 
 </manifest>
