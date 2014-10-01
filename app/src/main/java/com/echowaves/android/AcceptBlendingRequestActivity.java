@@ -63,7 +63,12 @@ public class AcceptBlendingRequestActivity extends EWActivity {
         if (extras != null) {
             fromWaveView.setText(extras.getString("FROM_WAVE"));
             if (extras.getString("SHARED_IMAGE") != null) {// let's preview the image that was shared first
+
+
                 Intent detailedImageIntent = new Intent(this, DetailedImageSharingPreviewActivity.class);
+                detailedImageIntent.putExtra("FROM_WAVE", extras.getString("FROM_WAVE"));
+                detailedImageIntent.putExtra("SHARED_IMAGE", extras.getString("SHARED_IMAGE"));
+
                 startActivity(detailedImageIntent);
             }
         }
