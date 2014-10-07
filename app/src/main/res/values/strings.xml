@@ -13,6 +13,7 @@
     <string name="tuneOut">TuneOut</string>
     <string name="createWave">Create New Wave</string>
     <string name="createChildWave">Create Wave</string>
+    <string name="welcome">Welcome to EchoWaves</string>
     <string name="title_activity_sign_up">SignUp</string>
     <string name="title_activity_wave_details">Wave Details</string>
     <string name="title_activity_navigation_tab_bar">NavigationTabBarActivity</string>

@@ -299,7 +299,10 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         if (waveName.equals(WavePickerFragment.getCurrentWaveName())) {
             shareButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
+            saveButton.setVisibility(View.GONE);
         } else {
+            shareButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
             saveButton.setVisibility(View.VISIBLE);
         }
 
