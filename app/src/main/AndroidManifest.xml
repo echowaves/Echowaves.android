@@ -43,14 +43,23 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:label="echowaves">
+            <!--<intent-filter android:label="echowaves">-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+
+                <!--<data android:scheme="echowaves" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+            <!--</intent-filter>-->
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
-                <data android:scheme="echowaves" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                    android:host="echowaves.com"
+                    android:path="/android_is_not_installed.html" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".SignInActivity"

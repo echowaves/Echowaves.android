@@ -119,6 +119,19 @@ public class UploadProgressActivity extends EWActivity {
         protected void onCancelled() {
         }
 
+        //reduce image size otherwise the image does not render, eghh
+        private Bitmap loadImage(String imgPath) {
+            BitmapFactory.Options options;
+            try {
+                options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                return BitmapFactory.decodeFile(imgPath, options);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
         @Override
         protected void onProgressUpdate(Object... params) {
             cancelButton.setEnabled(false);
@@ -129,8 +142,8 @@ public class UploadProgressActivity extends EWActivity {
             final File tmpFile = (File) params[1];
             final Date assetDate = (Date) params[2];
 
-            Bitmap bitMap = BitmapFactory.decodeFile(tmpFile.getAbsolutePath());
-            imageView.setImageBitmap(bitMap);
+//            Bitmap bitMap = BitmapFactory.decodeFile(tmpFile.getAbsolutePath());
+            imageView.setImageBitmap(loadImage(tmpFile.getAbsolutePath()));
 
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
