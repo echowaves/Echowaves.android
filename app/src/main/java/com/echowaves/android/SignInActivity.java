@@ -60,12 +60,13 @@ public class SignInActivity extends EWActivity {
                 final String wavePassword = ((EditText) findViewById(R.id.tunein_wave_password)).getText().toString();
 
                 EWWave.tuneInWithNameAndPassword(waveName, wavePassword, new EWJsonHttpResponseHandler(v.getContext()) {
-
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
                         Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
 
                         EWWave.storeCredentialForWave(waveName, wavePassword);
+
+                        EWWave.storeAndroidTokenForWave(waveName, EWWave.getStoredDeviceToken(), new EWJsonHttpResponseHandler(v.getContext()));
 
 //                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                         Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);

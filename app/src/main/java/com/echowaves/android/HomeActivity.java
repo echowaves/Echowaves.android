@@ -2,7 +2,6 @@ package com.echowaves.android;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -26,8 +25,7 @@ import java.io.IOException;
 
 public class HomeActivity extends EWActivity {
 
-    public static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
+    //    public static final String PROPERTY_REG_ID = "registration_id";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static String shareToken = null; // we will access this property in deep actions to determine if need to open nested actions
     private static int tuneInCount = 0;
@@ -150,8 +148,7 @@ public class HomeActivity extends EWActivity {
      * registration ID.
      */
     private String getRegistrationId(Context context) {
-        final SharedPreferences prefs = getGCMPreferences();
-        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        String registrationId = EWWave.getStoredDeviceToken();
         if (registrationId.isEmpty()) {
             Log.i("home", "Registration not found.");
             return "";
@@ -159,7 +156,7 @@ public class HomeActivity extends EWActivity {
         // Check if app was updated; if so, it must clear the registration ID
         // since the existing regID is not guaranteed to work with the new
         // app version.
-        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+        int registeredVersion = EWWave.getStoredAppVersion();
         int currentVersion = getAppVersion(context);
         if (registeredVersion != currentVersion) {
             Log.i("home", "App version changed.");
@@ -171,12 +168,12 @@ public class HomeActivity extends EWActivity {
     /**
      * @return Application's {@code SharedPreferences}.
      */
-    private SharedPreferences getGCMPreferences() {
-        // This sample app persists the registration ID in shared preferences, but
-        // how you store the regID in your app is up to you.
-        return getSharedPreferences(HomeActivity.class.getSimpleName(),
-                Context.MODE_PRIVATE);
-    }
+//    private SharedPreferences getGCMPreferences() {
+//        // This sample app persists the registration ID in shared preferences, but
+//        // how you store the regID in your app is up to you.
+//        return getSharedPreferences(HomeActivity.class.getSimpleName(),
+//                Context.MODE_PRIVATE);
+//    }
 
     /**
      * Check the device to make sure it has the Google Play Services APK. If
@@ -217,13 +214,11 @@ public class HomeActivity extends EWActivity {
      * @param regId   registration ID
      */
     private void storeRegistrationId(Context context, String regId) {
-        final SharedPreferences prefs = getGCMPreferences();
         int appVersion = getAppVersion(context);
         Log.i("home", "Saving regId on app version " + appVersion);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PROPERTY_REG_ID, regId);
-        editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+
+        EWWave.storeDeviceToken(regId);
+        EWWave.storeAppVersion(appVersion);
         Log.d("^^^^^^^^^^^^^^^^^^", "background2 regid: " + regid);
     }
 

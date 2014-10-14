@@ -17,6 +17,8 @@ import java.util.Date;
 public class ApplicationContextProvider extends Application {
 
     public final static String APP_DOMAIN = "com.echowaves";
+    public final static String DEVICE_TOKEN= "device.token";
+    public static final String PROPERTY_APP_VERSION = "appVersion";
     public final static String LOGIN_KEY = APP_DOMAIN + ".login";
     public final static String PASS_KEY = APP_DOMAIN + ".password";
     public final static String CURRENT_ASSET_DATE_TIME_KEY = "currentAssetDateTime";

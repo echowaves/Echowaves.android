@@ -61,6 +61,8 @@ public class SignUpActivity extends EWActivity {
 
                                 EWWave.storeCredentialForWave(waveName, wavePassword);
 
+                                EWWave.storeAndroidTokenForWave(waveName, EWWave.getStoredDeviceToken(), new EWJsonHttpResponseHandler(v.getContext()));
+
                                 Intent createWave = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
                                 startActivity(createWave);
                             }
