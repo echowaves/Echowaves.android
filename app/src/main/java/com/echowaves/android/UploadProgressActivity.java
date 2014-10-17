@@ -108,6 +108,9 @@ public class UploadProgressActivity extends EWActivity {
 //            Intent navBarIntent = new Intent(context, NavigationTabBarActivity.class);
 //            startActivity(navBarIntent);
             setResult(2);
+
+//            EWWave.sendPushNotifyForWave(
+
             finish();
         }
 

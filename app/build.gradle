@@ -8,8 +8,8 @@ android {
         applicationId "com.echowaves.android"
         minSdkVersion 16
         targetSdkVersion 19
-        versionCode 17
-        versionName "7.0.7"
+        versionCode 19
+        versionName "7.0.9"
     }
     buildTypes {
         release {
