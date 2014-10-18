@@ -94,11 +94,10 @@ public class EWWave extends EWDataModel {
     }
 
 
-    public static void sendPushNotifyForWave(String waveName, Integer numberOfImages, AsyncHttpResponseHandler responseHandler) {
+    public static void sendPushNotifyBadge(Integer numberOfImages, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
-        params.put("wave_name", waveName);
         params.put("badge", numberOfImages.toString());
-        HTTP_CLIENT.post(getAbsoluteUrl("/send-push-notify.json"), params, responseHandler);
+        HTTP_CLIENT.post(getAbsoluteUrl("/push-notify.json"), params, responseHandler);
     }
 
 

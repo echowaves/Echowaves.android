@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWImage;
+import com.echowaves.android.model.EWWave;
+import com.echowaves.android.util.EWJsonHttpResponseHandler;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 
@@ -48,6 +50,8 @@ public class UploadProgressActivity extends EWActivity {
     private WaveOperation waveOperation;
     private RequestHandle currentUploadHandle;
 
+    private int photosToUpload = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,8 @@ public class UploadProgressActivity extends EWActivity {
         waveOperation = new WaveOperation(this);
 
         photosCount = (TextView) findViewById(R.id.upload_count);
-        photosCount.setText(String.valueOf(ApplicationContextProvider.getPhotosCountSinceLast()));
+        photosToUpload = ApplicationContextProvider.getPhotosCountSinceLast();
+        photosCount.setText(String.valueOf(photosToUpload));
 
         imageView = (ImageView) findViewById(R.id.upload_imageView);
         progressBar = (ProgressBar) findViewById(R.id.upload_progressBar);
@@ -109,8 +114,10 @@ public class UploadProgressActivity extends EWActivity {
 //            startActivity(navBarIntent);
             setResult(2);
 
-//            EWWave.sendPushNotifyForWave(
-
+            if(photosToUpload > 0) {
+                EWWave.sendPushNotifyBadge(photosToUpload, new EWJsonHttpResponseHandler(this.context));
+                Log.d("******************************************************", "sending push notification that " + photosToUpload + " photos uploaded");
+            }
             finish();
         }
 
@@ -129,7 +136,7 @@ public class UploadProgressActivity extends EWActivity {
                 options = new BitmapFactory.Options();
                 options.inSampleSize = 2;
                 return BitmapFactory.decodeFile(imgPath, options);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -158,7 +165,7 @@ public class UploadProgressActivity extends EWActivity {
                     ApplicationContextProvider.setCurrentAssetDateTime(currentAssetDate);
                     uploadProgressDetailsActivityIsActive = false;
                     cancelButton.setEnabled(false);
-
+                    photosToUpload--;
                 }
             });
 
