@@ -25,6 +25,10 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
     private WavingTabFragment wavingFragment;
     private EchoWaveTabFragment echoWaveFragment;
     private BlendsTabFragment blendsTabFragment;
+    private TabHost tabHost;
+
+    static int currentTab;
+//    static String currentWave;
 
 
     @Override
@@ -33,7 +37,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 
         setContentView(R.layout.activity_navigation_tab_bar);
 
-        TabHost tabHost = (TabHost) findViewById(R.id.nav_tabhost);
+        tabHost = (TabHost) findViewById(R.id.nav_tabhost);
         tabHost.setup();
 
         final TabWidget tabWidget = tabHost.getTabWidget();
@@ -71,6 +75,8 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 //            }
             tabHost.addTab(tabSpec);
         }
+
+        tabHost.setOnTabChangedListener(this);
 
         // tune out button
         TextView tuneOutButton = (TextView) findViewById(R.id.nav_tuneOut);
@@ -137,33 +143,31 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
-
             });
-
-
         }
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("==========================================: ", "onResume called");
+        Log.d("NavigationTabBarActivity ==========================================: ", "onResume called");
+        Log.d("NavigationTabBarActivity ==========================================: ", "setting currentWave to " + WavePickerFragment.getCurrentWaveName());
         onAWaveSelected(WavePickerFragment.getCurrentWaveName());
+        Log.d("NavigationTabBarActivity ==========================================: ", "setting tab to " + String.valueOf(currentTab));
+        tabHost.setCurrentTab(currentTab);
     }
 
     @Override
     public void onTabChanged(String tabId) {
-        Log.d("$$$$$$$$$$$$$$$$$ NavigationTabBarActivity", "onTabChanged(): tabId=" + tabId);
-
+        Log.d("NavigationTabBarActivity ==========================================: ", "onTabChanged(): tabId=" + tabId.substring(3));
+        currentTab = Integer.parseInt(tabId.substring(3));
     }
 
     @Override
     public void onAWaveSelected(String waveName) {
-        Log.d("%%%%%%%%%%%%%%%%% NavigationTabBarActivity", "waveSelected:" + waveName);
-
+        Log.d("NavigationTabBarActivity ==========================================: ", "waveSelected:" + waveName);
+        WavePickerFragment.setCurrentWaveName(waveName);
         if (WavePickerFragment.getCurrentWaveName() != null) {
             wavingFragment.updateWave(WavePickerFragment.getCurrentWaveName());
             echoWaveFragment.updateWave(WavePickerFragment.getCurrentWaveName());

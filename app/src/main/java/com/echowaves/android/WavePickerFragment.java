@@ -33,6 +33,15 @@ public class WavePickerFragment extends Fragment {
         return null;
     }
 
+    public static void setCurrentWaveName(String waveName) {
+        if(waves != null) {
+            for(int i=0; i<waves.length; i++) {
+                if(waves[i].equals(waveName)) {
+                    currentWaveIndex = i;
+                }
+            }
+        }
+    }
     public static void resetCurrentWaveIndex() {
         currentWaveIndex = 0;
     }
@@ -67,7 +76,7 @@ public class WavePickerFragment extends Fragment {
     }
 
     public static void reloadWaves() {
-        resetCurrentWaveIndex();
+//        resetCurrentWaveIndex();
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(view.getContext()) {
 
             @Override
@@ -87,7 +96,7 @@ public class WavePickerFragment extends Fragment {
                 spinnerWaves = (Spinner) view.findViewById(R.id.wavePicker);
 
                 ArrayAdapter<String> waves_adapter =
-                        new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, waves);
+                        new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, waves);
 
                 waves_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
