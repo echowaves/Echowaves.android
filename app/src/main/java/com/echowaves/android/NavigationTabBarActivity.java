@@ -30,6 +30,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
     static int currentTab;
 //    static String currentWave;
 
+    private static int TAKE_PHOTO_CODE = 3321;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +110,9 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
             public void onClick(final View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(takePictureIntent);
+                    currentTab = 1;
+                    tabHost.setCurrentTab(currentTab);
+                    startActivityForResult(takePictureIntent, TAKE_PHOTO_CODE);
                 }
             }
         });
@@ -138,13 +141,26 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 
                         acceptBlendingIntent.putExtra("FROM_WAVE", waveName);
                         acceptBlendingIntent.putExtra("SHARED_IMAGE", imageName);
-                        startActivity(acceptBlendingIntent);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             });
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("==========================================: ", "onActivityResult");
+        if (resultCode == RESULT_OK ) {
+            Log.d("==========================================: ", "onActivityResult:RESULT_OK");
+            if (requestCode == TAKE_PHOTO_CODE) {
+                Log.d("==========================================: ", "onActivityResult:TAKE_PHOTO_CODE");
+                Intent pickWavesIntent = new Intent(this, PickWavesForUploadActivity.class);
+                startActivity(pickWavesIntent);
+            }
         }
     }
 
