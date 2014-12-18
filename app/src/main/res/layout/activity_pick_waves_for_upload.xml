@@ -64,7 +64,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="15dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_button"
+            android:background="@drawable/rounded_button_red"
             android:padding="15dp"
             android:text="Wave Now"
             android:textColor="@android:color/white"

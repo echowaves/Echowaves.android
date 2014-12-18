@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWImage;
 import com.echowaves.android.model.EWWave;
 import com.echowaves.android.util.EWJsonHttpResponseHandler;
@@ -26,6 +28,8 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
     private EchoWaveTabFragment echoWaveFragment;
     private BlendsTabFragment blendsTabFragment;
     private TabHost tabHost;
+
+    private Button waveAllNowButton;
 
     static int currentTab;
 //    static String currentWave;
@@ -172,6 +176,26 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
         onAWaveSelected(WavePickerFragment.getCurrentWaveName());
         Log.d("NavigationTabBarActivity ==========================================: ", "setting tab to " + String.valueOf(currentTab));
         tabHost.setCurrentTab(currentTab);
+
+        waveAllNowButton = (Button) findViewById(R.id.nav_waveAllNowButton);
+        int photosCount = ApplicationContextProvider.getPhotosCountSinceLast();
+        if(photosCount > 0) {
+            waveAllNowButton.setVisibility(View.VISIBLE);
+            waveAllNowButton.setText("Wave: " + photosCount);
+            waveAllNowButton.
+                    setOnClickListener(
+                            new View.OnClickListener() {
+                                public void onClick(final View v) {
+                                    Intent pickWavesIntent = new Intent(v.getContext(), PickWavesForUploadActivity.class);
+                                    startActivity(pickWavesIntent);
+                                }
+                            }
+                    );
+        } else {
+            waveAllNowButton.setVisibility(View.GONE);
+        }
+
+
     }
 
     @Override

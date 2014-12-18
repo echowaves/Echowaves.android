@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWWave;
 import com.echowaves.android.util.EWJsonHttpResponseHandler;
 
@@ -32,6 +33,7 @@ public class PickWavesForUploadActivity extends EWActivity {
 
     private static ListView wavesListView;
 
+    private Button waveNowButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class PickWavesForUploadActivity extends EWActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponseArray.toString());
 
-                waves = new ArrayList<Model>(jsonResponseArray.length());
+                waves = new ArrayList<>(jsonResponseArray.length());
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
                         Log.d("jsonObject", jsonResponseArray.getJSONObject(i).toString());
@@ -128,8 +130,8 @@ public class PickWavesForUploadActivity extends EWActivity {
 
         });
 
-
-        Button waveNowButton = (Button) findViewById(R.id.pickwaves_waveNowButton);
+        waveNowButton = (Button) findViewById(R.id.pickwaves_waveNowButton);
+        waveNowButton.setText("Wave " + ApplicationContextProvider.getPhotosCountSinceLast() + " Now");
         //Listening to button event
         waveNowButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -138,6 +140,13 @@ public class PickWavesForUploadActivity extends EWActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        waveNowButton.setText("Wave " + ApplicationContextProvider.getPhotosCountSinceLast() + " Now");
     }
 
     @Override
