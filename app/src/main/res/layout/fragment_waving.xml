@@ -63,7 +63,7 @@
             android:layout_gravity="center_vertical|right"
             android:layout_margin="5dp"
             android:singleLine="true"
-            android:text="Photos since:"
+            android:text="Last waved:"
             android:textSize="15sp" />
 
         <Button
@@ -75,26 +75,6 @@
             android:text="12:00am 01/01/0001"
             android:textColor="@android:color/holo_blue_dark"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/waving_photosCount"
-            android:layout_gravity="center_vertical|right"
-            android:layout_margin="5dp"
-            android:text="0"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="50sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/waving_waveAllButton"
-            android:layout_gravity="center_vertical|left"
-            android:layout_margin="5dp"
-            android:background="@drawable/rounded_button_red"
-            android:padding="15dp"
-            android:text="Wave all"
-            android:textColor="@android:color/white"
-            android:textSize="30sp" />
-
 
     </GridLayout>
 

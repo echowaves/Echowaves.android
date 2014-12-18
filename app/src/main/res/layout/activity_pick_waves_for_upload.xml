@@ -53,8 +53,17 @@
             android:id="@+id/pickwaves_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/pickwaves_waveNowButton" />
+            android:layout_above="@+id/pickwaves_textViewWaveAllDescription" />
 
+        <TextView
+            android:id="@+id/pickwaves_textViewWaveAllDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Photos from your phone will be uploaded to the waves selected above"
+            android:textSize="10sp"
+            android:layout_marginTop="5dp"
+            android:layout_above="@+id/pickwaves_waveNowButton"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/pickwaves_waveNowButton"
@@ -62,10 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="15dp"
-            android:layout_marginTop="16dp"
+            android:layout_margin="5dp"
             android:background="@drawable/rounded_button_red"
-            android:padding="15dp"
             android:text="Wave Now"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -73,3 +80,4 @@
     </RelativeLayout>
 
 </LinearLayout>
+

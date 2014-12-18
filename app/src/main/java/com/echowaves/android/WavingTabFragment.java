@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 
@@ -15,14 +14,12 @@ import java.text.DateFormat;
 
 public class WavingTabFragment extends EWTabFragment {
 
-    private TextView photosCount;
     private Button sinceDateTimeValueButton;
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d("!!!!!!!!!!!!!", "WavingTabFragment onResume()");
-        photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
         sinceDateTimeValueButton.setText(DateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM, DateFormat.SHORT).format(ApplicationContextProvider.getCurrentAssetDateTime()));
 
@@ -33,7 +30,6 @@ public class WavingTabFragment extends EWTabFragment {
     public void onStart() {
         super.onStart();
         Log.d("!!!!!!!!!!!!!", "WavingTabFragment onStart()");
-        photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
         sinceDateTimeValueButton.setText(DateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM, DateFormat.SHORT).format(ApplicationContextProvider.getCurrentAssetDateTime()));
 
@@ -59,20 +55,6 @@ public class WavingTabFragment extends EWTabFragment {
                         }
                 );
 
-
-        photosCount = (TextView) view.findViewById(R.id.waving_photosCount);
-
-        Button waveAllButton = (Button) view.findViewById(R.id.waving_waveAllButton);
-        //Listening to button event
-        waveAllButton.
-                setOnClickListener(
-                        new View.OnClickListener() {
-                            public void onClick(final View v) {
-                                Intent pickWavesIntent = new Intent(v.getContext(), PickWavesForUploadActivity.class);
-                                startActivity(pickWavesIntent);
-                            }
-                        }
-                );
 
         Button addWaveButton = (Button) view.findViewById(R.id.waving_addNewWaveButton);
         //Listening to button event

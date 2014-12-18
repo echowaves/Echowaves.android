@@ -181,7 +181,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
         int photosCount = ApplicationContextProvider.getPhotosCountSinceLast();
         if(photosCount > 0) {
             waveAllNowButton.setVisibility(View.VISIBLE);
-            waveAllNowButton.setText("Wave: " + photosCount);
+            waveAllNowButton.setText("Wave " + photosCount);
             waveAllNowButton.
                     setOnClickListener(
                             new View.OnClickListener() {
