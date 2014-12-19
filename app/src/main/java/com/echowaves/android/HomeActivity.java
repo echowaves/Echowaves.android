@@ -7,9 +7,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.echowaves.android.model.ApplicationContextProvider;
 import com.echowaves.android.model.EWWave;
@@ -29,6 +34,15 @@ public class HomeActivity extends EWActivity {
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static String shareToken = null; // we will access this property in deep actions to determine if need to open nested actions
     private static int tuneInCount = 0;
+
+    private TextView firstTimeTextView;
+    private Button createWaveButton;
+
+
+    private EditText waveName;
+    private EditText wavePassword;
+    private Button tuneInButton;
+
     /**
      * Substitute you own sender ID here. This is the project number you got
      * from the API Console, as described in "Getting Started."
@@ -81,7 +95,7 @@ public class HomeActivity extends EWActivity {
                     tuneInCount++;
                     Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
 
-                    EWWave.storeCredentialForWave(storedWaveName, storedWavePassword);
+//                    EWWave.storeCredentialForWave(storedWaveName, storedWavePassword);
 
                     Intent tuneIn = new Intent(ApplicationContextProvider.getContext(), NavigationTabBarActivity.class);
                     startActivity(tuneIn);
@@ -96,7 +110,17 @@ public class HomeActivity extends EWActivity {
 
         }
 
+        hideTextIfNecessery();
+    }
 
+    private void hideTextIfNecessery() {
+        if(waveName.getText().length() > 0) {
+            firstTimeTextView.setVisibility(View.INVISIBLE);
+            createWaveButton.setVisibility(View.INVISIBLE);
+        } else {
+            firstTimeTextView.setVisibility(View.VISIBLE);
+            createWaveButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -104,16 +128,8 @@ public class HomeActivity extends EWActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        Button tuneInButton = (Button) findViewById(R.id.home_tuneIn);
-        //Listening to button event
-        tuneInButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Intent tuneIn = new Intent(ApplicationContextProvider.getContext(), SignInActivity.class);
-                startActivity(tuneIn);
-            }
-        });
-
-        Button createWaveButton = (Button) findViewById(R.id.home_createWave);
+        firstTimeTextView = (TextView) findViewById(R.id.home_firstTimeText);
+        createWaveButton = (Button) findViewById(R.id.home_createWaveButton);
         //Listening to button event
         createWaveButton.setOnClickListener(new View.OnClickListener() {
 
@@ -122,6 +138,7 @@ public class HomeActivity extends EWActivity {
                 startActivity(createWave);
             }
         });
+
 
         // Check device for Play Services APK.
         if (checkPlayServices()) {
@@ -137,6 +154,59 @@ public class HomeActivity extends EWActivity {
 
         }
 
+
+        // show soft keyboard automagically
+        waveName = (EditText) findViewById(R.id.home_wave_name);
+        wavePassword = (EditText) findViewById(R.id.home_wave_password);
+        waveName.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        String storedWaveName = EWWave.getStoredWaveName();
+        String storedWavePassword = EWWave.getStoredWavePassword();
+        if (!"".equals(storedWaveName)) {
+            waveName.setText(storedWaveName);
+            wavePassword.setText(storedWavePassword);
+        }
+
+        waveName.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                hideTextIfNecessery();
+            }
+        });
+
+        tuneInButton = (Button) findViewById(R.id.home_sign_in_button);
+        //Listening to button event
+        tuneInButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(final View v) {
+
+//                Log.d("waveName.getText().toString()" , waveName.getText().toString());
+//                Log.d("wavePassword.getText().toString()" , wavePassword.getText().toString());
+                EWWave.tuneInWithNameAndPassword(waveName.getText().toString(), wavePassword.getText().toString(), new EWJsonHttpResponseHandler(v.getContext()) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+
+                        EWWave.storeCredentialForWave(waveName.getText().toString(), wavePassword.getText().toString());
+
+                        EWWave.storeAndroidTokenForWave(waveName.getText().toString(), EWWave.getStoredDeviceToken(), new EWJsonHttpResponseHandler(v.getContext()));
+
+//                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+                        Intent tuneIn = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
+                        startActivity(tuneIn);
+                    }
+
+                });
+            }
+        });
+
+        hideTextIfNecessery();
     }
 
     /**
