@@ -75,7 +75,7 @@ public class BlendsTabFragment extends EWTabFragment {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponseArray.toString());
 
-                blendedWith = new ArrayList<String>(jsonResponseArray.length());
+                blendedWith = new ArrayList<>(jsonResponseArray.length());
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
                         Log.d("jsonObject::::::::::::::::::::::", jsonResponseArray.getJSONObject(i).toString());
@@ -226,6 +226,7 @@ public class BlendsTabFragment extends EWTabFragment {
             view.setOnClickListener(new View.OnClickListener() {
                 public void onClick(final View v) {
                     Intent acceptBlendingIntent = new Intent(v.getContext(), AcceptBlendingRequestActivity.class);
+
                     acceptBlendingIntent.putExtra("FROM_WAVE", waveName);
                     startActivity(acceptBlendingIntent);
                 }

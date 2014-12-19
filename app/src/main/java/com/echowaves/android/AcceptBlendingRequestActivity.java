@@ -57,7 +57,6 @@ public class AcceptBlendingRequestActivity extends EWActivity {
         toWaveView = (TextView) findViewById(R.id.acceptBlending_toWaveName);
         blendWaveLabelView = (TextView) findViewById(R.id.acceptBlending_blendWaveLabel);
 
-        resetBlendWaveLabel();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -78,13 +77,15 @@ public class AcceptBlendingRequestActivity extends EWActivity {
         toWaveView.setText(currentlySelectedWaveName);
         origToWaveName = currentlySelectedWaveName;
 
+        resetBlendWaveLabel();
+
         EWWave.getAllMyWaves(new EWJsonHttpResponseHandler(getLayoutInflater().getContext()) {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonResponseArray) {
                 Log.d(">>>>>>>>>>>>>>>>>>>> PickWavesForUploadActivity finished Loading", jsonResponseArray.toString());
 
-                allMyWaves = new ArrayList<String>(jsonResponseArray.length());
+                allMyWaves = new ArrayList<>(jsonResponseArray.length());
                 for (int i = 0; i < jsonResponseArray.length(); i++) {
                     try {
                         Log.d("jsonObject", jsonResponseArray.getJSONObject(i).toString());
