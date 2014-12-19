@@ -79,11 +79,14 @@ public class HomeActivity extends EWActivity {
             Log.d("%%%%%%%%%%%%%%%%%%%%%%%%%% token", shareToken);
         }
 
-
         final String storedWaveName = EWWave.getStoredWaveName();
         final String storedWavePassword = EWWave.getStoredWavePassword();
         // auto tunein
-        if (!"".equals(storedWaveName) && tuneInCount == 0) {
+        if (
+                (!"".equals(storedWaveName) && tuneInCount == 0)
+                ||
+                        (!"".equals(storedWaveName) && shareToken != null)
+                ) {
             EWWave.tuneInWithNameAndPassword(storedWaveName, storedWavePassword, new EWJsonHttpResponseHandler(this) {
 //                @Override
 //                public void onStart() {
@@ -139,21 +142,15 @@ public class HomeActivity extends EWActivity {
             }
         });
 
-
         // Check device for Play Services APK.
         if (checkPlayServices()) {
-
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(getApplicationContext());
-
             if (regid.isEmpty()) {
                 new RegisterInBackground().execute();
             }
-
             Log.d("^^^^^^^^^^^^^^^^^^^^^^^^", "regId: " + regid);
-
         }
-
 
         // show soft keyboard automagically
         waveName = (EditText) findViewById(R.id.home_wave_name);

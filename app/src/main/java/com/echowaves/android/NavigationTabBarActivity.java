@@ -145,6 +145,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
 
                         acceptBlendingIntent.putExtra("FROM_WAVE", waveName);
                         acceptBlendingIntent.putExtra("SHARED_IMAGE", imageName);
+                        startActivity(acceptBlendingIntent);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
