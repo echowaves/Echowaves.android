@@ -44,8 +44,7 @@ public class PickWavesForUploadActivity extends EWActivity {
         //Listening to button event
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent home = new Intent(getApplicationContext(), NavigationTabBarActivity.class);
-                startActivity(home);
+                finish();
             }
         });
 

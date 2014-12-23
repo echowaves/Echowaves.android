@@ -8,6 +8,7 @@
 
     <string name="tuneIn">TuneIn</string>
     <string name="pickWaves">Pick Waves</string>
+    <string name="pickContactDetais">Pick one to send blending request to:</string>
     <string name="setDateTime">Set Date and Time</string>
     <string name="setDateTimeNow">reset to now</string>
     <string name="tuneOut">TuneOut</string>
@@ -37,5 +38,6 @@
     <string name="title_activity_detailed_image">DetailedImageActivity</string>
     <string name="title_activity_share">ShareActivity</string>
     <string name="title_activity_detailed_image_sharing_preview">DetailedImageSharingPreviewActivity</string>
+    <string name="title_activity_pick_contact_for_blending">PickContactForBlendingActivity</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.echowaves.android;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +13,6 @@ import android.opengl.GLES10;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -43,6 +44,11 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class DetailedImageFragment extends Fragment implements EWConstants {
     static final int REQUEST_SELECT_CONTACT = 1;
+    static final int PICK_CONTANT_FOR_BLENDING_ACTIVITY = 2;
+
+    static final String PICKED_CONTACT_FIELD = "CONTACT_FIELD";
+//    static final int SELECTED_CONTACT = 3;
+
 
     private static boolean navVisible = true;
     //    private boolean fullRes = false;
@@ -244,8 +250,8 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
         shareButton = (ImageButton) rootView.findViewById(R.id.detailedimage_shareButton);
         shareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+//                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
                 if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(intent, REQUEST_SELECT_CONTACT);
                 }
@@ -415,88 +421,120 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == REQUEST_SELECT_CONTACT && resultCode == Activity.RESULT_OK) {
             Uri contactUri = data.getData();
-            String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,
-                    ContactsContract.Contacts.DISPLAY_NAME,};
-            final Cursor cursor = getActivity().getContentResolver().query(contactUri, projection,
-                    null, null, null);
-            // If the cursor returned is valid, get the phone number
-            if (cursor != null && cursor.moveToFirst()) {
-                // Do something with the phone number
+            ArrayList<String> contactsDetails = new ArrayList<>();
 
-                int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-                final String number = cursor.getString(numberIndex);
-                final String name = cursor.getString(nameIndex);
-                Log.d("!!!!!!!!!!!!!!!!!! result number", number);
-                Log.d("!!!!!!!!!!!!!!!!!! result name  ", name);
+            //
+            //  Find contact based on name.
+            //
+            ContentResolver cr = getActivity().getContentResolver();
+                String contactId =
+                        contactUri.getLastPathSegment();
 
+                Log.d("??????????????????????? contactid: " , contactId);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Confirm SMS Sending")
-                        .setMessage("Do you want to send SMS invite to " + name + " " + number + "?")
-                        .setCancelable(true)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                //
+                //  Get all phone numbers.
+                //
+                Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?" ,new String[]{contactId}, null);
 
-                                EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
-                                    @Override
-                                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                while (phones.moveToNext()) {
+                    String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                    switch (type) {
+                        case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
+                            contactsDetails.add("home:\n" + number);
+                            break;
+                        case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+                            contactsDetails.add("mobile:\n" + number);
+                            break;
+                        case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
+                            contactsDetails.add("work:\n" + number);
+                            break;
+                        default:
+                            contactsDetails.add("other:\n" + number);
+                    }
+                }
+                phones.close();
+                //
+                //  Get all email addresses.
+                //
+                Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
+                while (emails.moveToNext()) {
+                    String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                    int type = emails.getInt(emails.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                    switch (type) {
+                        case ContactsContract.CommonDataKinds.Email.TYPE_HOME:
+                            contactsDetails.add("home:\n" + email);
+                            break;
+                        case ContactsContract.CommonDataKinds.Email.TYPE_WORK:
+                            contactsDetails.add("work:\n" + email);
+                            break;
+                        default:
+                            contactsDetails.add("other:\n" + email);
 
-                                        try {
-                                            final String token = jsonResponse.getString("token");
+                    }
+                }
+                emails.close();
 
-                                            final String msg = "Look at my photo and blend with my wave http://echowaves.com/mobile?token=" + token;
-                                            SmsManager sm = SmsManager.getDefault();
-                                            sm.sendTextMessage(number, null, msg, null, null);
+            Log.d("(\"???????????????? contactDetails size: ", String.valueOf(contactsDetails.size()));
+            for(String contactDetail:contactsDetails) {
+                Log.d("???????????????? ", contactDetail);
+            }
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            Intent pickContactDetailsIntent = new Intent(getActivity(), PickContactForBlendingActivity.class);
+            pickContactDetailsIntent.putExtra("wave_name", waveName);
+            pickContactDetailsIntent.putExtra("image_name", imageName);
+            pickContactDetailsIntent.putExtra("contacts_details", contactsDetails);
+            startActivityForResult(pickContactDetailsIntent, PICK_CONTANT_FOR_BLENDING_ACTIVITY);
 
-                                            builder.setTitle("Success!")
-                                                    .setMessage("SMS invite successfully sent to " + name)
-                                                    .setCancelable(false)
-                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int id) {
-                                                        }
-                                                    });
-                                            AlertDialog alert = builder.create();
-                                            alert.show();
-                                        } catch (JSONException jsonException) {
-                                            Log.e("json exception", jsonException.toString());
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//            EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
+//                @Override
+//                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+//                    Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+//
+//                    try {
+//                        final String token = jsonResponse.getString("token");
+//
+//                        final String msg = "Look at my photo and blend with my wave http://echowaves.com/mobile?token=" + token;
+////                                            SmsManager sm = SmsManager.getDefault();
+////                                            sm.sendTextMessage(number, null, msg, null, null);
+//
+//                        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+//                        sendIntent.setData(Uri.parse("smsto:"));
+//                        sendIntent.setType("vnd.android-dir/mms-sms");
+//                        sendIntent.putExtra("address", number);
+//                        sendIntent.putExtra("sms_body", msg);
+//                        sendIntent.putExtra("exit_on_sent", true);
+//                        startActivity(sendIntent);
+//
+//                    } catch (JSONException jsonException) {
+//                        Log.e("json exception", jsonException.toString());
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//
+//                        builder.setTitle("Error!")
+//                                .setMessage("Error.")
+//                                .setCancelable(false)
+//                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int id) {
+//                                    }
+//                                });
+//                        AlertDialog alert = builder.create();
+//                        alert.show();
+//
+//                    }
+//                }
+//            });
 
-                                            builder.setTitle("Error!")
-                                                    .setMessage("Error.")
-                                                    .setCancelable(false)
-                                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int id) {
-                                                        }
-                                                    });
-                                            AlertDialog alert = builder.create();
-                                            alert.show();
-
-                                        }
-
-
-                                    }
-                                });
-
-
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-
-
+        } else if (requestCode == PICK_CONTANT_FOR_BLENDING_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            if (data != null && data.getExtras() != null) {
+                Log.d("******************* picked contact detail", data.getExtras().getString(PICKED_CONTACT_FIELD));
             }
         }
+
 
     }
 }
