@@ -491,47 +491,76 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
             pickContactDetailsIntent.putExtra("contacts_details", contactsDetails);
             startActivityForResult(pickContactDetailsIntent, PICK_CONTANT_FOR_BLENDING_ACTIVITY);
 
-//            EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-//                    Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
-//
-//                    try {
-//                        final String token = jsonResponse.getString("token");
-//
-//                        final String msg = "Look at my photo and blend with my wave http://echowaves.com/mobile?token=" + token;
-////                                            SmsManager sm = SmsManager.getDefault();
-////                                            sm.sendTextMessage(number, null, msg, null, null);
-//
-//                        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-//                        sendIntent.setData(Uri.parse("smsto:"));
-//                        sendIntent.setType("vnd.android-dir/mms-sms");
-//                        sendIntent.putExtra("address", number);
-//                        sendIntent.putExtra("sms_body", msg);
-//                        sendIntent.putExtra("exit_on_sent", true);
-//                        startActivity(sendIntent);
-//
-//                    } catch (JSONException jsonException) {
-//                        Log.e("json exception", jsonException.toString());
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//
-//                        builder.setTitle("Error!")
-//                                .setMessage("Error.")
-//                                .setCancelable(false)
-//                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                    }
-//                                });
-//                        AlertDialog alert = builder.create();
-//                        alert.show();
-//
-//                    }
-//                }
-//            });
 
         } else if (requestCode == PICK_CONTANT_FOR_BLENDING_ACTIVITY && resultCode == Activity.RESULT_OK) {
             if (data != null && data.getExtras() != null) {
-                Log.d("******************* picked contact detail", data.getExtras().getString(PICKED_CONTACT_FIELD));
+                final String sendBlendRequestTo = data.getExtras().getString(PICKED_CONTACT_FIELD);
+                Log.d("******************* picked contact detail", sendBlendRequestTo);
+
+            EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                    Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+
+                    try {
+                        final String token = jsonResponse.getString("token");
+
+                        final String msg = "Look at my photo and blend with my wave http://echowaves.com/mobile?token=" + token;
+
+                        if(sendBlendRequestTo.contains("@")) {//this is email
+
+                            Intent sendEmailIntent = new Intent(Intent.ACTION_SEND);
+                            sendEmailIntent.setType("message/rfc822");
+                            sendEmailIntent.putExtra(Intent.EXTRA_EMAIL  , new String[]{sendBlendRequestTo});
+                            sendEmailIntent.putExtra(Intent.EXTRA_SUBJECT, "Echowaves blending");
+                            sendEmailIntent.putExtra(Intent.EXTRA_TEXT   , msg);
+                            try {
+                                startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
+                            } catch (android.content.ActivityNotFoundException ex) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                builder.setTitle("Error!")
+                                        .setMessage("There are no email clients installed.")
+                                        .setCancelable(false)
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+                            }
+
+
+                        } else {//this is sms
+                            Intent sendSmsIntent = new Intent(Intent.ACTION_VIEW);
+                            sendSmsIntent.setData(Uri.parse("smsto:"));
+                            sendSmsIntent.setType("vnd.android-dir/mms-sms");
+                            sendSmsIntent.putExtra("address", sendBlendRequestTo);
+                            sendSmsIntent.putExtra("sms_body", msg);
+                            sendSmsIntent.putExtra("exit_on_sent", true);
+                            startActivity(sendSmsIntent);
+                        }
+
+                    } catch (JSONException jsonException) {
+                        Log.e("json exception", jsonException.toString());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                        builder.setTitle("Error!")
+                                .setMessage("Error.")
+                                .setCancelable(false)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                }
+            });
+
+
+
+
             }
         }
 
