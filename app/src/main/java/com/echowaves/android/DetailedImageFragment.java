@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.opengl.GLES10;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
     private TextView dateTimeTextView;
     private TextView waveNameTextView;
     private TouchImageView imageView;
+    private Bitmap bmp;
 
     @Override
     public View getView() {
@@ -123,7 +125,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                                 GLES10.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, maxSize, 0);
                                 int maxDim = maxSize[0];
 
-                                Bitmap bmp = BitmapFactory.decodeStream(new ByteArrayInputStream(responseBody));
+                                bmp = BitmapFactory.decodeStream(new ByteArrayInputStream(responseBody));
 
                                 final int height = bmp.getHeight();
                                 final int width = bmp.getWidth();
@@ -138,13 +140,10 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                                         scale *= 2;
                                     }
 
-                                    Bitmap scaled = Bitmap.createScaledBitmap(bmp, bmp.getWidth() / scale, bmp.getHeight() / scale, true);
-
-                                    imageView.setImageBitmap(scaled);
-
-                                } else {
-                                    imageView.setImageBitmap(bmp);
+                                    bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth() / scale, bmp.getHeight() / scale, true);
                                 }
+
+                                imageView.setImageBitmap(bmp);
 
                                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                                 imageView.setMaxZoom(10f);
@@ -339,7 +338,7 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                        Bitmap bmp = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
+                        bmp = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
                         imageView = (TouchImageView) rootView.findViewById(R.id.detailedimage_image);
                         imageView.setImageBitmap(bmp);
 
@@ -429,59 +428,59 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
             //  Find contact based on name.
             //
             ContentResolver cr = getActivity().getContentResolver();
-                String contactId =
-                        contactUri.getLastPathSegment();
+            String contactId =
+                    contactUri.getLastPathSegment();
 
-                Log.d("??????????????????????? contactid: " , contactId);
+            Log.d("??????????????????????? contactid: ", contactId);
 
-                //
-                //  Get all phone numbers.
-                //
-                Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?" ,new String[]{contactId}, null);
+            //
+            //  Get all phone numbers.
+            //
+            Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{contactId}, null);
 
-                while (phones.moveToNext()) {
-                    String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-                    switch (type) {
-                        case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                            contactsDetails.add("home:\n" + number);
-                            break;
-                        case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                            contactsDetails.add("mobile:\n" + number);
-                            break;
-                        case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                            contactsDetails.add("work:\n" + number);
-                            break;
-                        default:
-                            contactsDetails.add("other:\n" + number);
-                    }
+            while (phones.moveToNext()) {
+                String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                switch (type) {
+                    case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
+                        contactsDetails.add("home:\n" + number);
+                        break;
+                    case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+                        contactsDetails.add("mobile:\n" + number);
+                        break;
+                    case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
+                        contactsDetails.add("work:\n" + number);
+                        break;
+                    default:
+                        contactsDetails.add("other:\n" + number);
                 }
-                phones.close();
-                //
-                //  Get all email addresses.
-                //
-                Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
-                while (emails.moveToNext()) {
-                    String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                    int type = emails.getInt(emails.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-                    switch (type) {
-                        case ContactsContract.CommonDataKinds.Email.TYPE_HOME:
-                            contactsDetails.add("home:\n" + email);
-                            break;
-                        case ContactsContract.CommonDataKinds.Email.TYPE_WORK:
-                            contactsDetails.add("work:\n" + email);
-                            break;
-                        default:
-                            contactsDetails.add("other:\n" + email);
+            }
+            phones.close();
+            //
+            //  Get all email addresses.
+            //
+            Cursor emails = cr.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
+            while (emails.moveToNext()) {
+                String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                int type = emails.getInt(emails.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                switch (type) {
+                    case ContactsContract.CommonDataKinds.Email.TYPE_HOME:
+                        contactsDetails.add("home:\n" + email);
+                        break;
+                    case ContactsContract.CommonDataKinds.Email.TYPE_WORK:
+                        contactsDetails.add("work:\n" + email);
+                        break;
+                    default:
+                        contactsDetails.add("other:\n" + email);
 
-                    }
                 }
-                emails.close();
+            }
+            emails.close();
 
             Log.d("(\"???????????????? contactDetails size: ", String.valueOf(contactsDetails.size()));
-            for(String contactDetail:contactsDetails) {
+            for (String contactDetail : contactsDetails) {
                 Log.d("???????????????? ", contactDetail);
             }
 
@@ -497,70 +496,72 @@ public class DetailedImageFragment extends Fragment implements EWConstants {
                 final String sendBlendRequestTo = data.getExtras().getString(PICKED_CONTACT_FIELD);
                 Log.d("******************* picked contact detail", sendBlendRequestTo);
 
-            EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                    Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
+                EWImage.shareImage(imageName, waveName, new EWJsonHttpResponseHandler(getActivity()) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                        Log.d(">>>>>>>>>>>>>>>>>>>> ", jsonResponse.toString());
 
-                    try {
-                        final String token = jsonResponse.getString("token");
+                        try {
+                            final String token = jsonResponse.getString("token");
 
-                        final String msg = "Look at my photo and blend with my wave http://echowaves.com/mobile?token=" + token;
+                            final String msg = "Look at my photo and blend with my wave http://echowaves.com/mobile?token=" + token;
 
-                        if(sendBlendRequestTo.contains("@")) {//this is email
+                            if (sendBlendRequestTo.contains("@")) {//this is email
 
-                            Intent sendEmailIntent = new Intent(Intent.ACTION_SEND);
-                            sendEmailIntent.setType("message/rfc822");
-                            sendEmailIntent.putExtra(Intent.EXTRA_EMAIL  , new String[]{sendBlendRequestTo});
-                            sendEmailIntent.putExtra(Intent.EXTRA_SUBJECT, "Echowaves blending");
-                            sendEmailIntent.putExtra(Intent.EXTRA_TEXT   , msg);
-                            try {
-                                startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
-                            } catch (android.content.ActivityNotFoundException ex) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                Intent sendEmailIntent = new Intent(Intent.ACTION_SEND);
+                                sendEmailIntent.setType("text/plain");
+                                sendEmailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{sendBlendRequestTo});
+                                sendEmailIntent.putExtra(Intent.EXTRA_SUBJECT, "Echowaves blending");
+                                sendEmailIntent.putExtra(Intent.EXTRA_TEXT, msg);
 
-                                builder.setTitle("Error!")
-                                        .setMessage("There are no email clients installed.")
-                                        .setCancelable(false)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                            }
-                                        });
-                                AlertDialog alert = builder.create();
-                                alert.show();
+                                String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bmp, "attachment", null);
+                                Uri screenshotUri = Uri.parse(path);
+
+                                sendEmailIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+
+                                try {
+                                    startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
+                                } catch (android.content.ActivityNotFoundException ex) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                    builder.setTitle("Error!")
+                                            .setMessage("There are no email clients installed.")
+                                            .setCancelable(false)
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
+                            } else {//this is sms
+                                Intent sendSmsIntent = new Intent(Intent.ACTION_VIEW);
+                                sendSmsIntent.setData(Uri.parse("smsto:"));
+                                sendSmsIntent.setType("vnd.android-dir/mms-sms");
+                                sendSmsIntent.putExtra("address", sendBlendRequestTo);
+                                sendSmsIntent.putExtra("sms_body", msg);
+                                sendSmsIntent.putExtra("exit_on_sent", true);
+                                startActivity(sendSmsIntent);
                             }
-
-
-                        } else {//this is sms
-                            Intent sendSmsIntent = new Intent(Intent.ACTION_VIEW);
-                            sendSmsIntent.setData(Uri.parse("smsto:"));
-                            sendSmsIntent.setType("vnd.android-dir/mms-sms");
-                            sendSmsIntent.putExtra("address", sendBlendRequestTo);
-                            sendSmsIntent.putExtra("sms_body", msg);
-                            sendSmsIntent.putExtra("exit_on_sent", true);
-                            startActivity(sendSmsIntent);
-                        }
-
-                    } catch (JSONException jsonException) {
-                        Log.e("json exception", jsonException.toString());
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                        builder.setTitle("Error!")
-                                .setMessage("Error.")
-                                .setCancelable(false)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                        } catch (JSONException jsonException) {
+                            Log.e("json exception", jsonException.toString());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("Error!")
+                                    .setMessage("Error.")
+                                    .setCancelable(false)
+                                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        } //catch (FileNotFoundException ex) {
+//                            Log.e("DetailedImageFragement", "file not found");
+//                        } catch (IOException ex) {
+//                            Log.e("DetailedImageFragement", "ioexception");
+//                        }
                     }
-                }
-            });
-
-
-
-
+                });
             }
         }
 
