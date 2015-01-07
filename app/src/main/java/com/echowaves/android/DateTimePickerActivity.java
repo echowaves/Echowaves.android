@@ -32,7 +32,7 @@ public class DateTimePickerActivity extends EWActivity {
         setContentView(R.layout.activity_date_time_picker);
 
         photosCount = (TextView) findViewById(R.id.dtpicker_photosCount);
-        photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()));
+        photosCount.setText("Wave " + Long.toString(ApplicationContextProvider.getPhotosCountSinceLast()) + " since:");
 
         ImageView backButton = (ImageView) findViewById(R.id.dtpicker_imageViewBack);
         //Listening to button event
@@ -58,7 +58,7 @@ public class DateTimePickerActivity extends EWActivity {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //                updatePickersFromDate(getDateFromPickers());
-                photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSince(getDateFromPickers())));
+                photosCount.setText("Wave " + Long.toString(ApplicationContextProvider.getPhotosCountSince(getDateFromPickers())) + " since:");
             }
         });
 
@@ -66,7 +66,7 @@ public class DateTimePickerActivity extends EWActivity {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 //                updatePickersFromDate(getDateFromPickers());
-                photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSince(getDateFromPickers())));
+                photosCount.setText("Wave " + Long.toString(ApplicationContextProvider.getPhotosCountSince(getDateFromPickers())) + " since:");
             }
         });
 
@@ -97,7 +97,7 @@ public class DateTimePickerActivity extends EWActivity {
         datePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
         timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
-        photosCount.setText(Long.toString(ApplicationContextProvider.getPhotosCountSince(dt)));
+        photosCount.setText("Wave " + Long.toString(ApplicationContextProvider.getPhotosCountSince(dt)) + " since:");
 
         Log.d("$$$$$$$$$$$$$$$$$$$$$$ updatePickersFromDate: ", dt.toString());
 
