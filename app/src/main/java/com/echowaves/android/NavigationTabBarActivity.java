@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -84,7 +85,7 @@ public class NavigationTabBarActivity extends EWFragmentActivity implements TabH
         tabHost.setOnTabChangedListener(this);
 
         // tune out button
-        TextView tuneOutButton = (TextView) findViewById(R.id.nav_tuneOut);
+        ImageView tuneOutButton = (ImageView) findViewById(R.id.nav_tuneOut);
         //Listening to button event
         tuneOutButton.setOnClickListener(new View.OnClickListener() {
 
